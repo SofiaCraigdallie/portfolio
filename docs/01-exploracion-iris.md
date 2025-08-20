@@ -1,5 +1,7 @@
+---
 title: Exploración del dataset Iris
 date: 2025-01-01
+---
 
 # Exploración del dataset Iris
 
