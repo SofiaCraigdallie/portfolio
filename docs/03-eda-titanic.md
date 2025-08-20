@@ -1,5 +1,7 @@
+---
 title: EDA Titanic con pandas
 date: 2025-01-01
+---
 
 # EDA Titanic
 
