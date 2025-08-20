@@ -24,3 +24,9 @@ markdown_extensions:
   - pymdownx.emoji
   - pymdownx.tasklist:
       custom_checkbox: true
+nav:
+  - Inicio: index.md
+  - Acerca de mí: acerca.md
+  - Recursos: recursos.md
+  - Exploración Iris: 01-exploracion-iris.md
+  - EDA Titanic: 03-eda-titanic.md
