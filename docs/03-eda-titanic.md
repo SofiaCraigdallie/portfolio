@@ -12,14 +12,14 @@ date: 2025-01-01
 ## Visualizaciones destacadas
 
 ### 1) Supervivencia por sexo y clase
-![Survival por clase y sexo](../assets/img/titanic_survival.png)
+![Survival por clase y sexo](assets/img/titanic_survival.png)
 
 **Observaciones:**
 - Mayor supervivencia en mujeres.
 - Primera clase con mejores chances de sobrevivir.
 
 ### 2) Distribución de tarifas (Fare) por clase
-![Boxplot Fare](../assets/img/titanic_fare.png)
+![Boxplot Fare](assets/img/titanic_fare.png)
 
 **Observaciones:**
 - Pasajeros de primera clase pagaron más y tenían más chances de sobrevivir.
