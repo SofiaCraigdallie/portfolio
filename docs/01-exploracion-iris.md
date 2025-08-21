@@ -12,14 +12,14 @@ date: 2025-01-01
 ## Visualizaciones destacadas
 
 ### 1) Pairplot (relaciones entre variables)
-![Pairplot Iris](../assets/img/iris_pairplot.png)
+![Pairplot Iris](assets/img/iris_pairplot.png)
 
 **Observaciones:**
 - Las variables de pétalo (`petal_length`, `petal_width`) separan muy bien las especies.
 - `sepal_length` y `sepal_width` tienen más solapamiento entre `versicolor` y `virginica`.
 
 ### 2) Heatmap de correlación
-![Heatmap correlación](../assets/img/iris_corr.png)
+![Heatmap correlación](assets/img/iris_corr.png)
 
 **Observaciones:**
 - Fuerte correlación entre `petal_length` y `petal_width`.
