@@ -30,3 +30,4 @@ nav:
   - Recursos: recursos.md
   - Exploración Iris: 01-exploracion-iris.md
   - EDA Titanic: 03-eda-titanic.md
+  - Análisis (Notebook): analysis.ipynb
