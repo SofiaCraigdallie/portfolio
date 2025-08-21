@@ -16,6 +16,9 @@ Desarrollar criterio para explorar datos, elegir visualizaciones adecuadas y com
 - [Exploración del dataset Iris](01-exploracion-iris.md)
 - [EDA Titanic con pandas](03-eda-titanic.md)
 
+## Notebook
+- [Analysis.ipynb](analysis.ipynb)
+
 ---
 
 ## Visualizaciones e insights de Iris
