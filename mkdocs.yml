@@ -28,6 +28,8 @@ nav:
   - Inicio: index.md
   - Acerca de mí: acerca.md
   - Recursos: recursos.md
-  - Exploración Iris: 01-exploracion-iris.md
-  - EDA Titanic: 03-eda-titanic.md
-  - Análisis (Notebook): analysis.ipynb
+  - Portafolio:
+      - Índice: portfolio/index.md
+      - 01 – Exploración del dataset Iris: portfolio/01-exploracion-iris.md
+      - 02 – EDA Titanic con pandas: portfolio/03-eda-titanic.md
+      - Notebook principal: portfolio/analysis.ipynb

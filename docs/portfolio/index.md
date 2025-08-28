@@ -10,7 +10,7 @@ Cada proyecto sigue un formato estructurado.
 
 ---
 
-## Índice de proyectos
-- 🌸 [01 – Exploración del dataset Iris](01-exploracion-iris.md)  
-- 🚢 [02 – EDA Titanic con pandas](03-eda-titanic.md)  
-- 📓 [03 – Notebook principal](analysis.ipynb)  
+## Índice de proyectos 
+- 🌸 [01 – Exploración del dataset Iris](01-exploracion-iris.md)
+- 🚢 [02 – EDA Titanic con pandas](03-eda-titanic.md)
+- 📓 [Notebook principal](analysis.ipynb)
