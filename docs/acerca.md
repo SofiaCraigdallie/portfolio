@@ -24,4 +24,4 @@ Disfruto aplicar técnicas de ciencia de datos para resolver problemas reales y 
 - 📧 sofia.craigdallie@correo.ucu.edu.uy
 - 📧 craigdalliesofia@gmail.com
 - 💻 [GitHub](https://github.com/SofiaCraigdallie)  
-- 🔗 [LinkedIn](http://[linkedin.com/in/sofía-craigdallie])  
+- 🔗 [LinkedIn](http://linkedin.com/in/sofía-craigdallie)  
