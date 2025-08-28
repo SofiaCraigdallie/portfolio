@@ -18,6 +18,6 @@ Aquí documento proyectos, prácticas, visualizaciones e insights desarrollados 
 ---
 
 ## Proyectos destacados
-- 🌸 [Exploración del dataset Iris](01-exploracion-iris.md)  
-- 🚢 [EDA de Netflix con pandas](03-eda-netflix.md)  
-- 📓 [Notebook principal](analysis.ipynb)  
+- 🌸 [Exploración del dataset Iris](portfolio/01-exploracion-iris.md)
+- 🎬 [EDA Netflix con pandas](portfolio/03-eda-netflix.md)
+- 📓 [Notebook principal](portfolio/analysis.ipynb)
