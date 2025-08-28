@@ -1,39 +1,23 @@
-title: Portafolio — Sofi
+---
+title: "Portafolio — Sofia Craigdallie"
 date: 2025-01-01
+---
 
-# Portafolio — Sofi
+# Portafolio — Sofia Craigdallie  
 
-Bienvenida/o a mi portafolio del curso. Acá documento prácticas, visualizaciones e insights de análisis de datos.
+Bienvenida/o a mi portafolio de estudios en Ingeniería en Inteligencia Artificial y Ciencia de Datos.  
+Aquí documento proyectos, prácticas, visualizaciones e insights desarrollados durante mi recorrido académico.  
 
 ---
 
-## Objetivo del curso
-Desarrollar criterio para explorar datos, elegir visualizaciones adecuadas y comunicar hallazgos de manera clara.
+## Objetivos
+- Practicar análisis exploratorio de datos y visualizaciones.  
+- Aplicar técnicas de ciencia de datos a conjuntos de datos reales.  
+- Comunicar hallazgos e insights de manera clara y efectiva.  
 
 ---
 
-## Prácticas relacionadas
-- [Exploración del dataset Iris](01-exploracion-iris.md)
-- [EDA Titanic con pandas](03-eda-titanic.md)
-
-## Notebook
-- [Analysis.ipynb](analysis.ipynb)
-
----
-
-## Visualizaciones e insights de Iris
-### Pairplot
-![Pairplot Iris](assets/img/iris_pairplot.png)
-
-- Muestra cómo las variables de pétalo separan muy bien las especies.  
-- `sepal_length` y `sepal_width` tienen mayor solapamiento.  
-- Patrón claro de separabilidad de *setosa*.  
-
-### Heatmap de correlación
-![Heatmap Iris](assets/img/iris_corr.png)
-
-- Correlación alta entre `petal_length` y `petal_width`.  
-- Variables de sépalo aportan menos discriminación.  
-- Permite identificar redundancias en las variables.  
-
---- 
+## Proyectos destacados
+- 🌸 [Exploración del dataset Iris](01-exploracion-iris.md)  
+- 🚢 [EDA Titanic con pandas](03-eda-titanic.md)  
+- 📓 [Notebook principal](analysis.ipynb)  
