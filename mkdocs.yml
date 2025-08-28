@@ -31,5 +31,5 @@ nav:
   - Portafolio:
       - Índice: portfolio/index.md
       - 01 – Exploración del dataset Iris: portfolio/01-exploracion-iris.md
-      - 02 – EDA Titanic con pandas: portfolio/03-eda-titanic.md
+      - 02 – EDA de Netflix con pandas: portfolio/03-eda-netflix.md
       - Notebook principal: portfolio/analysis.ipynb
