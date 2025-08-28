@@ -10,7 +10,9 @@ plugins:
   - awesome-pages
   - git-revision-date-localized:
       fallback_to_build_date: true
-  - glightbox
+  - mkdocs-jupyter:
+      execute: false
+      include_source: true  
 markdown_extensions:
   - admonition
   - attr_list
