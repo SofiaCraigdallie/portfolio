@@ -1,36 +1,45 @@
 ---
-title: EDA Titanic con pandas
-date: 2025-01-01
+title: "EDA de Netflix con pandas"
+date: 2025-01-12
 ---
 
-# EDA Titanic
+# EDA de Netflix con pandas 🎬
 
-## Cómo cargué los datos
-- Origen: dataset de Kaggle (`train.csv`).
-- Librerías: `pandas`, `matplotlib`, `seaborn`.
+## Resumen
+Análisis exploratorio de un dataset de **Netflix** usando `pandas`. 
+Se examinan dimensiones del dataset, valores faltantes, distribuciones y cortes por categorías (por ejemplo, tipo de contenido y país).
 
-## Visualizaciones destacadas
+## Contexto
+Práctica de EDA enfocada en manipulación con `pandas` y visualizaciones base. El objetivo es comprender la estructura del dataset y encontrar patrones iniciales para futuras preguntas de negocio.
 
-### 1) Supervivencia por sexo y clase
-![Survival por clase y sexo](assets/img/titanic_survival.png)
+## Objetivos
+- Auditar el dataset (columnas, dtypes, nulos, duplicados).
+- Visualizar distribuciones relevantes (p. ej., por año de lanzamiento y tipo).
+- Extraer insights preliminares (países más frecuentes, top géneros, etc.).
 
-**Observaciones:**
-- Mayor supervivencia en mujeres.
-- Primera clase con mejores chances de sobrevivir.
+## Actividades (con tiempos estimados)
+- Auditoría de datos (`info`, `describe`, nulos, duplicados) — 20 min  
+- Limpieza mínima (casts a fechas, estandarización básica) — 20 min  
+- Visualizaciones y tablas resumen — 30 min  
 
-### 2) Distribución de tarifas (Fare) por clase
-![Boxplot Fare](assets/img/titanic_fare.png)
+## Desarrollo
+Se revisaron tipos de datos y se identificaron **valores nulos** en campos como `director`, `cast` o `country`.  
+Se realizó una limpieza mínima (parseo de fechas y normalización simple de categorías).  
+Se generaron gráficos y tablas de frecuencia para comprender:
+- Evolución de lanzamientos por año.  
+- Distribución por **type** (Movies vs TV Shows).  
+- Países con mayor cantidad de títulos.
 
-**Observaciones:**
-- Pasajeros de primera clase pagaron más y tenían más chances de sobrevivir.
-- Outliers claros en tarifas muy altas.
+## Evidencias
 
-## Hallazgos iniciales
-- Sexo y clase social son factores clave en la supervivencia.
-- `Age` tiene muchos valores faltantes → requiere imputación.
-- Variables socioeconómicas influyen en el desenlace.
+### Dashboard final interactivo
+![Dashboard](../assets/img/netflix_dashboard.png)
 
-## Próximos pasos
-- Feature engineering: `FamilySize`, `Title`, `IsAlone`.
-- Imputar `Age` usando mediana por grupo.
-- Probar un modelo baseline de clasificación.
+## Reflexión
+El EDA inicial ayuda a definir preguntas más específicas (p. ej., ¿ciertas categorías crecieron más en los últimos años?, ¿existe sesgo geográfico por país?).  
+Próximos pasos: enriquecer con features (p. ej., extracción de año/mes), y explorar relaciones entre **rating**, **duración** y **tipo**.
+
+## Referencias
+- Práctica: <https://juanfkurucz.com/ucu-id/ut1/03-eda-netflix-pandas/>  
+- Documentación pandas: <https://pandas.pydata.org/docs/>  
+- Documentación matplotlib: <https://matplotlib.org/stable/>  
