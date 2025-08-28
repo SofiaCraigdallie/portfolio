@@ -19,5 +19,5 @@ Aquí documento proyectos, prácticas, visualizaciones e insights desarrollados 
 
 ## Proyectos destacados
 - 🌸 [Exploración del dataset Iris](01-exploracion-iris.md)  
-- 🚢 [EDA Titanic con pandas](03-eda-titanic.md)  
+- 🚢 [EDA de Netflix con pandas](03-eda-netflix.md)  
 - 📓 [Notebook principal](analysis.ipynb)  
