@@ -83,11 +83,11 @@ def train(
 
 Imagen directa (abre en lightbox):
 
-![Diagrama del flujo](../assets/placeholder.png){ width="420" }
+![Diagrama del flujo](../assets/img/placeholder.png){ width="420" }
 
 Click para ampliar (lightbox):
 
-[![Vista previa](../assets/placeholder.png){ width="280" }](../assets/placeholder.png)
+[![Vista previa](../assets/img/placeholder.png){ width="280" }](../assets/img/placeholder.png)
 
 ### Enlaces internos y relativos
 
