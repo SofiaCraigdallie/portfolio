@@ -14,3 +14,4 @@ Cada proyecto sigue un formato estructurado.
 - 🌸 [01 – Exploración del dataset Iris](01-exploracion-iris.md)
 - 🎬 [03 – EDA de Netflix con pandas](03-eda-netflix.md)
 - 📓 [Notebook principal](analysis.ipynb)
+- 🔗 [04 - EDA Multi-fuentes y Joins](04-eda-multifuentesyjoins.md)

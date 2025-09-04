@@ -36,3 +36,4 @@ nav:
       - 01 – Exploración del dataset Iris: portfolio/01-exploracion-iris.md
       - 02 – EDA de Netflix con pandas: portfolio/03-eda-netflix.md
       - Notebook principal: portfolio/analysis.ipynb
+      - 03 - EDA Multi-fuentes y Joins: portfolio/04-eda-multifuentesyjoins.md
