@@ -37,13 +37,14 @@ Finalmente, el análisis integrado mostró (a modo ilustrativo):
 
 ## Evidencias
 ### Comparación de JOINs
-![Join Example](../assets/img/placeholder.png)
+![Join Example](../assets/img/joins_comparacion.png)
+
 
 - El **LEFT JOIN** conserva más registros (viajes sin zona asignada).  
 - El **INNER JOIN** elimina esos casos.
 
 ### Revenue y propinas por borough
-![Revenue Propinas](../assets/img/placeholder.png)
+![Revenue Propinas](../assets/img/revenue_propinas.png)
 
 - Comparativa de **revenue por km** y **tasa de propinas** por borough.  
 - Útil para priorizar zonas o diseñar campañas.
