@@ -12,10 +12,10 @@ Aquí recopilo **proyectos, prácticas y visualizaciones** que forman parte de m
 
 ## 🎯 Objetivos
 
-!!! note ""
-    - 📊 Practicar análisis exploratorio de datos y visualizaciones.  
-    - 🤖 Aplicar técnicas de ciencia de datos y aprendizaje automático a problemas reales.  
-    - 📝 Comunicar hallazgos e insights de forma clara, estructurada y visual.  
+!!! note "Mis metas"
+    - :material-chart-bar: Practicar análisis exploratorio de datos y visualizaciones  
+    - :material-robot: Aplicar técnicas de ciencia de datos y aprendizaje automático a problemas reales  
+    - :material-pencil: Comunicar hallazgos e insights de forma clara, estructurada y visual  
 
 ---
 
@@ -23,16 +23,24 @@ Aquí recopilo **proyectos, prácticas y visualizaciones** que forman parte de m
 
 === "UT1: EDA & Fuentes"
 
-    !!! card "🌸 Exploración del dataset Iris"
-        [Ver proyecto](portfolio/ingenieria_datos/UT1/01-exploracion-iris.md)
-
-    !!! card "🎬 EDA Netflix con pandas"
-        [Ver proyecto](portfolio/ingenieria_datos/UT1/03-eda-netflix.md)
-
-    !!! card "🔗 EDA Multi-fuentes y Joins"
-        [Ver proyecto](portfolio/ingenieria_datos/UT1/04-eda-multifuentesyjoins.md)
+    <div class="grid cards" markdown>
+    
+    -   :material-flower: **Exploración del dataset Iris**  
+        [:octicons-link-16: Ver proyecto](portfolio/ingenieria_datos/UT1/01-exploracion-iris.md)  
+    
+    -   :material-movie-open: **EDA Netflix con pandas**  
+        [:octicons-link-16: Ver proyecto](portfolio/ingenieria_datos/UT1/03-eda-netflix.md)  
+    
+    -   :material-link-variant: **EDA Multi-fuentes y Joins**  
+        [:octicons-link-16: Ver proyecto](portfolio/ingenieria_datos/UT1/04-eda-multifuentesyjoins.md)  
+    
+    </div>
 
 === "UT2: Calidad & Ética"
 
-    !!! card "🕵️ Missing Data Detective"
-        [Ver proyecto](portfolio/ingenieria_datos/UT2/05-missing-data-detective.md)
+    <div class="grid cards" markdown>
+    
+    -   :material-magnify: **Missing Data Detective**  
+        [:octicons-link-16: Ver proyecto](portfolio/ingenieria_datos/UT2/05-missing-data-detective.md)  
+    
+    </div>
