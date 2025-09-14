@@ -33,7 +33,7 @@ Se generaron gráficos y tablas de frecuencia para comprender:
 ## Evidencias
 
 ### Dashboard final interactivo
-![Dashboard](../../assets/img/netflix_dashboard.png)
+![Dashboard](../../../assets/img/netflix_dashboard.png)
 
 ## Reflexión
 El EDA inicial ayuda a definir preguntas más específicas (p. ej., ¿ciertas categorías crecieron más en los últimos años?, ¿existe sesgo geográfico por país?).  

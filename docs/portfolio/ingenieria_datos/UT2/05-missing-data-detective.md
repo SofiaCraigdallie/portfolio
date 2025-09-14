@@ -97,7 +97,7 @@ df.head()
 ## 📊 Evidencias  
 
 ### 🔹 Patrones de datos faltantes  
-![Patrones de missing](../../assets/img/missing_patterns.png)
+![Patrones de missing](../../../assets/img/missing_patterns.png)
 
 - Top columnas con mayor porcentaje de valores faltantes.  
 - Distribución de filas según cantidad de nulos.  
@@ -105,7 +105,7 @@ df.head()
 ---
 
 ### 🔹 Outliers detectados  
-![Outliers](../../assets/img/outliers_analysis.png)
+![Outliers](../../../assets/img/outliers_analysis.png)
 
 - Detección de valores atípicos en variables clave (`SalePrice`, `Lot Area`, `Garage Area`).  
 - Uso de boxplots e IQR.  
@@ -113,7 +113,7 @@ df.head()
 ---
 
 ### 🔹 Distribución antes y después de imputación  
-![Distribución imputación](../../assets/img/distribution_comparison.png)
+![Distribución imputación](../../../assets/img/distribution_comparison.png)
 
 - Comparación de histogramas y gráficas de barras.  
 - La imputación con mediana preserva mejor la forma de la distribución.  
@@ -121,7 +121,7 @@ df.head()
 ---
 
 ### 🔹 Correlaciones originales vs imputadas  
-![Correlaciones](../../assets/img/correlation_comparison.png)
+![Correlaciones](../../../assets/img/correlation_comparison.png)
 
 - Comparación de matrices de correlación antes y después de imputar.  
 - Diferencias mínimas, lo que sugiere que la imputación elegida no distorsionó demasiado las relaciones.   

@@ -28,13 +28,13 @@ Con un **mapa de calor** de correlaciones se detectó alta correlación entre `p
 
 ## Evidencias
 ### Pairplot
-![Pairplot Iris](../../assets/img/iris_pairplot.png)
+![Pairplot Iris](../../../assets/img/iris_pairplot.png)
 
 - Las variables de pétalo separan bien las especies.  
 - `sepal_length` y `sepal_width` presentan mayor solapamiento.
 
 ### Heatmap de correlación
-![Heatmap Iris](../../assets/img/iris_corr.png)
+![Heatmap Iris](../../../assets/img/iris_corr.png)
 
 - Correlación alta entre `petal_length` y `petal_width`.  
 - Variables de sépalo aportan menos discriminación.
