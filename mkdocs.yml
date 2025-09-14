@@ -34,9 +34,9 @@ nav:
   - Recursos: recursos.md
   - Portafolio:
       - Ingeniería de Datos:
-          - UT1: EDA & Fuentes:
+          - "UT1: EDA & Fuentes":
               - Proyecto 1 – Exploración del dataset Iris: portfolio/ingenieria_datos/UT1/01-exploracion-iris.md
               - Proyecto 2 – EDA de Netflix con pandas: portfolio/ingenieria_datos/UT1/02-eda-netflix.md
               - Proyecto 3 – EDA Multi-fuentes y Joins: portfolio/ingenieria_datos/UT1/03-eda-multifuentes-joins.md
-          - UT2: Calidad & Ética:
+          - "UT2: Calidad & Ética":
               - Proyecto 4 – Missing Data Detective: portfolio/ingenieria_datos/UT2/04-missing-data-detective.md
