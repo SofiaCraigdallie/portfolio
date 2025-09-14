@@ -12,15 +12,31 @@ Aquí recopilo **proyectos, prácticas y visualizaciones** que forman parte de m
 
 ## 🎯 Objetivos
 
-- 📊 Practicar análisis exploratorio de datos y visualizaciones.  
-- 🤖 Aplicar técnicas de ciencia de datos y aprendizaje automático a problemas reales.  
-- 📝 Comunicar hallazgos e insights de forma clara, estructurada y visual.  
+!!! note ""
+    - 📊 Practicar análisis exploratorio de datos y visualizaciones.  
+    - 🤖 Aplicar técnicas de ciencia de datos y aprendizaje automático a problemas reales.  
+    - 📝 Comunicar hallazgos e insights de forma clara, estructurada y visual.  
 
 ---
 
 ## 🌟 Proyectos destacados
 
-- 🌸 [Exploración del dataset Iris](portfolio/ingenieria_datos/UT1/01-exploracion-iris.md)
-- 🎬 [EDA Netflix con pandas](portfolio/ingenieria_datos/UT1/03-eda-netflix.md)
-- 🔗 [EDA Multi-fuentes y Joins](portfolio/ingenieria_datos/UT1/04-eda-multifuentesyjoins.md) 
-- 🕵️ [Missing Data Detective](portfolio/ingenieria_datos/UT2/05-missing-data-detective.md)
+=== "UT1: EDA & Fuentes"
+
+    !!! card
+        **🌸 Exploración del dataset Iris**  
+        [Ver proyecto](portfolio/ingenieria_datos/UT1/01-exploracion-iris.md)
+
+    !!! card
+        **🎬 EDA Netflix con pandas**  
+        [Ver proyecto](portfolio/ingenieria_datos/UT1/03-eda-netflix.md)
+
+    !!! card
+        **🔗 EDA Multi-fuentes y Joins**  
+        [Ver proyecto](portfolio/ingenieria_datos/UT1/04-eda-multifuentesyjoins.md)
+
+=== "UT2: Calidad & Ética"
+
+    !!! card
+        **🕵️ Missing Data Detective**  
+        [Ver proyecto](portfolio/ingenieria_datos/UT2/05-missing-data-detective.md)

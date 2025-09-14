@@ -3,8 +3,27 @@ theme:
   name: material
   language: es
   features:
+    - navigation.tabs
     - navigation.sections
     - navigation.indexes
+    - navigation.top
+    - navigation.expand
+    - content.code.annotate
+    - content.tabs.link
+  palette:
+    - scheme: default
+      primary: indigo
+      accent: teal
+      toggle:
+        icon: material/weather-night
+        name: Cambiar a modo oscuro
+    - scheme: slate
+      primary: teal
+      accent: amber
+      toggle:
+        icon: material/weather-sunny
+        name: Cambiar a modo claro
+
 plugins:
   - search
   - awesome-pages
@@ -14,6 +33,7 @@ plugins:
   - mkdocs-jupyter:
       execute: false
       include_source: true  
+
 markdown_extensions:
   - admonition
   - attr_list
