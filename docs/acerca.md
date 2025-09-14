@@ -14,35 +14,11 @@ Me apasiona:
 
 ---
 
-## 🛠️ Habilidades
-
-=== "Lenguajes & Herramientas"
-
-<div class="grid cards" markdown>
-
--   :material-translate: **Idiomas**  
-    - Inglés (C2 Proficiency, Cambridge)  
-    - Portugués (intermedio)  
-
--   :material-language-python: **Python**  
-    Manejo de librerías como *pandas*, *matplotlib*, *seaborn* y *scikit-learn*.  
-
--   :material-git: **Git & GitHub**  
-    Control de versiones, trabajo colaborativo y despliegue con GitHub Pages.  
-
-</div>
-
-=== "Competencias"
-
-<div class="grid cards" markdown>
-
--   :material-chart-bar: **Análisis exploratorio de datos (EDA)**  
-    Procesamiento, limpieza y visualización de datos.  
-
--   :material-chart-line: **Visualización**  
-    Uso de gráficos para comunicar insights de forma clara y efectiva.  
-
-</div>
+ ## 🛠️ Habilidades 
+ - 🌍 Idiomas: Inglés (C2 Proficiency, Cambridge), Portugués (intermedio). 
+ - 🐍 Python (pandas, matplotlib, seaborn, scikit-learn). 
+ - 🔧 Git y GitHub. 
+ - 📊 Análisis exploratorio de datos (EDA) y visualización.  
 
 !!! info "En constante aprendizaje"
     Actualmente sigo desarrollando habilidades en **estadística avanzada**, **machine learning** y **optimización de modelos**.  
