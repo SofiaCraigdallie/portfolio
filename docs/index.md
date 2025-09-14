@@ -23,20 +23,16 @@ Aquí recopilo **proyectos, prácticas y visualizaciones** que forman parte de m
 
 === "UT1: EDA & Fuentes"
 
-    !!! card
-        **🌸 Exploración del dataset Iris**  
+    !!! card "🌸 Exploración del dataset Iris"
         [Ver proyecto](portfolio/ingenieria_datos/UT1/01-exploracion-iris.md)
 
-    !!! card
-        **🎬 EDA Netflix con pandas**  
+    !!! card "🎬 EDA Netflix con pandas"
         [Ver proyecto](portfolio/ingenieria_datos/UT1/03-eda-netflix.md)
 
-    !!! card
-        **🔗 EDA Multi-fuentes y Joins**  
+    !!! card "🔗 EDA Multi-fuentes y Joins"
         [Ver proyecto](portfolio/ingenieria_datos/UT1/04-eda-multifuentesyjoins.md)
 
 === "UT2: Calidad & Ética"
 
-    !!! card
-        **🕵️ Missing Data Detective**  
+    !!! card "🕵️ Missing Data Detective"
         [Ver proyecto](portfolio/ingenieria_datos/UT2/05-missing-data-detective.md)

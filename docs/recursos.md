@@ -13,20 +13,16 @@ Colección de links y documentación que me resultan clave para el estudio y des
 
 === "Frameworks & Librerías"
 
-    !!! card
-        **🖥️ MkDocs Material**  
+    !!! card "🖥️ MkDocs Material"
         [Documentación oficial](https://squidfunk.github.io/mkdocs-material/)  
 
-    !!! card
-        **📊 pandas**  
+    !!! card "📊 pandas"
         [Documentación oficial](https://pandas.pydata.org/docs/)  
 
-    !!! card
-        **📈 seaborn**  
+    !!! card "📈 seaborn"
         [Documentación oficial](https://seaborn.pydata.org/)  
 
-    !!! card
-        **🤖 scikit-learn**  
+    !!! card "🤖 scikit-learn"
         [Documentación oficial](https://scikit-learn.org/stable/)  
 
 ---

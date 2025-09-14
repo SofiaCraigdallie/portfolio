@@ -18,27 +18,22 @@ Me apasiona:
 
 === "Lenguajes & Herramientas"
 
-    !!! card
-        **🌍 Idiomas**  
+    !!! card "🌍 Idiomas"
         - Inglés (C2 Proficiency, Cambridge)  
         - Portugués (intermedio)  
 
-    !!! card
-        **🐍 Python**  
+    !!! card "🐍 Python"
         Manejo de librerías como *pandas*, *matplotlib*, *seaborn* y *scikit-learn*.  
 
-    !!! card
-        **🔧 Git & GitHub**  
+    !!! card "🔧 Git & GitHub"
         Control de versiones, trabajo colaborativo y despliegue con GitHub Pages.  
 
 === "Competencias"
 
-    !!! card
-        **📊 Análisis exploratorio de datos (EDA)**  
+    !!! card "📊 Análisis exploratorio de datos (EDA)"
         Procesamiento, limpieza y visualización de datos.  
 
-    !!! card
-        **📈 Visualización**  
+    !!! card "📈 Visualización"
         Uso de gráficos para comunicar insights de forma clara y efectiva.  
 
 !!! info "En constante aprendizaje"
