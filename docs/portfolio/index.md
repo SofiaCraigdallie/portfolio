@@ -11,7 +11,7 @@ Cada proyecto sigue un formato estructurado.
 ---
 
 ## Índice de proyectos
-- 🌸 [01 – Exploración del dataset Iris](01-exploracion-iris.md)
-- 🎬 [03 – EDA de Netflix con pandas](03-eda-netflix.md)
-- 🔗 [04 - EDA Multi-fuentes y Joins](04-eda-multifuentesyjoins.md)
-- 🕵️ [05 - Missing Data Detective](05-missing-data-detective.md)
+- 🌸 [Exploración del dataset Iris](portfolio/ingenieria_datos/UT1/01-exploracion-iris.md)
+- 🎬 [EDA Netflix con pandas](portfolio/ingenieria_datos/UT1/03-eda-netflix.md)
+- 🔗 [EDA Multi-fuentes y Joins](portfolio/ingenieria_datos/UT1/04-eda-multifuentesyjoins.md) 
+- 🕵️ [Missing Data Detective](portfolio/ingenieria_datos/UT2/05-missing-data-detective.md)
