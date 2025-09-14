@@ -19,28 +19,9 @@ Aquí recopilo **proyectos, prácticas y visualizaciones** que forman parte de m
 
 ---
 
-## 🌟 Proyectos destacados
+## 🌟 Proyectos destacados 
 
-=== "UT1: EDA & Fuentes"
-
-    <div class="grid cards" markdown>
-    
-    -   :material-flower: **Exploración del dataset Iris**  
-        [:octicons-link-16: Ver proyecto](portfolio/ingenieria_datos/UT1/01-exploracion-iris.md)  
-    
-    -   :material-movie-open: **EDA Netflix con pandas**  
-        [:octicons-link-16: Ver proyecto](portfolio/ingenieria_datos/UT1/03-eda-netflix.md)  
-    
-    -   :material-link-variant: **EDA Multi-fuentes y Joins**  
-        [:octicons-link-16: Ver proyecto](portfolio/ingenieria_datos/UT1/04-eda-multifuentesyjoins.md)  
-    
-    </div>
-
-=== "UT2: Calidad & Ética"
-
-    <div class="grid cards" markdown>
-    
-    -   :material-magnify: **Missing Data Detective**  
-        [:octicons-link-16: Ver proyecto](portfolio/ingenieria_datos/UT2/05-missing-data-detective.md)  
-    
-    </div>
+- 🌸 [Exploración del dataset Iris](portfolio/ingenieria_datos/UT1/01-exploracion-iris.md) 
+- 🎬 [EDA Netflix con pandas](portfolio/ingenieria_datos/UT1/03-eda-netflix.md) 
+- 🔗 [EDA Multi-fuentes y Joins](portfolio/ingenieria_datos/UT1/04-eda-multifuentesyjoins.md) 
+- 🕵️ [Missing Data Detective](portfolio/ingenieria_datos/UT2/05-missing-data-detective.md)
