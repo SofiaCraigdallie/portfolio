@@ -14,11 +14,11 @@ Me apasiona:
 
 ---
 
- ## 🛠️ Habilidades 
- - 🌍 Idiomas: Inglés (C2 Proficiency, Cambridge), Portugués (intermedio). 
- - 🐍 Python (pandas, matplotlib, seaborn, scikit-learn). 
- - 🔧 Git y GitHub. 
- - 📊 Análisis exploratorio de datos (EDA) y visualización.  
+## 🛠️ Habilidades 
+- 🌍 Idiomas: Inglés (C2 Proficiency, Cambridge), Portugués (intermedio). 
+- 🐍 Python (pandas, matplotlib, seaborn, scikit-learn). 
+- 🔧 Git y GitHub. 
+- 📊 Análisis exploratorio de datos (EDA) y visualización.  
 
 !!! info "En constante aprendizaje"
     Actualmente sigo desarrollando habilidades en **estadística avanzada**, **machine learning** y **optimización de modelos**.  
