@@ -27,13 +27,16 @@ markdown_extensions:
   - pymdownx.emoji
   - pymdownx.tasklist:
       custom_checkbox: true
+
 nav:
   - Inicio: index.md
   - Acerca de mí: acerca.md
   - Recursos: recursos.md
   - Portafolio:
-      - Índice: portfolio/index.md
-      - 01 – Exploración del dataset Iris: portfolio/01-exploracion-iris.md
-      - 02 – EDA de Netflix con pandas: portfolio/03-eda-netflix.md
-      - Notebook principal: portfolio/analysis.ipynb
-      - 03 - EDA Multi-fuentes y Joins: portfolio/04-eda-multifuentesyjoins.md
+      - Ingeniería de Datos:
+          - UT1: EDA & Fuentes:
+              - Proyecto 1 – Exploración del dataset Iris: portfolio/ingenieria_datos/UT1/01-exploracion-iris.md
+              - Proyecto 2 – EDA de Netflix con pandas: portfolio/ingenieria_datos/UT1/02-eda-netflix.md
+              - Proyecto 3 – EDA Multi-fuentes y Joins: portfolio/ingenieria_datos/UT1/03-eda-multifuentes-joins.md
+          - UT2: Calidad & Ética:
+              - Proyecto 4 – Missing Data Detective: portfolio/ingenieria_datos/UT2/04-missing-data-detective.md
