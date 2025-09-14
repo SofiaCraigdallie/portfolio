@@ -3,26 +3,25 @@ theme:
   name: material
   language: es
   features:
-    - navigation.tabs
-    - navigation.sections
+    - navigation.top       # barra arriba
+    - navigation.tabs      # pestañas arriba
+    - navigation.sections  # subniveles con secciones
     - navigation.indexes
-    - navigation.top
     - navigation.expand
-    - content.code.annotate
-    - content.tabs.link
+    - navigation.instant
   palette:
     - scheme: default
-      primary: indigo
-      accent: teal
+      primary: indigo      # color principal
+      accent: pink         # color de acento
       toggle:
         icon: material/weather-night
-        name: Cambiar a modo oscuro
+        name: Modo oscuro
     - scheme: slate
-      primary: teal
-      accent: amber
+      primary: indigo
+      accent: pink
       toggle:
         icon: material/weather-sunny
-        name: Cambiar a modo claro
+        name: Modo claro
 
 plugins:
   - search
@@ -37,7 +36,6 @@ plugins:
 markdown_extensions:
   - admonition
   - attr_list
-  - md_in_html
   - footnotes
   - tables
   - toc:
@@ -45,12 +43,12 @@ markdown_extensions:
   - pymdownx.details
   - pymdownx.superfences
   - pymdownx.highlight
-  - pymdownx.emoji
   - pymdownx.emoji:
       emoji_index: !!python/name:material.extensions.emoji.twemoji
       emoji_generator: !!python/name:material.extensions.emoji.to_svg
   - pymdownx.tasklist:
       custom_checkbox: true
+  - md_in_html
 
 nav:
   - Inicio: index.md
