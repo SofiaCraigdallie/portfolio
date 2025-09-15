@@ -64,6 +64,7 @@ inner_join.head()
 ```
   
 4. **Problemas comunes detectados**  
+
     - Diferencias en tipos de datos (`int` vs `string`).  
     - Fechas en distintos formatos (`YYYY-MM-DD` vs `MM/DD/YYYY`).  
     - IDs faltantes en el dataset de zonas.  
@@ -112,11 +113,14 @@ Finalmente, el análisis integrado mostró (a modo ilustrativo):
 
 - Integrar múltiples fuentes enriquece el análisis y permite encontrar **insights de negocio más profundos**.  
 - La elección correcta del tipo de join es fundamental:  
-   - **LEFT JOIN** evita pérdida de información.  
-   - **INNER JOIN** asegura consistencia en los registros.  
+
+    - **LEFT JOIN** evita pérdida de información.  
+    - **INNER JOIN** asegura consistencia en los registros.  
+
 - Futuro trabajo:  
-   - Automatizar el pipeline con **Prefect**.  
-   - Versionar datos con **DVC** para mejorar reproducibilidad.  
+
+    - Automatizar el pipeline con **Prefect**.  
+    - Versionar datos con **DVC** para mejorar reproducibilidad.  
 
 ---
 

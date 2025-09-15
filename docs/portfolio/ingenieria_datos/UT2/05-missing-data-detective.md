@@ -89,6 +89,7 @@ df.head()
     - Se probaron distintas estrategias (mean, median, most_frequent, ffill).
 
 5. **Pipeline reproducible**
+
     - Construcción de funciones para detectar, imputar y validar.
     - Asegurar que el proceso sea replicable en otros datasets.
 

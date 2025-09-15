@@ -38,16 +38,19 @@ El foco estuvo en:
 ## 🛠️ Desarrollo  
 
 1. **Auditoría de datos**  
+
     - Se revisaron tipos de datos con `df.info()`.  
     - Se identificaron **valores nulos** en columnas como `director`, `cast` y `country`.  
     - Se encontraron duplicados y se eliminaron.  
 
 2. **Limpieza mínima**  
+
     - Conversión de `date_added` a formato fecha.  
     - Extracción de `year` desde `release_year`.  
     - Normalización básica de categorías.  
 
 3. **Visualizaciones**  
+
     - Evolución de títulos por año.  
     - Distribución por `type` (Movies vs TV Shows).  
     - Países con mayor cantidad de títulos.  
