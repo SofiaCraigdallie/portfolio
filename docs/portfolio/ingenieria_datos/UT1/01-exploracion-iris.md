@@ -36,10 +36,10 @@ El objetivo fue identificar patrones de separabilidad entre especies a través d
 
 1. Se cargaron los datos y se calcularon estadísticas descriptivas (media, desvío, rangos).  
 2. Con `seaborn.pairplot` se analizaron las relaciones bivariadas entre variables, diferenciadas por especie.  
-   - Las variables de **pétalo** muestran una clara separación de clases, en especial *setosa*.  
+    - Las variables de **pétalo** muestran una clara separación de clases, en especial *setosa*.  
 3. Se construyó un **mapa de calor de correlaciones**:  
-   - Se observó una correlación alta entre `petal_length` y `petal_width`, sugiriendo posible redundancia.  
-   - Las variables de **sépalo** muestran mayor solapamiento entre especies.  
+    - Se observó una correlación alta entre `petal_length` y `petal_width`, sugiriendo posible redundancia.  
+    - Las variables de **sépalo** muestran mayor solapamiento entre especies.  
 
 ```python
 import seaborn as sns

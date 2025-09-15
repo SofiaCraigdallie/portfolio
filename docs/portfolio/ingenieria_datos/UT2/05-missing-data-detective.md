@@ -55,13 +55,13 @@ print(df.isna().sum())
 sns.heatmap(df.isna(), cbar=False)
 plt.show()
 ```
-- Se identificaron columnas con alta proporción de valores faltantes.
+    - Se identificaron columnas con alta proporción de valores faltantes.
 
 2. **Clasificación de mecanismos**
 
-- MCAR: ausencia completamente aleatoria.  
-- MAR: ausencia depende de otras variables observadas.  
-- MNAR: ausencia depende del propio valor faltante. 
+    - MCAR: ausencia completamente aleatoria.  
+    - MAR: ausencia depende de otras variables observadas.  
+    - MNAR: ausencia depende del propio valor faltante. 
 
 3. **Outliers**
 ```python
@@ -75,7 +75,7 @@ IQR = Q3 - Q1
 outliers = df[(df["columna"] < Q1 - 1.5*IQR) | (df["columna"] > Q3 + 1.5*IQR)]
 outliers.head()
 ```
-- Los outliers fueron detectados con el rango intercuartílico (IQR) y z-scores.
+    - Los outliers fueron detectados con el rango intercuartílico (IQR) y z-scores.
 
 4. **Imputación de valores**
 ```python
@@ -86,11 +86,11 @@ imputer = SimpleImputer(strategy="median")
 df["columna"] = imputer.fit_transform(df[["columna"]])
 df.head()
 ```
-- Se probaron distintas estrategias (mean, median, most_frequent, ffill).
+    - Se probaron distintas estrategias (mean, median, most_frequent, ffill).
 
 5. **Pipeline reproducible**
-- Construcción de funciones para detectar, imputar y validar.
-- Asegurar que el proceso sea replicable en otros datasets.
+    - Construcción de funciones para detectar, imputar y validar.
+    - Asegurar que el proceso sea replicable en otros datasets.
 
 ---
 

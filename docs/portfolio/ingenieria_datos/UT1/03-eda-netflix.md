@@ -38,19 +38,19 @@ El foco estuvo en:
 ## 🛠️ Desarrollo  
 
 1. **Auditoría de datos**  
-   - Se revisaron tipos de datos con `df.info()`.  
-   - Se identificaron **valores nulos** en columnas como `director`, `cast` y `country`.  
-   - Se encontraron duplicados y se eliminaron.  
+    - Se revisaron tipos de datos con `df.info()`.  
+    - Se identificaron **valores nulos** en columnas como `director`, `cast` y `country`.  
+    - Se encontraron duplicados y se eliminaron.  
 
 2. **Limpieza mínima**  
-   - Conversión de `date_added` a formato fecha.  
-   - Extracción de `year` desde `release_year`.  
-   - Normalización básica de categorías.  
+    - Conversión de `date_added` a formato fecha.  
+    - Extracción de `year` desde `release_year`.  
+    - Normalización básica de categorías.  
 
 3. **Visualizaciones**  
-   - Evolución de títulos por año.  
-   - Distribución por `type` (Movies vs TV Shows).  
-   - Países con mayor cantidad de títulos.  
+    - Evolución de títulos por año.  
+    - Distribución por `type` (Movies vs TV Shows).  
+    - Países con mayor cantidad de títulos.  
 
 ```python
 import pandas as pd
@@ -96,8 +96,8 @@ plt.show()
 - El **EDA inicial** permite detectar problemas de calidad (nulos, duplicados) y generar preguntas relevantes.  
 - Observamos que los lanzamientos crecieron en la última década, sobre todo en películas.  
 - Futuro trabajo:  
-  - Analizar la relación entre **rating y duración**.  
-  - Explorar la dinámica por país y género a lo largo del tiempo.  
+    - Analizar la relación entre **rating y duración**.  
+    - Explorar la dinámica por país y género a lo largo del tiempo.  
 
 ---
 
