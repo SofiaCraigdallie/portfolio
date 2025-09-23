@@ -80,7 +80,7 @@ plt.show()
 - Correlación alta entre `petal_length` y `petal_width`.  
 - Variables de sépalo aportan menos discriminación.
 
-### 📝 [Notebook](../../notebooks/UT1-1.ipynb)
+### 📝 [Notebook](notebooks/UT1-1.ipynb)
 
 ---
 
