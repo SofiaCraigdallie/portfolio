@@ -127,7 +127,7 @@ df.head()
 - Comparación de matrices de correlación antes y después de imputar.  
 - Diferencias mínimas, lo que sugiere que la imputación elegida no distorsionó demasiado las relaciones.
 
-### 📝 [Notebook](notebooks/UT2-1.ipynb)
+### 📝 [Notebook](/notebooks/UT2-1.ipynb)
 
 ---
 

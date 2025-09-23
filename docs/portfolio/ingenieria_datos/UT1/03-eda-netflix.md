@@ -92,7 +92,7 @@ plt.show()
 - Predominio de **Movies** frente a **TV Shows**.  
 - Sesgo geográfico: EE.UU. e India lideran en cantidad de títulos.
 
-### 📝 [Notebook](notebooks/UT1-2.ipynb)
+### 📝 [Notebook](/notebooks/UT1-2.ipynb)
 
 ---
 
