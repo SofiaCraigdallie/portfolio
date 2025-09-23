@@ -90,7 +90,9 @@ plt.show()
 
 - Crecimiento fuerte en lanzamientos post-2015.  
 - Predominio de **Movies** frente a **TV Shows**.  
-- Sesgo geográfico: EE.UU. e India lideran en cantidad de títulos. 
+- Sesgo geográfico: EE.UU. e India lideran en cantidad de títulos.
+
+### 📝 [Notebook](../../notebooks/UT1-2.ipynb)
 
 ---
 

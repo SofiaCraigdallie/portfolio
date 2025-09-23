@@ -107,6 +107,8 @@ Finalmente, el análisis integrado mostró (a modo ilustrativo):
 - Comparativa de **revenue por km** y **tasa de propinas** por borough.  
 - Útil para priorizar zonas o diseñar campañas.
 
+### 📝 [Notebook](../../notebooks/UT1-3.ipynb)
+
 ---
 
 ## 🤔 Reflexión  

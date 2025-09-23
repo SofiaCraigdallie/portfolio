@@ -32,7 +32,8 @@ plugins:
   - glightbox
   - mkdocs-jupyter:
       execute: false
-      include_source: true  
+      include_source: true
+      include: ["*.ipynb"]  
 
 markdown_extensions:
   - admonition
