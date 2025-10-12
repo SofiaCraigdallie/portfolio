@@ -30,9 +30,9 @@ Los ejercicios se centraron en **asegurar la integridad de los datos y promover 
 
 | Proyecto | Descripción | Enlace |
 |-----------|--------------|--------|
-| 🕵️ **UT2-1 — Missing Data Detective** | Análisis y tratamiento de datos faltantes mediante imputación y detección de outliers. | [Ver artículo](./UT2-1_Missing_Data_Detective.md) |
-| 🏠 **UT2-2 — Feature Scaling & Pipelines (Ames Housing)** | Comparación de técnicas de escalado y construcción de pipelines reproducibles en *scikit-learn*. | [Ver artículo](./UT2-2_Feature_Scaling_Pipelines.md) |
-| ⚖️ **UT2-3 — Sesgo y Fairness (Boston, Titanic, Ames)** | Detección, medición y mitigación de sesgos en modelos predictivos, integrando consideraciones éticas. | [Ver artículo](./UT2-3_Sesgo_y_Fairness.md) |
+| 🕵️ **Detección de valores faltantes** | Análisis y tratamiento de datos faltantes mediante imputación y detección de outliers. | [Ver artículo](./05-missing-data-detective.md) |
+| 🏠 **Escalando variables con estilo** | Comparación de técnicas de escalado y construcción de pipelines reproducibles en *scikit-learn*. | [Ver artículo](./06-feature-scaling&pipelines.md) |
+| ⚖️ **Modelos más justos** | Detección, medición y mitigación de sesgos en modelos predictivos, integrando consideraciones éticas. | [Ver artículo](./07-deteccion-sesgo.md) |
 
 ---
 

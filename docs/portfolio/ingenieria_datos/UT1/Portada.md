@@ -25,9 +25,9 @@ El eje principal fue el **Análisis Exploratorio de Datos (EDA)** y la **integra
 
 | Proyecto | Descripción | Enfoque |
 |-----------|--------------|----------|
-| 🌸 **Iris** | Exploración inicial del clásico dataset de Fisher. | Relaciones entre variables y correlaciones. |
-| 🎬 **Netflix** | Análisis exploratorio del catálogo de contenidos. | Limpieza realista, tendencias y sesgos geográficos. |
-| 🔗 **Multifuentes** | Integración de datasets de viajes y zonas. | *Joins* y análisis agregado por ubicación. |
+| 🌸 **Descubriendo Iris** | Exploración inicial del clásico dataset de Fisher. | Relaciones entre variables y correlaciones. | [Ver artículo](./01-exploracion-iris.md) |
+| 🎬 **Netflix bajo la lupa** | Análisis exploratorio del catálogo de contenidos. | Limpieza realista, tendencias y sesgos geográficos. | [Ver artículo](./03-eda-netflix.md) |
+| 🔗 **Uniendo mundos de datos** | Integración de datasets de viajes y zonas. | *Joins* y análisis agregado por ubicación. | [Ver artículo](./04-eda-multifuentesyjoins.md) |
 
 ---
 
