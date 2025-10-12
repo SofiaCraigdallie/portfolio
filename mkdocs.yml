@@ -69,5 +69,5 @@ nav:
               - 🕵️ Detección de valores faltantes; jugando al detective de datos: portfolio/ingenieria_datos/UT2/05-missing-data-detective.md
               - 🏠 Escalando variables con estilo; creando pipelines justos y reproducibles: portfolio/ingenieria_datos/UT2/06-feature-scaling&pipelines.md
               - ⚖️ Modelos más justos; detectando y mitigando sesgos en Boston, Titanic y Ames: portfolio/ingenieria_datos/UT2/07-deteccion-sesgo.md
-          - "UT3: Feature Engineering":
-              - Proyecto 7 - Feature Engineering: portfolio/ingenieria_datos/UT3/08-feature-engineering.md
+          - "🧭 UT3: Feature Engineering":
+              - 🧩 Ingeniería de Features; mejorando el modelo de Ames Housing: portfolio/ingenieria_datos/UT3/08-feature-engineering.md
