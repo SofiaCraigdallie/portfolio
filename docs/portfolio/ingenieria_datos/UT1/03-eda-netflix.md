@@ -1,65 +1,52 @@
 ---
-title: "EDA de Netflix con pandas"
+title: "🎬 Explorando el catálogo de Netflix: análisis exploratorio con pandas"
 date: 2025-01-12
 ---
 
-# 🎬 EDA de Netflix con pandas  
+# 🌍 Contexto
+
+Este proyecto forma parte de la **Unidad Temática 1: Exploración y fuentes de datos** del Portafolio de Ingeniería de Datos.  
+En esta práctica se aplica el proceso de **Análisis Exploratorio de Datos (EDA)** al dataset de títulos de **Netflix**, con el objetivo de obtener una visión inicial del catálogo de la plataforma y sus tendencias.
+
+El conjunto de datos incluye información sobre miles de títulos —películas y series— con atributos como país, director, reparto, fecha de lanzamiento, tipo de contenido y clasificación.  
+El análisis permite detectar problemas de calidad, generar visualizaciones descriptivas y formular preguntas de negocio para etapas posteriores de análisis o modelado.
 
 ---
 
-## 📘 Contexto  
+# 🎯 Objetivos
 
-Práctica de **Análisis Exploratorio de Datos (EDA)** aplicada a un dataset de *Netflix*.  
-El foco estuvo en:  
-- Manipulación con **pandas**.  
-- Visualizaciones básicas.  
-- Extracción de patrones iniciales para futuras preguntas de negocio.  
-
----
-
-## 🎯 Objetivos  
-
-- Auditar el dataset (columnas, tipos de datos, valores nulos y duplicados).  
-- Visualizar distribuciones relevantes (año de lanzamiento, tipo de contenido).  
-- Extraer insights preliminares (países más frecuentes, géneros principales). 
+- Auditar la estructura y calidad del dataset (tipos de datos, valores nulos, duplicados).  
+- Aplicar una **limpieza básica** (normalización de fechas y categorías).  
+- Visualizar distribuciones de variables clave: tipo de contenido, año de lanzamiento y país.  
+- Extraer patrones y tendencias generales para futuros análisis de comportamiento y producción audiovisual.
 
 ---
 
-## ⏱️ Actividades (con tiempos estimados)  
+# 📦 Dataset
 
-| Actividad | Tiempo estimado | Resultado esperado |
-|-----------|-----------------|--------------------|
-| Auditoría de datos (`info`, `describe`, nulos, duplicados) | 20 min | Conocer estructura y calidad |
-| Limpieza mínima (parseo de fechas, normalización básica) | 20 min | Dataset estandarizado |
-| Visualizaciones y tablas resumen | 30 min | Insights iniciales |
+| Aspecto | Descripción |
+|----------|-------------|
+| **Fuente** | Kaggle – [Netflix Movies and TV Shows](https://www.kaggle.com/datasets/shivamb/netflix-shows) |
+| **Formato** | CSV |
+| **Tamaño** | ~8.800 registros × 12 columnas |
+| **Variables principales** | `type`, `title`, `director`, `cast`, `country`, `date_added`, `release_year`, `rating`, `duration`, `listed_in` |
+| **Problemas detectados** | Valores nulos frecuentes en `director`, `cast` y `country`; duplicados; inconsistencias en formato de fecha. |
 
 ---
 
-## 🛠️ Desarrollo  
+# 🧹 Limpieza y preparación de datos
 
-1. **Auditoría de datos**  
+Se realizó una limpieza mínima para asegurar la consistencia de las variables:
 
-    - Se revisaron tipos de datos con `df.info()`.  
-    - Se identificaron **valores nulos** en columnas como `director`, `cast` y `country`.  
-    - Se encontraron duplicados y se eliminaron.  
-
-2. **Limpieza mínima**  
-
-    - Conversión de `date_added` a formato fecha.  
-    - Extracción de `year` desde `release_year`.  
-    - Normalización básica de categorías.  
-
-3. **Visualizaciones**  
-
-    - Evolución de títulos por año.  
-    - Distribución por `type` (Movies vs TV Shows).  
-    - Países con mayor cantidad de títulos.  
+- Conversión de `date_added` a tipo **datetime**.  
+- Extracción del año desde `release_year`.  
+- Eliminación de duplicados.  
+- Revisión de valores nulos y normalización básica de texto.
 
 ```python
 import pandas as pd
 import matplotlib.pyplot as plt
 
-# Cargar dataset
 df = pd.read_csv("netflix_titles.csv")
 
 # Auditoría inicial
@@ -69,45 +56,121 @@ print(df.isna().sum())
 # Limpieza mínima
 df['date_added'] = pd.to_datetime(df['date_added'], errors='coerce')
 df['year'] = df['release_year']
-
-# Distribución por tipo
-df['type'].value_counts().plot(kind="bar", color=["#1f77b4", "#ff7f0e"])
-plt.title("Distribución de contenido por tipo")
-plt.show()
-
-# Evolución de títulos por año
-df['year'].value_counts().sort_index().plot(kind="line")
-plt.title("Lanzamientos por año")
-plt.show()
+df.drop_duplicates(inplace=True)
 ```
 
 ---
 
-## 📊 Evidencias  
+# 📊 Análisis exploratorio (EDA)
 
-### 🔹 Dashboard final interactivo  
+## 🔹 Distribución de contenido por tipo
+
+Se analizó la proporción de **películas** y **series de TV** en el catálogo.
+
+```python
+df['type'].value_counts().plot(kind="bar", color=["#1f77b4", "#ff7f0e"])
+plt.title("Distribución de contenido por tipo")
+plt.show()
+```
+
+📈 **Interpretación:**  
+El catálogo de Netflix está dominado por **películas**, que representan aproximadamente el **70%** del total, frente al 30% de series.
+
+---
+
+## 🔹 Evolución de lanzamientos por año
+
+Se estudió la cantidad de títulos agregados a la plataforma por año.
+
+```python
+df['year'].value_counts().sort_index().plot(kind="line")
+plt.title("Lanzamientos por año")
+plt.xlabel("Año")
+plt.ylabel("Cantidad de títulos")
+plt.show()
+```
+
+📈 **Interpretación:**  
+Se observa un **crecimiento exponencial desde 2015**, coincidente con la expansión global de la plataforma.  
+Este aumento refleja la estrategia de Netflix de incrementar su producción y diversificar géneros.
+
+---
+
+## 🔹 Países con mayor cantidad de títulos
+
+```python
+top_countries = df['country'].value_counts().head(10)
+top_countries.plot(kind="barh", color="#d62728")
+plt.title("Países con mayor cantidad de títulos")
+plt.show()
+```
+
+📈 **Interpretación:**  
+Los países más representados son **Estados Unidos** e **India**, seguidos por **Reino Unido** y **Japón**.  
+Esto revela un fuerte sesgo hacia mercados angloparlantes, aunque se aprecia crecimiento en producciones asiáticas.
+
+---
+
 ![Dashboard Netflix](../../../assets/img/netflix_dashboard.png)
-
-- Crecimiento fuerte en lanzamientos post-2015.  
-- Predominio de **Movies** frente a **TV Shows**.  
-- Sesgo geográfico: EE.UU. e India lideran en cantidad de títulos.
 
 ### 📝 [Notebook](../../../notebooks/UT1-2.ipynb)
 
 ---
 
-## 🤔 Reflexión  
+# ⚙️ Análisis técnico
 
-- El **EDA inicial** permite detectar problemas de calidad (nulos, duplicados) y generar preguntas relevantes.  
-- Observamos que los lanzamientos crecieron en la última década, sobre todo en películas.  
-- Futuro trabajo:  
-    - Analizar la relación entre **rating y duración**.  
-    - Explorar la dinámica por país y género a lo largo del tiempo.  
+- Se identificaron columnas con valores faltantes y se aplicaron estrategias simples de limpieza.  
+- Se evaluó la estructura temporal del catálogo mediante series anuales.  
+- Se detectó un **aumento sostenido de títulos** en la última década.  
+- El análisis confirmó la necesidad de una futura **normalización por país y género**, ideal para aplicar técnicas de *feature engineering* (UT3).
 
 ---
 
-## 📚 Referencias  
+# 🧠 Resultados y discusión
 
-- Práctica: <https://juanfkurucz.com/ucu-id/ut1/03-eda-netflix-pandas/>  
+| Hallazgo | Interpretación |
+|-----------|----------------|
+| Crecimiento post-2015 | Expansión global de la plataforma |
+| Dominio de películas sobre series | Foco principal en contenido cinematográfico |
+| Concentración en pocos países | Sesgo geográfico (EE.UU. e India) |
+| Presencia de datos faltantes | Oportunidad para limpieza avanzada o imputación |
+
+> 💬 **Discusión:**  
+> El análisis revela un dataset heterogéneo con problemas típicos de calidad en fuentes reales.  
+> La tendencia temporal y la concentración geográfica ofrecen una base sólida para estudios de segmentación, diversidad de contenido o predicción de lanzamientos.
+
+---
+
+# 🔗 Conexión con otras unidades
+
+Este proyecto conecta directamente con:
+- **UT2:** Evaluar la calidad y sesgos del dataset de Netflix (por país, género o tipo de contenido).  
+- **UT3:** Crear nuevas variables (ej. `continent`, `content_length`) para modelos de predicción de popularidad.  
+- **UT5:** Integrar el dataset en un pipeline ETL con Spark.
+
+---
+
+# 🧩 Reflexión final
+
+Este análisis fue una primera experiencia con **datos reales y desordenados**, mostrando que la limpieza y el EDA son etapas críticas en cualquier proyecto de datos.  
+Entendí que las visualizaciones simples pueden responder preguntas estratégicas y abrir nuevas líneas de investigación.  
+
+> 🌱 *Próximos pasos:*  
+> Analizar la relación entre **rating, duración y país**, y extender el estudio hacia **recomendación de contenidos** basados en similitud temática.
+
+---
+
+# 🧰 Stack técnico
+
+**Lenguaje:** Python  
+**Librerías:** Pandas · Matplotlib · Seaborn · NumPy  
+**Conceptos aplicados:** Auditoría de datos · Limpieza básica · Visualización descriptiva · Tendencias temporales
+
+---
+
+# 📚 Referencias
+
+- Práctica original: <https://juanfkurucz.com/ucu-id/ut1/03-eda-netflix-pandas/>  
+- Kaggle Dataset: [Netflix Movies and TV Shows](https://www.kaggle.com/datasets/shivamb/netflix-shows)  
 - [Documentación pandas](https://pandas.pydata.org/docs/)  
 - [Documentación matplotlib](https://matplotlib.org/stable/)

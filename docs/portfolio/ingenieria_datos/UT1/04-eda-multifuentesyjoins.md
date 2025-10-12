@@ -1,75 +1,112 @@
 ---
-title: "EDA Multi-fuentes y Joins"
+title: "🔗 EDA con múltiples fuentes: integración y joins con pandas"
 date: 2025-01-20
 ---
 
-# 🔗 EDA con múltiples fuentes y joins  
+# 🌍 Contexto
+
+Este proyecto pertenece a la **Unidad Temática 1: Exploración y fuentes de datos** del Portafolio de Ingeniería de Datos.  
+En esta práctica se aborda la integración de **múltiples fuentes de datos** mediante operaciones de **join** con `pandas.merge`, analizando cómo la unión de datasets complementarios puede enriquecer el análisis y generar información de negocio más completa.
+
+Se trabajó principalmente con dos datasets:  
+- **Trips:** información de viajes (distancia, tarifa, propina, ubicación de inicio).  
+- **Zones:** metadatos de las zonas o boroughs.  
+
+El objetivo fue comprender las diferencias entre tipos de joins, identificar problemas comunes de integración y analizar patrones de revenue y propinas por zona.
 
 ---
 
-## 📘 Contexto  
+# 🎯 Objetivos
 
-Práctica de **Análisis Exploratorio de Datos** enfocada en integrar múltiples datasets mediante **joins** (`pandas.merge`).  
-Se trabajó principalmente con:  
-- Dataset de viajes (*trips*).  
-- Dataset de zonas (*zones*).  
-
-El objetivo fue analizar cómo la combinación de fuentes enriquece el análisis y qué problemas pueden surgir en la unión de datos.  
+- Practicar la combinación de datasets mediante `pandas.merge`.  
+- Comparar los resultados obtenidos con `LEFT JOIN` e `INNER JOIN`.  
+- Detectar problemas comunes de unión (tipos de datos, IDs faltantes, fechas en distintos formatos).  
+- Analizar variables derivadas como revenue total, distancia recorrida y tasa de propinas por borough.
 
 ---
 
-## 🎯 Objetivos  
+# 📦 Datasets
 
-- Practicar la combinación de datasets con `pandas.merge`.  
-- Comparar diferencias entre `LEFT JOIN` e `INNER JOIN`.  
-- Identificar problemas comunes (tipos de datos, IDs, fechas).  
-- Detectar patrones de negocio a partir de datos integrados.  
-
----
-
-## ⏱️ Actividades (con tiempos estimados)  
-
-| Actividad | Tiempo estimado | Resultado esperado |
-|-----------|-----------------|--------------------|
-| Carga y exploración inicial de datasets | 20 min | Comprender estructura de *trips* y *zones* |
-| Implementación de LEFT e INNER JOINs | 25 min | Integración de datasets |
-| Detección de inconsistencias | 15 min | Identificación de problemas de join |
-| Análisis de revenue, propinas y patrones | 30 min | Insights de negocio por borough |
+| Aspecto | Descripción |
+|----------|-------------|
+| **Fuentes** | CSV – *Trips* y *Zones* |
+| **Formato** | Tabular |
+| **Tamaño aproximado** | *Trips:* miles de registros de viajes · *Zones:* decenas de ubicaciones |
+| **Variables principales (Trips)** | `pulocationid`, `fare_amount`, `tip_amount`, `trip_distance`, `tpep_pickup_datetime` |
+| **Variables principales (Zones)** | `locationid`, `borough`, `zone`, `service_zone` |
+| **Problemas detectados** | Tipos de datos distintos (`int` vs `str`), fechas en formatos variados, IDs sin correspondencia en *Zones*. |
 
 ---
 
-## 🛠️ Desarrollo  
+# 🧹 Limpieza y preparación de datos
 
-1. **Carga de datasets**  
+Se importaron ambos datasets y se realizó una exploración inicial:
+
 ```python
 import pandas as pd
 
 trips = pd.read_csv("trips.csv")
 zones = pd.read_csv("zones.csv")
 
-print(trips.head())
-print(zones.head())
+print(trips.info())
+print(zones.info())
 ```
 
-2. **Left Join** se preservó la información completa de los viajes, evitando pérdida de datos al tener zonas faltantes. 
+Principales ajustes realizados:
+- Conversión de columnas de ID a tipo numérico.  
+- Normalización de fechas al formato `datetime`.  
+- Verificación de valores faltantes.  
+- Chequeo de duplicados y consistencia de claves.
+
+---
+
+# 📊 Análisis exploratorio e integración de datos
+
+## 🔹 Implementación de LEFT JOIN
+
+El **LEFT JOIN** preserva todos los registros del dataset de viajes (*Trips*), incluso si no existe correspondencia en *Zones*.
+
 ```python
 left_join = trips.merge(zones, how="left", left_on="pulocationid", right_on="locationid")
 left_join.head()
 ```
 
-3. **Inner Join** se observó cómo algunos viajes quedaban fuera del análisis.
+📈 **Interpretación:**  
+Este tipo de join conserva el 100% de los viajes, lo que permite mantener información de transacciones aún sin zona asignada. Ideal para análisis de cobertura o calidad de datos.
+
+---
+
+## 🔹 Implementación de INNER JOIN
+
+El **INNER JOIN** conserva solo los registros con coincidencia en ambos datasets.
+
 ```python
 inner_join = trips.merge(zones, how="inner", left_on="pulocationid", right_on="locationid")
 inner_join.head()
 ```
-  
-4. **Problemas comunes detectados**  
 
-    - Diferencias en tipos de datos (`int` vs `string`).  
-    - Fechas en distintos formatos (`YYYY-MM-DD` vs `MM/DD/YYYY`).  
-    - IDs faltantes en el dataset de zonas.  
+📈 **Interpretación:**  
+Al eliminar los viajes sin correspondencia, se obtiene un conjunto más consistente pero reducido. Este enfoque es útil cuando se prioriza la integridad sobre la completitud.
 
-5. **Análisis de negocio: revenue y propinas por borough**
+---
+
+## 🔹 Problemas comunes detectados
+
+- Diferencias en tipos de datos (`int64` vs `object`).  
+- Formatos de fecha heterogéneos (`YYYY-MM-DD` vs `MM/DD/YYYY`).  
+- IDs faltantes o zonas inexistentes.  
+- Inconsistencias al agrupar por borough debido a registros nulos.  
+
+Estos problemas resaltan la importancia de la **auditoría de claves** antes de cualquier integración.
+
+### 📝 [Notebook](../../../notebooks/UT1-3.ipynb)
+
+---
+
+# ⚙️ Análisis técnico: revenue y propinas por borough
+
+A partir del dataset integrado (`left_join`), se calcularon métricas agregadas:
+
 ```python
 group = left_join.groupby("borough_pick", dropna=False).agg(
     viajes=("pulocationid","size"),
@@ -85,48 +122,72 @@ group["tip_rate"] = group["tip_total"] / group["revenue_total"].replace(0, pd.NA
 display(group)
 ```
 
-Finalmente, el análisis integrado mostró (a modo ilustrativo):
-
-- **Manhattan** concentra la mayor parte de los viajes.  
-- En **Queens**, los viajes tienden a ser más largos y costosos.  
-- El **revenue por km** puede resaltar zonas específicas (ej. EWR).  
-- Diferencias en la **tasa de propinas** y en días especiales con impacto en distancia y tarifa promedio.
+📊 **Resultados clave:**
+- **Manhattan** concentra la mayoría de los viajes y el mayor revenue total.  
+- **Queens** presenta distancias más largas y un revenue por km más alto.  
+- La **tasa de propinas** varía significativamente entre boroughs.  
 
 ---
 
-## 📊 Evidencias 
-### 🔹 Comparación de JOINs 
-![Join Example](../../../assets/img/joins_comparacion.png)
+# 📈 Visualizaciones
 
-- El **LEFT JOIN** conserva más registros (viajes sin zona asignada).  
-- El **INNER JOIN** elimina esos casos.
+### 🔹 Comparación de JOINs  
+![Join Example](../../../assets/img/joins_comparacion.png)  
+- El **LEFT JOIN** conserva más registros (incluyendo viajes sin zona).  
+- El **INNER JOIN** filtra los viajes incompletos.
 
 ### 🔹 Revenue y propinas por borough  
-![Revenue Propinas](../../../assets/img/revenue_propinas.png)
-
-- Comparativa de **revenue por km** y **tasa de propinas** por borough.  
-- Útil para priorizar zonas o diseñar campañas.
-
-### 📝 [Notebook](../../../notebooks/UT1-3.ipynb)
+![Revenue Propinas](../../../assets/img/revenue_propinas.png)  
+- Diferencias marcadas en **revenue por km** y **tasa de propinas** según borough.  
+- Permite detectar zonas prioritarias para estrategias comerciales o mejoras operativas.
 
 ---
 
-## 🤔 Reflexión  
+# 🧠 Resultados y discusión
 
-- Integrar múltiples fuentes enriquece el análisis y permite encontrar **insights de negocio más profundos**.  
-- La elección correcta del tipo de join es fundamental:  
+| Hallazgo | Interpretación |
+|-----------|----------------|
+| LEFT JOIN conserva todos los viajes | Aumenta cobertura, útil para calidad de datos |
+| INNER JOIN filtra viajes sin correspondencia | Útil para análisis de negocio limpio |
+| Manhattan concentra mayor revenue | Refleja densidad de viajes cortos y alta frecuencia |
+| Variación en tasa de propinas | Indica diferencias socioeconómicas o contextuales |
 
-    - **LEFT JOIN** evita pérdida de información.  
-    - **INNER JOIN** asegura consistencia en los registros.  
-
-- Futuro trabajo:  
-
-    - Automatizar el pipeline con **Prefect**.  
-    - Versionar datos con **DVC** para mejorar reproducibilidad.  
+> 💬 **Discusión:**  
+> La integración de datos es una etapa crítica en ingeniería de datos: pequeñas diferencias en claves o formatos pueden distorsionar los resultados.  
+> Este caso ilustra cómo las decisiones sobre el tipo de join afectan directamente los insights y la calidad del análisis posterior.
 
 ---
 
-## 📚 Referencias  
+# 🔗 Conexión con otras unidades
 
-- Práctica: <https://juanfkurucz.com/ucu-id/ut1/04-eda-multifuentes-joins/>  
-- [pandas merge](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.merge.html)
+Este trabajo conecta con:
+- **UT2:** Evaluar la calidad de datos integrados y el impacto de los valores faltantes.  
+- **UT3:** Generar nuevas variables a partir de datos combinados (ej. `revenue_por_km`, `tip_rate`).  
+- **UT5:** Diseñar pipelines ETL donde la unión de fuentes sea automatizada y reproducible.
+
+---
+
+# 🧩 Reflexión final
+
+Integrar múltiples fuentes de datos permite obtener una **visión más rica y contextualizada** de los procesos analizados.  
+Aprendí que la elección entre `LEFT JOIN` e `INNER JOIN` depende del objetivo: **completitud vs consistencia**.  
+Además, los errores comunes en tipos de datos o claves son inevitables, por lo que deben ser controlados sistemáticamente en etapas tempranas.
+
+> 🌱 *Próximos pasos:*  
+> - Automatizar el pipeline de unión con **Prefect** o **Airflow**.  
+> - Implementar versionado de datos con **DVC** para trazabilidad y reproducibilidad.
+
+---
+
+# 🧰 Stack técnico
+
+**Lenguaje:** Python  
+**Librerías:** Pandas · NumPy · Matplotlib  
+**Conceptos aplicados:** Joins · Integración de fuentes · Limpieza de claves · Agrupaciones y métricas agregadas  
+
+---
+
+# 📚 Referencias
+
+- Práctica original: <https://juanfkurucz.com/ucu-id/ut1/04-eda-multifuentes-joins/>  
+- [Documentación pandas.merge](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.merge.html)
