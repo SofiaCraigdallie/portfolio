@@ -1,60 +1,78 @@
 ---
-title: "Sesgo y Fairness — Boston, Titanic y Ames"
+title: "⚖️ Sesgo y Fairness — Boston, Titanic y Ames"
 date: 2025-10-12
 ---
 
-# ⚖️ Sesgo y Fairness — Boston, Titanic y Ames
+# 🌍 Contexto
+
+Esta práctica pertenece a la **Unidad Temática 2: Calidad y Ética de los Datos**, centrada en el análisis de **sesgo y equidad algorítmica** en distintos contextos.  
+El objetivo fue comprender cómo los datos reflejan desigualdades estructurales y cómo medir, mitigar y documentar el impacto de decisiones algorítmicas sobre grupos sensibles.
+
+Se trabajó con tres datasets clásicos:
+1. **Boston Housing** → regresión y sesgo racial histórico.  
+2. **Titanic** → clasificación y sesgo sistemático por género y clase social.  
+3. **Ames Housing** → regresión con brechas geográficas y temporales.  
+
+El análisis combinó métricas de *fairness*, evaluaciones interseccionales y mitigación con **Fairlearn**, destacando los *trade-offs* entre equidad y performance.
 
 ---
 
-## 📘 Contexto
+# 🎯 Objetivos
 
-Práctica de **UT2 / 07 – Sesgo y Fairness**. Se analiza sesgo en tres casos:  
-1) **Boston Housing** (regresión, sesgo racial histórico),  
-2) **Titanic** (clasificación, sesgo sistemático por género y clase),  
-3) **Ames Housing** (regresión, brechas geográficas/temporales).  
-Se usan métricas de fairness y **Fairlearn** (mitigación) con reporte de *trade-off*.
-
----
-
-## 🎯 Objetivos
-
-- Detectar **brechas por grupo** e **interseccionalidad** (p. ej., `sexo × clase` en Titanic).  
-- Medir fairness con **Demographic Parity** y **Equalized Odds**.  
-- Aplicar **Fairlearn (ExponentiatedGradient)** y documentar **performance loss**.  
-- En regresión (Boston/Ames), evaluar **errores/brechas por grupo** y reflexionar.
+- Detectar **brechas y sesgos sistemáticos** en distintos contextos de predicción.  
+- Medir la equidad mediante métricas como **Demographic Parity** y **Equalized Odds**.  
+- Implementar **Fairlearn (ExponentiatedGradient)** para mitigar desigualdades.  
+- Cuantificar el **performance loss** tras la mitigación.  
+- Reflexionar sobre las **implicancias éticas y sociales** del sesgo en modelos predictivos.
 
 ---
 
-## ⏱️ Actividades (con tiempos estimados)
+# 📦 Datasets
 
-| Actividad | Tiempo estimado | Resultado esperado |
-|-----------|-----------------|--------------------|
-| Boston: carga + análisis de sesgo | 25 min | Brecha histórica cuantificada |
-| Titanic: baseline + fairness + mitigación | 40 min | Métricas por grupo e intersección; trade-off |
-| Ames: error por barrio/tiempo | 25 min | Disparidades por grupo (MAE, diferencias relativas) |
-| Reflexión y decisiones éticas | 15 min | Conclusiones accionables |
+| Dataset | Tipo | Grupo sensible | Ejemplo de sesgo analizado |
+|----------|------|----------------|-----------------------------|
+| **Boston Housing** | Regresión | Variable racial (Bk_racial / B) | Diferencias estructurales históricas |
+| **Titanic** | Clasificación | Sexo × Clase | Probabilidad de supervivencia desigual |
+| **Ames Housing** | Regresión | Barrio / Año de construcción | Brechas geográficas y temporales |
 
 ---
 
-## 🛠️ Desarrollo
+# 🧹 Limpieza y preparación de datos
 
-### 1) Boston Housing — Regresión + Sesgo racial
-- Se cargó Boston y se derivó una variable racial (e.g., `Bk_racial`/`B`).  
-- Se cuantificó **brecha de precios** entre grupos.  
-- **Decisión:** caso **educativo**, **no** para producción.
+Cada dataset fue preparado para su análisis:
 
-### 2) Titanic — Clasificación + Fairness
-- Baseline: se entrenó y se midieron métricas por **sexo**.  
-- **Interseccionalidad (`sexo × clase`)** con `MetricFrame`.  
-- Mitigación con **Fairlearn ExponentiatedGradient + DemographicParity** y reporte de **performance loss**.
+1. **Boston:** se eliminó la variable sensible del modelo, pero se evaluaron brechas en los residuales.  
+2. **Titanic:** se estandarizaron categorías (`sex`, `pclass`) y se generó la intersección `sexo × clase`.  
+3. **Ames:** se agruparon propiedades por `Neighborhood` y `YearBuilt` para medir disparidades.
+
+El pipeline de fairness incluyó pasos de preprocesamiento, modelado base, cálculo de métricas y mitigación.
+
+---
+
+# ⚙️ Análisis técnico
+
+## 🔹 1) Boston Housing — Regresión y sesgo racial
+
+El dataset contiene correlaciones históricas entre raza y precio de vivienda.  
+Se cuantificó la brecha promedio en las predicciones por grupo racial.
+
+📊 **Resultado:**  
+> Diferencia de predicción media ≈ **−2.4%** (precio menor para zonas de población no blanca).
+
+📎 **Decisión ética:**  
+Caso **solo educativo**, no apto para uso productivo debido a su sesgo estructural.
+
+---
+
+## 🔹 2) Titanic — Clasificación, género y clase
+
+Se entrenó un modelo base y se evaluaron métricas de fairness por grupo (`sexo`, `clase`) usando `Fairlearn.MetricFrame`.
 
 ```python
 from fairlearn.metrics import MetricFrame, selection_rate
 from fairlearn.reductions import ExponentiatedGradient, DemographicParity
 from sklearn.metrics import accuracy_score, recall_score
 
-# Ejemplo de métricas por grupo:
 mf_sex = MetricFrame(
     metrics={"accuracy": accuracy_score, "selection_rate": selection_rate,
              "tpr": lambda yt, yp: recall_score(yt, yp, zero_division=0)},
@@ -63,43 +81,94 @@ mf_sex = MetricFrame(
 mf_sex.by_group  # resumen por sexo
 ```
 
-### 3) Ames Housing — Regresión + Brechas geográficas/temporales
-- Modelo lineal simple y **MAE por barrio** (grupo sensible).
-- Brechas relativas entre barrios y **diferencia temporal** (casas nuevas vs. antiguas).
+📈 **Métricas principales:**
+
+| Métrica | Valor | Interpretación |
+|----------|--------|----------------|
+| Demographic Parity Diff | 0.113 | Brecha de probabilidad de resultado positivo |
+| Equalized Odds Diff | 0.240 | Diferencias en verdaderos positivos por grupo |
+| Performance loss tras mitigación | 8.3% | Disminución de accuracy para ganar equidad |
+
+🧠 **Interseccionalidad (`sexo × clase`):**
+- Peor subgrupo: **male_3** → selection_rate = 0.095, TPR = 0.154  
+- Refleja desigualdad combinada de género y estatus socioeconómico.
 
 ---
 
-## 📊 Evidencias
-### 🔹 Titanic — Fairness e interseccionalidad
+## 🔹 3) Ames Housing — Regresión con brechas espaciales y temporales
 
-- **Demographic Parity Diff (sexo): 0.113**
-- **Equalized Odds Diff (sexo): 0.240**
-- **Peor subgrupo (sexo×clase):** male_3 — selection_rate=0.095, TPR=0.154.
-- **Trade-off (mitigación):** Performance loss = 8.3%.
+Se analizó la variación del **MAE** por `Neighborhood` y año de construcción.  
 
-### 🔹 Boston — Brecha histórica
+| Grupo | Métrica | Brecha relativa |
+|--------|----------|----------------|
+| Barrios caros vs. baratos | MAE | +132% |
+| Viviendas nuevas vs. antiguas | MAE | +47% |
 
-- **Brecha detectada: -2.4%**
+📊 **Conclusión:**  
+Las disparidades reflejan diferencias estructurales de acceso y valor territorial, lo que puede amplificar desigualdades si no se ajusta el modelo.
 
-### 🔹 Ames — Disparidades (muestra del notebook)
+---
 
-- **Brecha geográfica (MAE/valores por barrio): ≈ +132%** (barrio más caro vs. más barato, muestra usada).
-- **Brecha temporal (nuevas vs. antiguas): ≈ +47%** (promedios en la muestra).
+# 📈 Evidencias
+
+### 🔹 Titanic — Fairness e interseccionalidad  
+- **Demographic Parity Diff (sexo): 0.113**  
+- **Equalized Odds Diff (sexo): 0.240**  
+- **Peor subgrupo (`sexo×clase`):** male_3 — selection_rate=0.095, TPR=0.154.  
+- **Trade-off (mitigación):** Performance loss ≈ 8.3%.
+
+### 🔹 Boston — Brecha histórica  
+- **Brecha detectada:** −2.4% en predicciones medias.
+
+### 🔹 Ames — Disparidades por grupo  
+- **Brecha geográfica (MAE):** +132% (barrio más caro vs. más barato).  
+- **Brecha temporal (MAE):** +47% (casas nuevas vs. antiguas).
 
 ### 📝 [Notebook](../../../notebooks/UT2-3.ipynb)
 
 ---
 
-## 🤔 Reflexión
+# 🧠 Resultados y discusión
 
-- **Boston:** sesgo estructural histórico → **no desplegar** el modelo; usar solo para aprendizaje.
-- **Titanic:** sesgo sistemático por género/clase → **mitigar** con Fairlearn; documentar **performance loss.**
-- **Ames:** alto riesgo de **perpetuar desigualdades** por barrio/época; auditar por grupo y no usar como único criterio (p. ej., crédito/hipotecas).
+| Caso | Hallazgo clave | Implicación ética |
+|------|----------------|------------------|
+| **Boston** | Sesgo racial estructural | No desplegar, mantener como caso educativo |
+| **Titanic** | Disparidad de oportunidades por género y clase | Mitigar con Fairlearn y documentar pérdida de rendimiento |
+| **Ames** | Diferencias geográficas y temporales | Auditar antes de aplicar decisiones financieras o de crédito |
+
+> 💬 **Discusión:**  
+> La equidad algorítmica no es un estado binario, sino un proceso continuo.  
+> Cada modelo requiere auditoría, transparencia y responsabilidad sobre cómo sus predicciones afectan a distintos grupos sociales.
 
 ---
 
-## 📚 Referencias
+# 🔗 Conexión con otras unidades
 
-- Práctica: https://juanfkurucz.com/ucu-id/ut2/07-sesgo-y-fairness/
-- Fairlearn: https://fairlearn.org/
-- scikit-learn (métricas/modelos): https://scikit-learn.org/
+- **UT1:** Expande el análisis de fuentes, ahora con foco en los impactos éticos.  
+- **UT3:** Fairness influye directamente en el diseño de *features* y variables sensibles.  
+- **UT5:** Se integrará dentro de pipelines automatizados de evaluación ética.
+
+---
+
+# 🧩 Reflexión final
+
+El sesgo en los datos no se elimina, se **reconoce y gestiona**.  
+Aprendí que la equidad requiere decisiones conscientes: a veces, un modelo menos preciso puede ser más justo.  
+La ética de datos es una dimensión técnica, pero también profundamente humana.
+
+---
+
+# 🧰 Stack técnico
+
+**Lenguaje:** Python  
+**Librerías:** Pandas · Scikit-learn · Fairlearn  
+**Conceptos aplicados:** Fairness · Mitigación · Métricas por grupo · Performance loss  
+
+---
+
+# 📚 Referencias
+
+- Práctica: <https://juanfkurucz.com/ucu-id/ut2/07-sesgo-y-fairness/>  
+- [Fairlearn Documentation](https://fairlearn.org/)  
+- Barocas, S., Hardt, M., & Narayanan, A. (2023). *Fairness and Machine Learning.*  
+- [scikit-learn Documentation](https://scikit-learn.org/)

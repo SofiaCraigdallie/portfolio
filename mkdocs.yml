@@ -61,12 +61,13 @@ nav:
       - Ingeniería de Datos:
           - "🧭 UT1 – Exploración y Fuentes de Datos":
               - Introducción: portfolio/ingenieria_datos/UT1/Portada.md
-              - 🌸 Explorando el dataset Iris: portfolio/ingenieria_datos/UT1/01-exploracion-iris.md
-              - 🎬 Explorando el catálogo de Netflix: portfolio/ingenieria_datos/UT1/03-eda-netflix.md
-              - 🔗 EDA con múltiples fuentes y joins: portfolio/ingenieria_datos/UT1/04-eda-multifuentesyjoins.md
-          - "UT2: Calidad & Ética":
-              - Proyecto 4 – Missing Data Detective: portfolio/ingenieria_datos/UT2/05-missing-data-detective.md
-              - Proyecto 5 - Feature Scaling & Pipelines: portfolio/ingenieria_datos/UT2/06-feature-scaling&pipelines.md
-              - Proyecto 6 - Detectar y Corregir Sesgo: portfolio/ingenieria_datos/UT2/07-deteccion-sesgo.md
+              - 🌸 Mirada analítica al clásico Iris; separando especies con datos: portfolio/ingenieria_datos/UT1/01-exploracion-iris.md
+              - 🎬 Netflix bajo la lupa; explorando tendencias globales de contenido: portfolio/ingenieria_datos/UT1/03-eda-netflix.md
+              - 🔗 Uniendo mundos de datos; análisis multifuente con merges y joins: portfolio/ingenieria_datos/UT1/04-eda-multifuentesyjoins.md
+          - "🧭 UT2 – Calidad y Ética de los Datos":
+              - Introducción: portfolio/ingenieria_datos/UT2/Portada.md
+              - 🕵️ Detección de valores faltantes; jugando al detective de datos: portfolio/ingenieria_datos/UT2/05-missing-data-detective.md
+              - 🏠 Escalando variables con estilo; creando pipelines justos y reproducibles: portfolio/ingenieria_datos/UT2/06-feature-scaling&pipelines.md
+              - ⚖️ Modelos más justos; detectando y mitigando sesgos en Boston, Titanic y Ames: portfolio/ingenieria_datos/UT2/07-deteccion-sesgo.md
           - "UT3: Feature Engineering":
               - Proyecto 7 - Feature Engineering: portfolio/ingenieria_datos/UT3/08-feature-engineering.md

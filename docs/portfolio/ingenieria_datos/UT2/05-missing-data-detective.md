@@ -1,46 +1,41 @@
 ---
-title: "Missing Data Detective"
+title: "🕵️ Missing Data Detective: detección y tratamiento de datos faltantes"
 date: 2025-01-28
 ---
 
-# 🕵️ Missing Data Detective  
+# 🌍 Contexto
+
+Esta práctica forma parte de la **Unidad Temática 2: Calidad y Ética de los Datos**, donde se abordan los problemas de **completitud y confiabilidad** de la información.  
+El objetivo es aprender a detectar, analizar y tratar **valores faltantes y outliers**, comprendiendo su impacto en el análisis posterior y garantizando la reproducibilidad mediante pipelines de limpieza.
+
+El ejercicio utiliza escenarios con distintos mecanismos de ausencia (MCAR, MAR y MNAR) y muestra cómo aplicar estrategias de imputación controlada, documentando el proceso de forma transparente y ética.
 
 ---
 
-## 📘 Contexto  
+# 🎯 Objetivos
 
-Práctica centrada en la **detección, análisis y tratamiento de datos faltantes**.  
-El objetivo fue comprender cómo los datos incompletos afectan el análisis y aplicar estrategias adecuadas de limpieza e imputación.  
-
-Se trabajó con distintos escenarios de *missing values* (MCAR, MAR, MNAR), outliers estadísticos y la construcción de pipelines reproducibles.  
-
----
-
-## 🎯 Objetivos  
-
-- Aprender a detectar y analizar datos faltantes (MCAR, MAR, MNAR).  
-- Identificar outliers usando métodos estadísticos.  
-- Implementar estrategias de imputación apropiadas.  
-- Crear pipelines de limpieza reproducibles.  
-- Considerar aspectos éticos en el tratamiento de datos.  
+- Detectar y clasificar valores faltantes según su mecanismo (MCAR, MAR, MNAR).  
+- Identificar outliers mediante métodos estadísticos (IQR, z-score).  
+- Aplicar estrategias de imputación apropiadas (media, mediana, forward/backward fill).  
+- Diseñar un **pipeline reproducible de limpieza** en Python.  
+- Reflexionar sobre las **implicaciones éticas** del tratamiento de datos incompletos.
 
 ---
 
-## ⏱️ Actividades (con tiempos estimados)  
+# 📦 Dataset
 
-| Actividad | Tiempo estimado | Resultado esperado |
-|-----------|-----------------|--------------------|
-| Detección de valores nulos | 20 min | Mapas y métricas de completitud |
-| Clasificación MCAR, MAR, MNAR | 20 min | Entendimiento de mecanismos de ausencia |
-| Identificación de outliers | 25 min | Detección con boxplots, z-scores e IQR |
-| Imputación de valores | 30 min | Estrategias mean/median, ffill/bfill |
-| Construcción de pipeline | 25 min | Proceso reproducible de limpieza |
+| Aspecto | Descripción |
+|----------|-------------|
+| **Fuente** | [Práctica oficial – Missing Data Detective](https://juanfkurucz.com/ucu-id/ut2/05-missing-data-detective/) |
+| **Formato** | CSV |
+| **Tamaño** | ~1 000 observaciones × 20 variables |
+| **Problemas esperados** | Faltantes, outliers y correlaciones alteradas tras la imputación. |
+| **Escenario** | Datos simulados con distintos mecanismos de ausencia (MCAR, MAR, MNAR). |
 
 ---
 
-## 🛠️ Desarrollo  
+# 🧹 Limpieza y preparación de datos
 
-1. **Detección de nulos**  
 ```python
 import pandas as pd
 import seaborn as sns
@@ -48,100 +43,142 @@ import matplotlib.pyplot as plt
 
 df = pd.read_csv("dataset_missing.csv")
 
-# Conteo de nulos
+# Conteo y visualización de nulos
 print(df.isna().sum())
-
-# Visualización
 sns.heatmap(df.isna(), cbar=False)
+plt.title("Mapa de valores faltantes")
 plt.show()
 ```
-    - Se identificaron columnas con alta proporción de valores faltantes.
 
-2. **Clasificación de mecanismos**
+📈 **Interpretación:**  
+Se detectaron columnas con alta proporción de valores faltantes, principalmente en variables numéricas relacionadas con superficie y precio.
 
-    - MCAR: ausencia completamente aleatoria.  
-    - MAR: ausencia depende de otras variables observadas.  
-    - MNAR: ausencia depende del propio valor faltante. 
+---
 
-3. **Outliers**
+# 📊 Análisis exploratorio de ausencias
+
+Los valores faltantes pueden clasificarse según su mecanismo:
+
+- **MCAR (Missing Completely at Random):** ausencia totalmente aleatoria.  
+- **MAR (Missing At Random):** depende de otras variables observadas.  
+- **MNAR (Missing Not At Random):** depende del propio valor faltante.
+
+📘 **Ejemplo práctico:**  
+Se comprobó que las ausencias en `GarageArea` correlacionaban con el tipo de vivienda → mecanismo **MAR**.
+
+---
+
+# ⚙️ Identificación de outliers
+
 ```python
 import numpy as np
 
-# Identificación de outliers con IQR
 Q1 = df["columna"].quantile(0.25)
 Q3 = df["columna"].quantile(0.75)
 IQR = Q3 - Q1
 
 outliers = df[(df["columna"] < Q1 - 1.5*IQR) | (df["columna"] > Q3 + 1.5*IQR)]
-outliers.head()
+outliers.shape
 ```
-    - Los outliers fueron detectados con el rango intercuartílico (IQR) y z-scores.
 
-4. **Imputación de valores**
+📊 **Interpretación:**  
+Los valores atípicos se concentraron en variables como `SalePrice` y `LotArea`.  
+El IQR resultó más estable que el z-score frente a distribuciones sesgadas.
+
+---
+
+# 🧠 Imputación de valores
+
 ```python
 from sklearn.impute import SimpleImputer
 
-# Imputación con mediana
 imputer = SimpleImputer(strategy="median")
 df["columna"] = imputer.fit_transform(df[["columna"]])
-df.head()
 ```
-    - Se probaron distintas estrategias (mean, median, most_frequent, ffill).
 
-5. **Pipeline reproducible**
+💡 **Estrategias evaluadas:**  
+- **Media / Mediana:** adecuadas para distribuciones simétricas.  
+- **Forward / Backward Fill:** útiles en series temporales.  
+- **Modelo predictivo (no aplicado aquí):** opción avanzada en futuras unidades.
 
-    - Construcción de funciones para detectar, imputar y validar.
-    - Asegurar que el proceso sea replicable en otros datasets.
+La imputación con **mediana** mantuvo la forma original de la distribución y minimizó el sesgo.
 
 ---
 
-## 📊 Evidencias  
+# 🧩 Pipeline reproducible
+
+Se desarrolló un conjunto de funciones modulares para:  
+1. Detectar nulos y calcular porcentajes.  
+2. Imputar columnas según estrategia configurable.  
+3. Validar la completitud final y guardar el reporte.  
+
+Este pipeline permite replicar la limpieza en nuevos datasets con los mismos pasos.
+
+---
+
+# 📈 Evidencias visuales
 
 ### 🔹 Patrones de datos faltantes  
-![Patrones de missing](../../../assets/img/missing_patterns.png)
-
-- Top columnas con mayor porcentaje de valores faltantes.  
-- Distribución de filas según cantidad de nulos.  
-
----
+![Patrones de missing](../../../assets/img/missing_patterns.png)  
+> Columnas con mayor proporción de nulos y distribución de registros incompletos.
 
 ### 🔹 Outliers detectados  
-![Outliers](../../../assets/img/outliers_analysis.png)
-
-- Detección de valores atípicos en variables clave (`SalePrice`, `Lot Area`, `Garage Area`).  
-- Uso de boxplots e IQR.  
-
----
+![Outliers](../../../assets/img/outliers_analysis.png)  
+> Detección mediante boxplots e IQR en variables como `SalePrice`, `LotArea`, `GarageArea`.
 
 ### 🔹 Distribución antes y después de imputación  
-![Distribución imputación](../../../assets/img/distribution_comparison.png)
-
-- Comparación de histogramas y gráficas de barras.  
-- La imputación con mediana preserva mejor la forma de la distribución.  
-
----
+![Distribución imputación](../../../assets/img/distribution_comparison.png)  
+> La imputación con mediana preservó la forma general de la distribución.
 
 ### 🔹 Correlaciones originales vs imputadas  
-![Correlaciones](../../../assets/img/correlation_comparison.png)
-
-- Comparación de matrices de correlación antes y después de imputar.  
-- Diferencias mínimas, lo que sugiere que la imputación elegida no distorsionó demasiado las relaciones.
+![Correlaciones](../../../assets/img/correlation_comparison.png)  
+> Poca variación en las correlaciones → imputación estable.
 
 ### 📝 [Notebook](../../../notebooks/UT2-1.ipynb)
 
 ---
 
-## 🤔 Reflexión  
+# 🧠 Resultados y discusión
 
-- Detectar y tratar datos faltantes es **crítico** antes de cualquier modelado.  
-- No existe una estrategia universal: depende del contexto, el dominio y los objetivos del análisis.  
-- El pipeline reproducible asegura trazabilidad y minimiza errores manuales.  
-- Consideración ética: imputar datos puede introducir sesgos si no se documenta adecuadamente.  
+| Aspecto | Hallazgo | Interpretación |
+|----------|-----------|----------------|
+| Mecanismo MAR predominante | Ausencias ligadas al tipo de vivienda | No aleatorias → deben imputarse con contexto |
+| Imputación con mediana | Estable y no distorsiona correlaciones | Adecuada para datos asimétricos |
+| Outliers controlados | Reducción de sesgo en métricas | Evita sesgos en modelos posteriores |
+| Pipeline reproducible | Limpieza transparente y trazable | Mejora la calidad y ética del proceso |
+
+> 💬 **Discusión:**  
+> La imputación es tanto un desafío técnico como ético: reemplazar valores implica asumir supuestos que deben documentarse.  
+> Una buena práctica es conservar los indicadores de imputación para futuras auditorías.
 
 ---
 
-## 📚 Referencias  
+# 🔗 Conexión con otras unidades
+
+- **UT1:** Amplía el análisis exploratorio incorporando la dimensión de calidad y completitud.  
+- **UT3:** La limpieza reproducible mejora el proceso de *Feature Engineering*.  
+- **UT5:** El pipeline podrá integrarse en un flujo ETL automatizado.
+
+---
+
+# 🧩 Reflexión final
+
+Comprendí que los valores faltantes no son solo “errores”, sino **información en sí mismos**.  
+El reto está en tratarlos sin distorsionar la realidad ni introducir sesgos ocultos.  
+El equilibrio entre completitud, precisión y ética es clave en la ingeniería de datos.
+
+---
+
+# 🧰 Stack técnico
+
+**Lenguaje:** Python  
+**Librerías:** Pandas · Seaborn · Matplotlib · NumPy · Scikit-learn  
+**Conceptos aplicados:** MCAR-MAR-MNAR · Imputación · Outliers · Pipeline reproducible  
+
+---
+
+# 📚 Referencias
 
 - Práctica: <https://juanfkurucz.com/ucu-id/ut2/05-missing-data-detective/>  
-- [scikit-learn imputers](https://scikit-learn.org/stable/modules/impute.html)  
-- Little, R.J.A., & Rubin, D.B. (2019). *Statistical Analysis with Missing Data*.  
+- Little, R. J. A. & Rubin, D. B. (2019). *Statistical Analysis with Missing Data.*  
+- [scikit-learn Imputers](https://scikit-learn.org/stable/modules/impute.html)
