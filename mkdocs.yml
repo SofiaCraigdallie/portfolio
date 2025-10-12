@@ -66,5 +66,6 @@ nav:
           - "UT2: Calidad & Ética":
               - Proyecto 4 – Missing Data Detective: portfolio/ingenieria_datos/UT2/05-missing-data-detective.md
               - Proyecto 5 - Feature Scaling & Pipelines: portfolio/ingenieria_datos/UT2/06-feature-scaling&pipelines.md
+              - Proyecto 6 - Detectar y Corregir Sesgo: portfolio/ingenieria_datos/UT2/07-deteccion-sesgo.md
           - "UT3: Feature Engineering":
               - Proyecto 7 - Feature Engineering: portfolio/ingenieria_datos/UT3/08-feature-engineering.md
