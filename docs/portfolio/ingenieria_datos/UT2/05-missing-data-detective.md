@@ -3,6 +3,8 @@ title: "🕵️ Missing Data Detective: detección y tratamiento de datos faltan
 date: 2025-01-28
 ---
 
+# 🕵️ Missing Data Detective: detección y tratamiento de datos faltantes
+
 # 🌍 Contexto
 
 Esta práctica forma parte de la **Unidad Temática 2: Calidad y Ética de los Datos**, donde se abordan los problemas de **completitud y confiabilidad** de la información.  

@@ -3,6 +3,8 @@ title: "🎬 Explorando el catálogo de Netflix: análisis exploratorio con pand
 date: 2025-01-12
 ---
 
+# 🎬 Explorando el catálogo de Netflix: análisis exploratorio con pandas
+
 # 🌍 Contexto
 
 Este proyecto forma parte de la **Unidad Temática 1: Exploración y fuentes de datos** del Portafolio de Ingeniería de Datos.  

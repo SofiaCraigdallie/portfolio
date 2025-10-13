@@ -3,6 +3,8 @@ title: "⚖️ Sesgo y Fairness — Boston, Titanic y Ames"
 date: 2025-10-12
 ---
 
+# ⚖️ Sesgo y Fairness — Boston, Titanic y Ames
+
 # 🌍 Contexto
 
 Esta práctica pertenece a la **Unidad Temática 2: Calidad y Ética de los Datos**, centrada en el análisis de **sesgo y equidad algorítmica** en distintos contextos.  

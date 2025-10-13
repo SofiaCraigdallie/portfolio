@@ -3,6 +3,8 @@ title: "🧩 Ingeniería de Features — Mejorando el modelo de Ames Housing"
 date: 2025-10-11
 ---
 
+# 🧩 Ingeniería de Features — Mejorando el modelo de Ames Housing
+
 # 🌍 Contexto
 
 Esta práctica forma parte de la **Unidad Temática 3: Feature Engineering**, dedicada al proceso de **creación, transformación y evaluación de variables** para potenciar el rendimiento y la interpretabilidad de los modelos.  

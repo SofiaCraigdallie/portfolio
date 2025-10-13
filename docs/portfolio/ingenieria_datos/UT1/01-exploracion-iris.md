@@ -3,6 +3,8 @@ title: "🌸 Explorando el dataset Iris: patrones de separación entre especies"
 date: 2025-01-10
 ---
 
+# 🌸 Explorando el dataset Iris: patrones de separación entre especies
+
 # 🌍 Contexto
 
 Esta práctica introductoria corresponde a la **Unidad Temática 1: Exploración y fuentes de datos** del Portafolio de Ingeniería de Datos.  

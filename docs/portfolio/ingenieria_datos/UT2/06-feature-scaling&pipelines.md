@@ -3,6 +3,8 @@ title: "🏠 Feature Scaling & Pipelines — Ames Housing"
 date: 2025-10-11
 ---
 
+# 🏠 Feature Scaling & Pipelines — Ames Housing
+
 # 🌍 Contexto
 
 Este proyecto forma parte de la **Unidad Temática 2: Calidad y Ética de los Datos**, enfocada en garantizar la consistencia y preparación adecuada de las variables antes del modelado.  
