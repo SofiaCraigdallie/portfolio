@@ -3,7 +3,9 @@ title: "🕵️ Missing Data Detective: detección y tratamiento de datos faltan
 date: 2025-01-28
 ---
 
-# 🕵️ Missing Data Detective: detección y tratamiento de datos faltantes
+# 🕵️ Missing Data Detective
+
+---
 
 # 🌍 Contexto
 

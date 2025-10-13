@@ -3,7 +3,9 @@ title: "🧩 Ingeniería de Features — Mejorando el modelo de Ames Housing"
 date: 2025-10-11
 ---
 
-# 🧩 Ingeniería de Features — Mejorando el modelo de Ames Housing
+# 🧩 Ingeniería de Features
+
+---
 
 # 🌍 Contexto
 

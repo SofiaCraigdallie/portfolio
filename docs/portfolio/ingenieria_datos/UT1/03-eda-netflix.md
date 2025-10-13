@@ -3,7 +3,9 @@ title: "🎬 Explorando el catálogo de Netflix: análisis exploratorio con pand
 date: 2025-01-12
 ---
 
-# 🎬 Explorando el catálogo de Netflix: análisis exploratorio con pandas
+# 🎬 Explorando el catálogo de Netflix
+
+---
 
 # 🌍 Contexto
 

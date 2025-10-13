@@ -3,7 +3,9 @@ title: "🌸 Explorando el dataset Iris: patrones de separación entre especies"
 date: 2025-01-10
 ---
 
-# 🌸 Explorando el dataset Iris: patrones de separación entre especies
+# 🌸 Explorando el dataset Iris
+
+---
 
 # 🌍 Contexto
 

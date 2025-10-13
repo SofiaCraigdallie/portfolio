@@ -5,6 +5,8 @@ date: 2025-10-12
 
 # 🎬 Proyecto extra — Auditoría de calidad y joins con TMDb 5000 (movies & credits)
 
+---
+
 # 🌍 Contexto
 
 Proyecto extra de **UT2 – Calidad y Ética de los Datos** usando el dataset de Kaggle **TMDb 5000**  

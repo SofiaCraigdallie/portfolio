@@ -3,7 +3,9 @@ title: "🔗 EDA con múltiples fuentes: integración y joins con pandas"
 date: 2025-01-20
 ---
 
-# 🔗 EDA con múltiples fuentes: integración y joins con pandas
+# 🔗 EDA con múltiples fuentes
+
+---
 
 # 🌍 Contexto
 
