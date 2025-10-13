@@ -64,6 +64,7 @@ nav:
               - 🌸 Mirada analítica al clásico Iris; separando especies con datos: portfolio/ingenieria_datos/UT1/01-exploracion-iris.md
               - 🎬 Netflix bajo la lupa; explorando tendencias globales de contenido: portfolio/ingenieria_datos/UT1/03-eda-netflix.md
               - 🔗 Uniendo mundos de datos; análisis multifuente con merges y joins: portfolio/ingenieria_datos/UT1/04-eda-multifuentesyjoins.md
+              - 🌐 Proyecto extra; Explorando datos meteorológicos desde una API (Open-Meteo): portfolio/ingenieria_datos/UT1/Extra.md
           - "🧭 UT2 – Calidad y Ética de los Datos":
               - Introducción: portfolio/ingenieria_datos/UT2/Portada.md
               - 🕵️ Detección de valores faltantes; jugando al detective de datos: portfolio/ingenieria_datos/UT2/05-missing-data-detective.md
