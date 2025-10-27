@@ -73,3 +73,4 @@ nav:
               - 🎬 Proyecto extra; Auditoría de calidad y joins con TMDb 5000 (movies & credits): portfolio/ingenieria_datos/UT2/Extra.md
           - "🧭 UT3: Feature Engineering":
               - 🧩 Ingeniería de Features; mejorando el modelo de Ames Housing: portfolio/ingenieria_datos/UT3/08-feature-engineering.md
+              - 🧩 Encoding Avanzado; experimentando con cardinalidad, fuga y explicabilidad: portfolio/ingenieria_datos/UT3/09-encoding.md
