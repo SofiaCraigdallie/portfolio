@@ -55,7 +55,7 @@ ames_df["space_efficiency"] = ames_df["GrLivArea"] / ames_df["LotArea"]
 ames_df["crowded_property"] = ames_df["BedroomAbvGr"] / ames_df["GrLivArea"]
 ```
 
-![Distribución de variables originales y transformadas](../assets/img/distribucion_features_libre.png)
+![Distribución de variables originales y transformadas](../../../assets/img/distribucion_features_libre.png)
 
 **Figura 1.** Distribución de variables originales y transformadas utilizadas como base para el *feature engineering*.  
 Se observa que las transformaciones logarítmicas y cuadráticas ayudan a estabilizar la escala y reducir sesgos.
@@ -78,7 +78,7 @@ Las nuevas variables se basan en criterios económicos y arquitectónicos que in
 
 Estas variables permiten incorporar conocimiento del dominio inmobiliario directamente al modelo, mejorando su interpretabilidad.
 
-![Distribución de las features derivadas](../assets/img/distribucion_features_derivadas.png)
+![Distribución de las features derivadas](../../../assets/img/distribucion_features_derivadas.png)
 
 **Figura 2.** Distribución de las variables derivadas del dominio. Se observa que la mayoría tienen asimetría positiva (sesgo a la derecha), lo cual justifica transformaciones logarítmicas o normalizaciones en pasos posteriores.
 
@@ -117,7 +117,7 @@ Las propiedades clasificadas como “nuevas y grandes” tienden a concentrarse 
 
 Las features derivadas de superficie y eficiencia presentan la relación positiva más fuerte con el precio. La antigüedad y densidad, en cambio, muestran asociaciones negativas, coherentes con la lógica del mercado.
 
-![Comparación de importancia de features según distintos métodos](../assets/img/importancia_de_features.png)
+![Comparación de importancia de features según distintos métodos](../../../assets/img/importancia_de_features.png)
 
 **Figura 3.** Comparación de las 10 variables más relevantes según Mutual Information (izquierda) y Random Forest (derecha).  
 Ambos métodos coinciden en destacar la relevancia de `construction_density`, `sqft_squared` y `property_age`, confirmando la validez de las features generadas.
