@@ -3,7 +3,7 @@ title: "🧩 Encoding Avanzado — Adult Income (Census)"
 date: 2025-10-27
 ---
 
-# 🧩 Encoding Avanzado
+# 🧩 Encoding Avanzado — Adult Income (Census)
 
 ---
 
@@ -47,11 +47,15 @@ Se trabajó con el dataset **Adult Income (US Census, 1994)** para predecir si e
 
 # 🔍 Análisis de cardinalidad
 
-- **Baja (≤10):** 5 columnas → one-hot viable.  
-- **Media (11–50):** 3 columnas → preferir *target/frequency/binary* si fuera necesario.  
-- **Alta (>50):** 0 columnas → en este dataset no se activó rama *high-card*.
+![Cardinalidad de variables categóricas](../../../assets/img/cardinalidad_variables_categóricas.png)
 
-> **Conclusión:** *One-Hot* completo **no** es viable. Se procede con **Label**, **One-Hot solo baja** y **Target** para media/alta si aplica.
+**Figura 1.** Diagnóstico de cardinalidad por variable. Se observa que la mayoría de las columnas son de baja cardinalidad (≤10), aunque `education`, `occupation` y `native-country` se ubican en rango medio (11–50), lo que justifica usar encodings distintos según el tipo.
+
+> **Conclusión:** aplicar *One-Hot* a todas las categóricas no es viable. Se optó por:  
+> - *Label Encoding* para comparativa base,  
+> - *One-Hot* para baja cardinalidad,  
+> - *Target Encoding* para media/alta cardinalidad (en datasets futuros),  
+> - y una *Pipeline Ramificada* que combine estos enfoques.
 
 ---
 
@@ -86,26 +90,35 @@ Se trabajó con el dataset **Adult Income (US Census, 1994)** para predecir si e
 | Target (high card) | 0.8021 | 0.8272 | 0.5538 | **0.43** | **6** |
 | Branched Pipeline | 0.8485 | 0.8996 | 0.6646 | 0.44 | 30 |
 
-**Hallazgos clave**  
-- **Mejor rendimiento global:** **Label Encoding** (todas las métricas).  
-- **Más compacto:** Target (6 cols) pero con caída de métricas.  
-- **Trade‑off:** One‑Hot/Branched elevan dimensionalidad sin mejora sustancial en este dataset.
+![Comparación de encoding por método](../../../assets/img/comparación_imp_método.png)
+
+**Figura 2.** Comparación de los cuatro esquemas de codificación (Label, One-Hot, Target y Pipeline Ramificado). Se observa que Label Encoding logra el mejor equilibrio entre rendimiento y complejidad, mientras que One-Hot y Pipeline aumentan la dimensionalidad sin mejoras notables.
+
+
+![Comparación de métricas y trade-offs entre métodos de encoding](../../../assets/img/métodos_métricas.png)
+
+**Figura 3.** Comparación visual de métricas y trade-offs. Label Encoding y Pipeline mantienen alta exactitud con tiempos bajos. Target Encoding reduce la dimensionalidad, pero sacrifica rendimiento global.
 
 ---
 
 # 🔍 Explicabilidad — Feature Importance (Pipeline)
 
-**Top features:** `fnlwgt`, `age`, `education-num`, `capital-gain`, `hours-per-week`, `capital-loss`.  
-Las categóricas *one‑hot* con mayor peso: `marital-status_Married-civ-spouse`, `Never-married`, `sex_Male`, relaciones familiares y `workclass_Private`.
+![Importancia de features del modelo Random Forest](../../../assets/img/feature_importance_random_forest.png)
 
-**Importancia por tipo**  
-- **Numéricas:** **76.7 %** del total (6 variables).  
-- **One‑Hot:** 23.3 % (24 variables).  
-> Indica que la **estructura cuantitativa** del censo domina la predicción del ingreso.
+**Figura 4.** Variables más relevantes según el modelo Random Forest. `fnlwgt`, `age`, `education-num`, `capital-gain` y `hours-per-week` lideran la predicción, mientras que algunas categóricas *one-hot* (`marital-status_Married-civ-spouse`, `sex_Male`, `workclass_Private`) aportan contexto adicional.
+
+**Importancia por tipo de feature:**
+- **Numéricas:** 76.7 % del total (6 variables).  
+- **One-Hot:** 23.3 % (24 variables).  
+> Esto muestra que la **estructura cuantitativa del censo domina** la predicción del ingreso, aunque las categóricas ayudan a refinar segmentos sociales.
+
+![Importancia total y promedio por tipo de feature](../../../assets/img/features_codificadas.png)
+
+**Figura 5.** Comparación de la importancia total y promedio por tipo de variable. Las numéricas dominan tanto en peso total como en relevancia promedio; las categóricas aportan granularidad, pero con menor influencia individual.
 
 ---
 
-# 🧪 Desafíos (extras)
+# 🧪 Desafíos y variantes adicionales
 
 - **Frequency(native-country):** Acc 0.8081 · AUC 0.8311 · F1 0.5645 · 7 feats.  
   - Útil, bajo riesgo si se calcula **solo en train**.  
@@ -123,11 +136,11 @@ Las categóricas *one‑hot* con mayor peso: `marital-status_Married-civ-spouse`
 # 🧠 Resultados y discusión
 
 | Hallazgo | Implicación |
-|---|---|
-| **Label Encoding** domina en métricas con baja dimensionalidad | Preferible con **modelos de árboles** cuando no hay cardinalidades extremas |
-| One‑Hot (baja) y Pipeline (mixto) son similares | La expansión de columnas **no** aportó ganancia en este dataset |
-| Target/LOO no superaron alternativas | Útiles en **alta cardinalidad** o con regularización/CV; aquí no había |
-| Predictores numéricos explican la mayor parte | La carga horaria, capital y edad **condicionan** el ingreso; vigilar sesgos |
+|-----------|-------------|
+| **Label Encoding** domina en métricas con baja dimensionalidad | Recomendado con **modelos de árboles** cuando no hay cardinalidades extremas. |
+| **One-Hot (baja)** y **Pipeline (mixto)** logran rendimientos similares | La expansión de columnas **no mejora el rendimiento**, solo la interpretabilidad. |
+| **Target/LOO** no superaron alternativas | Útiles en **alta cardinalidad** o con regularización/CV; no aplican en este dataset. |
+| **Predictores numéricos** concentran la mayor explicación | La carga horaria, capital y edad son las variables que más condicionan el ingreso. |
 
 ---
 
@@ -141,15 +154,24 @@ Las categóricas *one‑hot* con mayor peso: `marital-status_Married-civ-spouse`
 
 # 🧩 Reflexión final
 
-**Qué aprendí:** el *encoding* define el **espacio de hipótesis** del modelo. En Adult Income, **árboles + Label** bastan; *One‑Hot* no mejora y *Target* requiere cuidado contra **data leakage**.  
-**Para producción:** usaría **pipeline con `ColumnTransformer`** (activando la rama *target* solo si aparece alta cardinalidad) y monitoreo de **métricas de equidad**.
+El tipo de encoding **define el espacio de hipótesis del modelo**.  
+En este caso, **árboles + Label Encoding** ofrecieron el mejor rendimiento con bajo costo computacional, mientras que *One-Hot* y *Target* solo justifican su uso ante cardinalidades extremas.  
+
+Comprendí que elegir el encoding correcto no es solo una decisión técnica, sino también ética: debe garantizar **equidad, interpretabilidad y reproducibilidad**.  
+En producción, optaría por un **`ColumnTransformer` ramificado**, activando la rama *target* solo si aparecen variables de alta cardinalidad y monitoreando métricas de equidad.
 
 ---
 
 # 🧰 Stack técnico
 
-**Python** · pandas · NumPy · scikit‑learn · category_encoders · matplotlib  
+Python · pandas · NumPy · scikit‑learn · category_encoders · matplotlib  
 **Conceptos:** cardinalidad, *data leakage*, *target smoothing*, pipelines, *feature importance*
+
+---
+
+# Evidencias
+
+### 📝 [Notebook](../../../notebooks/UT3-2.ipynb)
 
 ---
 
@@ -159,5 +181,3 @@ Las categóricas *one‑hot* con mayor peso: `marital-status_Married-civ-spouse`
 - UCI Adult: Dua, D. & Graff, C. (2019). *UCI ML Repository* — Adult.  
 - Scikit‑learn: *ColumnTransformer*, *Pipelines*, *OneHotEncoder*.  
 - `category_encoders`: *Target*, *Binary* encoders.
-
-### 📝 [Notebook](../../../notebooks/UT3-2.ipynb)
