@@ -74,3 +74,6 @@ nav:
           - "🧭 UT3: Feature Engineering":
               - 🧩 Ingeniería de Features; mejorando el modelo de Ames Housing: portfolio/ingenieria_datos/UT3/08-feature-engineering.md
               - 🧩 Encoding Avanzado; experimentando con cardinalidad, fuga y explicabilidad: portfolio/ingenieria_datos/UT3/09-encoding.md
+              - 🧠 Reducción y Selección; comparando PCA y técnicas de Feature Selection en Ames: portfolio/ingenieria_datos/UT3/10-PCAFeature-selection.md
+              - ⏱️ Tiempo en Acción; creando y evaluando features temporales con Pandas: portfolio/ingenieria_datos/UT3/11-Temporal-feature-engineering.md
+              - 🧬 Proyecto extra; Mini-Assignment, comparando robustez de PCA vs Selection en pipelines reales: portfolio/ingenieria_datos/UT3/Extra.md
