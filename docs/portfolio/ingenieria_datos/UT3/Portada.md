@@ -25,12 +25,12 @@ A lo largo de las prácticas se aplicaron técnicas desde el escalado y codifica
 
 ## 🧩 Proyectos incluidos
 
-| Proyecto | Descripción | Enfoque |
+| Proyecto | Descripción | Enlace |
 |-----------|--------------|----------|
-| 🧰 **Feature Engineering con Pandas** | Transformaciones numéricas y categóricas iniciales. | Limpieza, normalización y construcción manual de variables. | [Ver artículo](./08-feature-engineering.md) |
-| 🔢 **Encoding Avanzado y Target Encoding** | Comparación de estrategias de codificación para variables categóricas. | Codificación supervisada y análisis de impacto en el modelo. | [Ver artículo](./09-encoding.md) |
-| 🧮 **PCA y Feature Selection** | Reducción de dimensionalidad y selección de atributos relevantes. | Análisis de varianza explicada y ranking de importancia. | [Ver artículo](./10-PCAFeature-selection.md) |
-| ⏱️ **Temporal Feature Engineering** | Construcción de variables basadas en el tiempo. | Lags, rolling windows y validación temporal sin fugas. | [Ver artículo](./11-Temporal-feature-engineering.md) |
+| 🧰 **Feature Engineering con Pandas** | Transformaciones numéricas y categóricas iniciales. | [Ver artículo](./08-feature-engineering.md) |
+| 🔢 **Encoding Avanzado y Target Encoding** | Comparación de estrategias de codificación para variables categóricas. |  [Ver artículo](./09-encoding.md) |
+| 🧮 **PCA y Feature Selection** | Reducción de dimensionalidad y selección de atributos relevantes. | [Ver artículo](./10-PCAFeature-selection.md) |
+| ⏱️ **Temporal Feature Engineering** | Construcción de variables basadas en el tiempo. | [Ver artículo](./11-Temporal-feature-engineering.md) |
 
 ---
 
