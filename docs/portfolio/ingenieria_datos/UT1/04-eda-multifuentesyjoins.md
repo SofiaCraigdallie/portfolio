@@ -12,9 +12,9 @@ date: 2025-01-20
 Este proyecto pertenece a la **Unidad Temática 1: Exploración y fuentes de datos** del Portafolio de Ingeniería de Datos.  
 En esta práctica se aborda la integración de **múltiples fuentes de datos** mediante operaciones de **join** con `pandas.merge`, analizando cómo la unión de datasets complementarios puede enriquecer el análisis y generar información de negocio más completa.
 
-Se trabajó principalmente con dos datasets:  
+Se trabajó con dos datasets principales:  
 - **Trips:** información de viajes (distancia, tarifa, propina, ubicación de inicio).  
-- **Zones:** metadatos de las zonas o boroughs.  
+- **Zones:** metadatos de las zonas o *boroughs* de la ciudad.  
 
 El objetivo fue comprender las diferencias entre tipos de joins, identificar problemas comunes de integración y analizar patrones de revenue y propinas por zona.
 
@@ -103,8 +103,6 @@ Al eliminar los viajes sin correspondencia, se obtiene un conjunto más consiste
 
 Estos problemas resaltan la importancia de la **auditoría de claves** antes de cualquier integración.
 
-### 📝 [Notebook](../../../notebooks/UT1-3.ipynb)
-
 ---
 
 # ⚙️ Análisis técnico: revenue y propinas por borough
@@ -136,14 +134,18 @@ display(group)
 # 📈 Visualizaciones
 
 ### 🔹 Comparación de JOINs  
-![Join Example](../../../assets/img/joins_comparacion.png)  
-- El **LEFT JOIN** conserva más registros (incluyendo viajes sin zona).  
-- El **INNER JOIN** filtra los viajes incompletos.
 
-### 🔹 Revenue y propinas por borough  
+![Join Example](../../../assets/img/joins_comparacion.png)  
+
+**Figura 1:** Diferencia en cantidad de registros entre LEFT JOIN e INNER JOIN.
+El **LEFT JOIN** conserva más registros (incluyendo viajes sin zona), mientras que el **INNER JOIN** filtra los viajes incompletos.
+
+### 🔹 Revenue y propinas por borough 
+
 ![Revenue Propinas](../../../assets/img/revenue_propinas.png)  
-- Diferencias marcadas en **revenue por km** y **tasa de propinas** según borough.  
-- Permite detectar zonas prioritarias para estrategias comerciales o mejoras operativas.
+
+**Figura 2:** Relación entre revenue por km (barras) y tip rate (línea) según el borough de pickup.
+Se observan diferencias marcadas: Manhattan lidera en revenue total, mientras que EWR y zonas desconocidas muestran los mayores ingresos por km y tasa de propinas.
 
 ---
 
@@ -157,8 +159,9 @@ display(group)
 | Variación en tasa de propinas | Indica diferencias socioeconómicas o contextuales |
 
 > 💬 **Discusión:**  
-> La integración de datos es una etapa crítica en ingeniería de datos: pequeñas diferencias en claves o formatos pueden distorsionar los resultados.  
-> Este caso ilustra cómo las decisiones sobre el tipo de join afectan directamente los insights y la calidad del análisis posterior.
+> La integración de fuentes es una de las etapas más delicadas en ingeniería de datos.
+> Diferencias mínimas en claves o tipos pueden alterar los resultados.
+> Este caso demuestra cómo el tipo de join elegido impacta directamente en la calidad y los insights del análisis.
 
 ---
 
@@ -188,6 +191,12 @@ Además, los errores comunes en tipos de datos o claves son inevitables, por lo 
 **Lenguaje:** Python  
 **Librerías:** Pandas · NumPy · Matplotlib  
 **Conceptos aplicados:** Joins · Integración de fuentes · Limpieza de claves · Agrupaciones y métricas agregadas  
+
+---
+
+# Evidencias
+
+### 📝 [Notebook](../../../notebooks/UT1-3.ipynb)
 
 ---
 

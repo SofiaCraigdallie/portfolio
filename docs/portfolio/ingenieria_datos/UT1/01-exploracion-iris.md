@@ -5,15 +5,16 @@ date: 2025-01-10
 
 # 🌸 Explorando el dataset Iris
 
+> Primer ejercicio del Portafolio de Ingeniería de Datos — Unidad Temática 1: **Exploración y Fuentes de Datos**.  
+> Aquí comencé el proceso **CRISP-DM** desde su primera fase: *Comprensión de los datos*.
+
 ---
 
 # 🌍 Contexto
 
-Esta práctica introductoria corresponde a la **Unidad Temática 1: Exploración y fuentes de datos** del Portafolio de Ingeniería de Datos.  
-Se analiza el clásico dataset **Iris** (Fisher, 1936), ampliamente utilizado en aprendizaje automático y estadística.  
-El objetivo es comprender cómo las variables de longitud y ancho de pétalos y sépalos permiten **distinguir entre las tres especies de flores (setosa, versicolor y virginica)**.  
-
-Este ejercicio representa la primera aproximación al proceso **CRISP-DM**, abordando la fase de **Comprensión de los datos** mediante técnicas básicas de EDA (*Exploratory Data Analysis*).
+El dataset **Iris** (Fisher, 1936) es un clásico en estadística y aprendizaje automático.  
+Contiene mediciones de sépalos y pétalos de tres especies de flores: *setosa*, *versicolor* y *virginica*.  
+El objetivo fue explorar cómo las variables numéricas ayudan a **distinguir las especies** y a entender **patrones de correlación** entre sus atributos.
 
 ---
 
@@ -39,67 +40,41 @@ Este ejercicio representa la primera aproximación al proceso **CRISP-DM**, abor
 
 ---
 
-# 🧹 Limpieza y preparación de datos
+# 📊 Análisis exploratorio (EDA)
 
-El dataset no presentó valores faltantes ni duplicados.  
-Se verificó el tipo de datos de cada columna y se convirtió la variable objetivo (`target`) en etiquetas de texto (`species`) para mejorar la interpretación.
-
-```python
-import pandas as pd
-from sklearn.datasets import load_iris
-
-iris = load_iris(as_frame=True)
-df = iris.frame
-df["species"] = df["target"].map(dict(zip(range(3), iris.target_names)))
-df.head()
-```
+El análisis se centró en entender la relación entre medidas y especies, usando visualizaciones básicas pero muy informativas.
 
 ---
 
-# 📊 Análisis exploratorio (EDA)
-
-El análisis exploratorio se enfocó en examinar relaciones entre variables numéricas y su capacidad de separar especies.
-
 ## 🔹 Pairplot
 
-```python
-import seaborn as sns
-import matplotlib.pyplot as plt
+![Pairplot Iris](../../../assets/img/iris_pairplot.png)
 
-sns.pairplot(df, hue="species", diag_kind="hist")
-plt.show()
-```
+**Figura:** Diagrama de dispersión y distribución de las cuatro variables numéricas coloreadas por especie.
 
 📈 **Interpretación:**  
-- Las variables de **pétalo** (`petal_length`, `petal_width`) muestran una separación muy clara entre especies, especialmente **setosa**.  
-- Las variables de **sépalo** presentan mayor solapamiento, indicando menor capacidad discriminante.
-
-![Pairplot Iris](../../../assets/img/iris_pairplot.png)
+- Las variables de **pétalo** (`petal_length`, `petal_width`) separan casi perfectamente las tres especies, sobre todo *setosa*.  
+- Las de **sépalo** tienen más solapamiento, mostrando menor poder de discriminación.
 
 ---
 
 ## 🔹 Heatmap de correlación
 
-```python
-corr = df.drop(columns=["target"]).corr()
-sns.heatmap(corr, annot=True, cmap="coolwarm")
-plt.show()
-```
-
-📈 **Interpretación:**  
-- Se observa una correlación fuerte (≈ 0.96) entre `petal_length` y `petal_width`, lo que sugiere posible redundancia.  
-- Las variables de sépalo (`sepal_length`, `sepal_width`) presentan correlaciones más bajas, lo que puede aportar información complementaria.
-
 ![Heatmap Iris](../../../assets/img/iris_corr.png)
 
-### 📝 [Notebook](../../../notebooks/UT1-1.ipynb)
+**Figura:** Mapa de correlación de Pearson entre las variables numéricas.
+
+📈 **Interpretación:**  
+- Fuerte correlación (≈ 0.96) entre `petal_length` y `petal_width`.  
+- Las variables de sépalo presentan correlaciones más bajas, aportando información complementaria.
+
 ---
 
 # ⚙️ Análisis técnico
 
-- Las visualizaciones confirman que el dataset es **adecuado para problemas de clasificación supervisada multiclase**.  
-- La redundancia entre `petal_length` y `petal_width` podría considerarse en la fase de **Feature Selection** (UT3).  
-- El EDA evidencia un conjunto de datos **limpio, balanceado y bien estructurado**, ideal para pruebas iniciales de modelos.
+El dataset resulta **ideal para problemas de clasificación supervisada multiclase**.  
+La redundancia detectada entre `petal_length` y `petal_width` sugiere que podrían combinarse o regularizarse en etapas futuras (*Feature Engineering*, UT3).  
+En general, se confirma un conjunto **limpio, balanceado y estable**: una base perfecta para probar modelos simples.
 
 ---
 
@@ -112,8 +87,9 @@ plt.show()
 | Sin valores faltantes | No se requiere imputación |
 | Variables de sépalo poco discriminantes | Podrían tener menor peso en el modelado |
 
-> 💬 **Discusión:**  
-> El dataset Iris, aunque sencillo, permite visualizar con claridad el concepto de separabilidad de clases. El análisis demuestra que las variables de pétalo dominan la capacidad predictiva, mientras que las de sépalo aportan matices secundarios.
+💬 **Conclusión:**  
+El dataset Iris ilustra de forma simple la **separabilidad de clases** en datos reales.  
+Las variables de pétalo concentran el poder predictivo, mientras que las de sépalo añaden variabilidad menor pero útil para visualizar la estructura completa.
 
 ---
 
@@ -128,11 +104,11 @@ Este análisis sienta las bases para el trabajo de las siguientes unidades:
 
 # 🧩 Reflexión final
 
-Esta práctica me permitió comprender la importancia del análisis exploratorio antes de modelar.  
-A través de simples visualizaciones, se pueden detectar relaciones, redundancias y características clave de los datos.  
-Aprendí que la etapa de EDA no solo prepara los datos, sino que orienta decisiones futuras de modelado y selección de variables.
+Este ejercicio me enseñó que el EDA no es solo “mirar gráficos”, sino **descubrir la historia que los datos cuentan**.  
+Detectar patrones y redundancias temprano evita errores de modelado después.  
+La exploración es la brújula de cualquier proyecto de datos.
 
-> 🌱 *Próximo paso:* aplicar un modelo de clasificación supervisada (KNN o Random Forest) para cuantificar la separabilidad observada.
+> 🌱 *Próximo paso:* probar un modelo de clasificación (KNN o Random Forest) para cuantificar la separabilidad observada.
 
 ---
 
@@ -141,6 +117,12 @@ Aprendí que la etapa de EDA no solo prepara los datos, sino que orienta decisio
 **Lenguaje:** Python  
 **Librerías:** Pandas · Seaborn · Matplotlib · NumPy · Scikit-learn  
 **Conceptos aplicados:** EDA · Visualización · Correlación · Comprensión de datos  
+
+---
+
+# Evidencias
+
+### 📝 [Notebook](../../../notebooks/UT1-1.ipynb)
 
 ---
 

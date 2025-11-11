@@ -9,11 +9,14 @@ date: 2025-01-12
 
 # 🌍 Contexto
 
-Este proyecto forma parte de la **Unidad Temática 1: Exploración y fuentes de datos** del Portafolio de Ingeniería de Datos.  
-En esta práctica se aplica el proceso de **Análisis Exploratorio de Datos (EDA)** al dataset de títulos de **Netflix**, con el objetivo de obtener una visión inicial del catálogo de la plataforma y sus tendencias.
+El catálogo de Netflix contiene miles de películas y series con información sobre país, director, reparto, año de lanzamiento, duración y género.  
+A través del **EDA (Exploratory Data Analysis)** busqué responder preguntas iniciales como:
 
-El conjunto de datos incluye información sobre miles de títulos —películas y series— con atributos como país, director, reparto, fecha de lanzamiento, tipo de contenido y clasificación.  
-El análisis permite detectar problemas de calidad, generar visualizaciones descriptivas y formular preguntas de negocio para etapas posteriores de análisis o modelado.
+- ¿Predominan las películas o las series?  
+- ¿Cómo evolucionó el número de lanzamientos?  
+- ¿Qué países concentran más títulos?
+
+Este trabajo marca mi primera interacción con un **dataset real y ruidoso**, enfrentando problemas de formato, nulos y duplicados.
 
 ---
 
@@ -38,7 +41,7 @@ El análisis permite detectar problemas de calidad, generar visualizaciones desc
 
 ---
 
-# 🧹 Limpieza y preparación de datos
+# 🧹 Limpieza y preparación
 
 Se realizó una limpieza mínima para asegurar la consistencia de las variables:
 
@@ -47,21 +50,10 @@ Se realizó una limpieza mínima para asegurar la consistencia de las variables:
 - Eliminación de duplicados.  
 - Revisión de valores nulos y normalización básica de texto.
 
-```python
-import pandas as pd
-import matplotlib.pyplot as plt
+![Missing data](../../../assets/img/netflix_missingdata.png)
 
-df = pd.read_csv("netflix_titles.csv")
-
-# Auditoría inicial
-print(df.info())
-print(df.isna().sum())
-
-# Limpieza mínima
-df['date_added'] = pd.to_datetime(df['date_added'], errors='coerce')
-df['year'] = df['release_year']
-df.drop_duplicates(inplace=True)
-```
+**Figura 1:** Porcentaje y patrón de valores faltantes en las columnas principales.
+Las variables `director`, `cast` y `country` presentan las mayores proporciones de nulos, lo que evidencia la necesidad de limpieza y posible imputación.
 
 ---
 
@@ -69,64 +61,67 @@ df.drop_duplicates(inplace=True)
 
 ## 🔹 Distribución de contenido por tipo
 
-Se analizó la proporción de **películas** y **series de TV** en el catálogo.
+![Distribución por tipo de contenido](../../../assets/img/netflix_tipo.png)
 
-```python
-df['type'].value_counts().plot(kind="bar", color=["#1f77b4", "#ff7f0e"])
-plt.title("Distribución de contenido por tipo")
-plt.show()
-```
+**Figura 2:** Distribución del catálogo entre películas y series.
 
 📈 **Interpretación:**  
-El catálogo de Netflix está dominado por **películas**, que representan aproximadamente el **70%** del total, frente al 30% de series.
+Las **películas dominan claramente** el catálogo (≈ 70 %), mientras que las series representan el 30 %.  
+Esto refleja que Netflix mantiene su raíz cinematográfica, aunque las series crecen de forma sostenida en los últimos años.
 
 ---
 
 ## 🔹 Evolución de lanzamientos por año
 
-Se estudió la cantidad de títulos agregados a la plataforma por año.
+![Evolución temporal del catálogo de Netflix](../../../assets/img/netflix_evolucion.png)
 
-```python
-df['year'].value_counts().sort_index().plot(kind="line")
-plt.title("Lanzamientos por año")
-plt.xlabel("Año")
-plt.ylabel("Cantidad de títulos")
-plt.show()
-```
+**Figura 3:** Cantidad de títulos agregados por año.
 
 📈 **Interpretación:**  
-Se observa un **crecimiento exponencial desde 2015**, coincidente con la expansión global de la plataforma.  
-Este aumento refleja la estrategia de Netflix de incrementar su producción y diversificar géneros.
+Desde **2015 se observa un crecimiento acelerado**, coincidiendo con la expansión global del servicio y la producción de contenido original.  
+A partir de 2019, la curva tiende a estabilizarse, lo que podría reflejar saturación del catálogo o mayor curaduría.
 
 ---
 
 ## 🔹 Países con mayor cantidad de títulos
 
-```python
-top_countries = df['country'].value_counts().head(10)
-top_countries.plot(kind="barh", color="#d62728")
-plt.title("Países con mayor cantidad de títulos")
-plt.show()
-```
+![Países con mayor cantidad de títulos](../../../assets/img/netflix_paises.png)
+
+**Figura 4:** Los diez países con mayor representación en el catálogo.
 
 📈 **Interpretación:**  
-Los países más representados son **Estados Unidos** e **India**, seguidos por **Reino Unido** y **Japón**.  
-Esto revela un fuerte sesgo hacia mercados angloparlantes, aunque se aprecia crecimiento en producciones asiáticas.
+El **predominio de Estados Unidos** es claro, seguido por **India** y **Reino Unido**.  
+El aumento de títulos asiáticos muestra una tendencia hacia la **diversificación cultural** del contenido.
 
 ---
 
-![Dashboard Netflix](../../../assets/img/netflix_dashboard.png)
+## 🔹 Géneros, duración y temporadas
 
-### 📝 [Notebook](../../../notebooks/UT1-2.ipynb)
+![Distribución por género, duración y temporadas](../../../assets/img/netflix_generos_duracion.png)
+
+**Figura 5:** Distribución por género, duración y temporadas
+
+📈 **Interpretación:**  
+Los géneros más frecuentes son International Movies, Dramas y Comedies.
+La duración media de las películas ronda los **100 minutos**, y la mayoría de las series tiene entre **1 y 2 temporadas**, lo que sugiere predominancia de miniseries o temporadas cortas.
+
+---
+
+## 🔹 Dashboard integrador
+
+![Dashboard integrador](../../../assets/img/netflix_dashboard.png)
+
+**Figura 6:** Panel resumen con métricas clave (tipos de contenido, evolución temporal, países productores y ratings).
+Resume las principales tendencias observadas en el EDA.
 
 ---
 
 # ⚙️ Análisis técnico
 
-- Se identificaron columnas con valores faltantes y se aplicaron estrategias simples de limpieza.  
-- Se evaluó la estructura temporal del catálogo mediante series anuales.  
-- Se detectó un **aumento sostenido de títulos** en la última década.  
-- El análisis confirmó la necesidad de una futura **normalización por país y género**, ideal para aplicar técnicas de *feature engineering* (UT3).
+- El dataset presenta calidad aceptable tras limpieza básica.  
+- Las visualizaciones revelan **crecimiento sostenido** y **sesgo geográfico**.  
+- La falta de uniformidad en `rating` y `country` motiva una futura **normalización por continente o nivel etario**.  
+- Este dataset es ideal para practicar **ETL y feature engineering** en etapas posteriores.
 
 ---
 
@@ -139,9 +134,9 @@ Esto revela un fuerte sesgo hacia mercados angloparlantes, aunque se aprecia cre
 | Concentración en pocos países | Sesgo geográfico (EE.UU. e India) |
 | Presencia de datos faltantes | Oportunidad para limpieza avanzada o imputación |
 
-> 💬 **Discusión:**  
-> El análisis revela un dataset heterogéneo con problemas típicos de calidad en fuentes reales.  
-> La tendencia temporal y la concentración geográfica ofrecen una base sólida para estudios de segmentación, diversidad de contenido o predicción de lanzamientos.
+💬 **Discusión:**  
+El análisis revela un dataset heterogéneo con problemas típicos de calidad en fuentes reales.
+La tendencia temporal y la concentración geográfica ofrecen una base sólida para estudios de segmentación, diversidad de contenido o predicción de lanzamientos.
 
 ---
 
@@ -156,8 +151,8 @@ Este proyecto conecta directamente con:
 
 # 🧩 Reflexión final
 
-Este análisis fue una primera experiencia con **datos reales y desordenados**, mostrando que la limpieza y el EDA son etapas críticas en cualquier proyecto de datos.  
-Entendí que las visualizaciones simples pueden responder preguntas estratégicas y abrir nuevas líneas de investigación.  
+Esta práctica me ayudó a **entender el valor del EDA en datos reales**, donde los problemas de limpieza son inevitables.  
+Aprendí que **visualizar primero** simplifica la toma de decisiones y orienta la preparación de features posteriores. 
 
 > 🌱 *Próximos pasos:*  
 > Analizar la relación entre **rating, duración y país**, y extender el estudio hacia **recomendación de contenidos** basados en similitud temática.
@@ -169,6 +164,12 @@ Entendí que las visualizaciones simples pueden responder preguntas estratégica
 **Lenguaje:** Python  
 **Librerías:** Pandas · Matplotlib · Seaborn · NumPy  
 **Conceptos aplicados:** Auditoría de datos · Limpieza básica · Visualización descriptiva · Tendencias temporales
+
+---
+
+# Evidencias
+
+### 📝 [Notebook](../../../notebooks/UT1-2.ipynb)
 
 ---
 
