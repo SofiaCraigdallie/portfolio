@@ -72,6 +72,7 @@ nav:
               - ⚖️ Modelos más justos; detectando y mitigando sesgos en Boston, Titanic y Ames: portfolio/ingenieria_datos/UT2/07-deteccion-sesgo.md
               - 🎬 Proyecto extra; Auditoría de calidad y joins con TMDb 5000 (movies & credits): portfolio/ingenieria_datos/UT2/Extra.md
           - "🧭 UT3: Feature Engineering":
+              - Introducción: portfolio/ingenieria_datos/UT3/Portada.md
               - 🧩 Ingeniería de Features; mejorando el modelo de Ames Housing: portfolio/ingenieria_datos/UT3/08-feature-engineering.md
               - 🧩 Encoding Avanzado; experimentando con cardinalidad, fuga y explicabilidad: portfolio/ingenieria_datos/UT3/09-encoding.md
               - 🧠 Reducción y Selección; comparando PCA y técnicas de Feature Selection en Ames: portfolio/ingenieria_datos/UT3/10-PCAFeature-selection.md
