@@ -32,291 +32,77 @@ Esta práctica de la **Unidad Temática 3 (Feature Engineering)** trabaja **dato
 |---|---|
 | **Fuente** | Kaggle — *Online Retail (2010–2011)* |
 | **Archivo** | `OnlineRetail.csv` |
-| **Clave temporal** | `InvoiceDate` |
-| **ID usuario** | `CustomerID` |
 | **Estructura** | Transacciones (eventos irregulares, muchas órdenes por usuario) |
+| **Target** | `will_purchase_again`: indica si el usuario realiza una orden posterior. |
 
 > Nota: Aceptá el dataset en Kaggle (join/accept) antes de descargar con API.
 
----
+![Órdenes semanales y días entre órdenes](../../../assets/img/pedidos_semanales.png)
 
-# ⚙️ Setup
-
-```python
-# !pip install -q pandas numpy scikit-learn matplotlib seaborn kaggle
-import pandas as pd, numpy as np, matplotlib.pyplot as plt, seaborn as sns
-from sklearn.model_selection import TimeSeriesSplit
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import roc_auc_score
-import warnings, platform
-warnings.filterwarnings('ignore')
-pd.set_option('display.max_columns', None); pd.set_option('display.max_rows', 100)
-plt.style.use('seaborn-v0_8-darkgrid')
-
-print("✅ Libs OK"); print(f"Pandas: {pd.__version__}"); print(f"OS: {platform.system()}")
-```
+**Figura 1.** A la izquierda se observa la cantidad de órdenes únicas por semana.  
+A la derecha, la distribución de días entre órdenes, con una **mediana cercana a 28 días**, lo que justifica la creación de *lags* y ventanas de 7, 30 y 90 días.
 
 ---
 
-# 🧰 Descarga y Carga (Kaggle API)
+# 🔧 Metodología general
 
-> Subí `kaggle.json` (credenciales) en Colab, movelo a `~/.kaggle/` con permisos `0o600`, y luego bajá el dataset `vijayuv/onlineretail` a `./data/`.
+El proceso se estructuró en **siete etapas**, construyendo un pipeline reproducible:
 
-```python
-from kaggle.api.kaggle_api_extended import KaggleApi
-import os, json
+1. **Limpieza:** se eliminaron órdenes canceladas, precios y cantidades no válidos, y se tipificaron fechas.  
+2. **Nivel de orden:** se agregaron `cart_size` (tamaño del carrito) y `order_total` (gasto total).  
+3. **Lags:** se calcularon variables `days_since_prior_lag_{1..3}` mediante `.shift()` agrupando por usuario.  
+4. **Rolling / Expanding:** medias, desviaciones y sumas históricas, siempre desplazadas una fila para evitar mirar al presente.  
+5. **RFM + Ventanas:** métricas de recencia, frecuencia y gasto, además de ventanas de 7/30/90 días (`orders_7d`, `spend_90d`, etc.).  
+6. **Calendario y cíclicas:** variables de día, hora y mes transformadas con seno/coseno, junto con feriados del Reino Unido.  
+7. **Externas:** variables económicas mensuales simuladas (`gdp_growth`, `unemployment_rate`, `confidence`), propagadas hacia adelante (*forward fill*) para evitar fugas temporales.
 
-api = KaggleApi(); api.authenticate()
-os.makedirs("./data", exist_ok=True)
-api.dataset_download_files("vijayuv/onlineretail", path="./data", unzip=True)
-
-df_raw = pd.read_csv("./data/OnlineRetail.csv", encoding="ISO-8859-1")
-df_raw.head()
-```
+> El modelo base fue un **RandomForestClassifier** (`n_estimators=100`, `max_depth=10`, `random_state=42`).
 
 ---
 
-# 🧹 Limpieza y preparación temporal
+# ⚖️ Resultados: modelo base vs modelo temporal
 
-```python
-# 1) Filtrado mínimo útil
-df = (df_raw
-      .dropna(subset=['CustomerID'])
-      .rename(columns={'CustomerID':'user_id','InvoiceDate':'order_date',
-                       'InvoiceNo':'order_id','StockCode':'product_id','UnitPrice':'price'}))
-df = df[~df['order_id'].astype(str).str.startswith('C')] # descartar canceladas
-df = df[(df['Quantity']>0) & (df['price']>0)]
+![AUC base vs temporal](../../../assets/img/auc_base_vs_temporal.png)
 
-# 2) Tipos y derivadas
-df['order_date'] = pd.to_datetime(df['order_date'])
-df['total_amount'] = df['Quantity'] * df['price']
-df = df.sort_values(['user_id','order_date']).reset_index(drop=True)
-
-# 3) Agregado a nivel ORDEN
-orders_df = (df.groupby(['order_id','user_id','order_date'])
-               .agg(cart_size=('product_id','count'),
-                    order_total=('total_amount','sum'))
-               .reset_index()
-               .sort_values(['user_id','order_date']).reset_index(drop=True))
-
-# Índices y orden secuencial por usuario
-orders_df['order_number'] = orders_df.groupby('user_id').cumcount() + 1
-orders_df['days_since_prior_order'] = orders_df.groupby('user_id')['order_date'].diff().dt.days
-
-orders_df.head()
-```
+**Figura 2.** Comparación de AUC promedio entre modelos.  
+El modelo con features temporales alcanzó un **AUC de 0.7277**, frente a **0.6615** del modelo base, lo que representa una **mejora del 10%**.  
+Esta diferencia confirma que las variables derivadas del tiempo aportan señal predictiva real.
 
 ---
 
-# 🧱 Lag / Rolling / Expanding (sin leakage)
+# 🔍 Variables más relevantes
 
-```python
-# LAGs: usar shift(n) por usuario
-orders_df = orders_df.sort_values(['user_id','order_date']).reset_index(drop=True)
-orders_df['days_since_prior_lag_1'] = orders_df.groupby('user_id')['days_since_prior_order'].shift(1)
-orders_df['days_since_prior_lag_2'] = orders_df.groupby('user_id')['days_since_prior_order'].shift(2)
-orders_df['days_since_prior_lag_3'] = orders_df.groupby('user_id')['days_since_prior_order'].shift(3)
+![Importancia de features temporales](../../../assets/img/feature_importance_temporal.png)
 
-# ROLLING: excluir presente con shift(1) antes de rolling
-orders_df['rolling_cart_mean_3'] = (orders_df.groupby('user_id')['cart_size']
-                                    .shift(1).rolling(window=3, min_periods=1).mean()
-                                    .reset_index(level=0, drop=True))
-orders_df['rolling_cart_std_3']  = (orders_df.groupby('user_id')['cart_size']
-                                    .shift(1).rolling(window=3, min_periods=1).std()
-                                    .reset_index(level=0, drop=True))
-
-# EXPANDING: histórico acumulado (excluye presente con shift(1))
-orders_df['expanding_days_mean'] = (orders_df.groupby('user_id')['days_since_prior_order']
-                                    .shift(1).expanding(min_periods=1).mean()
-                                    .reset_index(level=0, drop=True))
-orders_df['total_orders_so_far'] = orders_df.groupby('user_id').cumcount()
-orders_df['expanding_total_spent'] = (orders_df.groupby('user_id')['order_total']
-                                      .shift(1).expanding(min_periods=1).sum()
-                                      .reset_index(level=0, drop=True)).fillna(0.0)
-```
+**Figura 3.** A la izquierda, las 25 variables más importantes según el modelo.  
+A la derecha, la importancia acumulada por categoría.  
+Destacan las **lags y ventanas móviles**, seguidas por las de **RFM** y **diversidad de productos**.  
+Las variables de calendario y las externas económicas tuvieron menor impacto, aunque ayudaron a capturar estacionalidad.
 
 ---
 
-# 👤 RFM + Ventanas por tiempo (7d/30d/90d)
+# ✅ Prevención de leakage
 
-```python
-# RFM
-reference_date = orders_df['order_date'].max()
-orders_df['recency_days'] = (reference_date - orders_df['order_date']).dt.days
-orders_df['frequency_total_orders'] = orders_df['total_orders_so_far']
-orders_df['monetary_total'] = orders_df['expanding_total_spent']
-orders_df['monetary_avg'] = orders_df['monetary_total'] / orders_df['total_orders_so_far'].replace(0,1)
+Para garantizar que el modelo no accediera a datos del futuro:
 
-# Ventanas por tiempo por usuario (excluyendo presente)
-def calculate_time_windows_for_user(g):
-    g = g.sort_values('order_date').reset_index(drop=True)
-    for col in ['orders_7d','orders_30d','orders_90d','spend_7d','spend_30d','spend_90d']:
-        g[col] = 0
-    for i in range(len(g)):
-        if i == 0: continue
-        past = g.iloc[:i]
-        t = g.loc[i,'order_date']
-        for d, k_cnt, k_sum in [(7,'orders_7d','spend_7d'),(30,'orders_30d','spend_30d'),(90,'orders_90d','spend_90d')]:
-            mask = past['order_date'] >= (t - pd.Timedelta(days=d))
-            g.loc[i, k_cnt] = int(mask.sum())
-            g.loc[i, k_sum] = float(past.loc[mask, 'order_total'].sum())
-    return g
-
-orders_df = orders_df.groupby('user_id', group_keys=False).apply(calculate_time_windows_for_user)
-```
-
----
-
-# 📅 Calendar + Encoding cíclico + Externas
-
-```python
-# Calendar
-orders_df['order_dow'] = orders_df['order_date'].dt.dayofweek  # 0=Lunes
-orders_df['order_hour_of_day'] = orders_df['order_date'].dt.hour
-orders_df['is_weekend'] = (orders_df['order_dow'] >= 5).astype(int)
-orders_df['day_of_month'] = orders_df['order_date'].dt.day
-orders_df['is_month_start'] = (orders_df['day_of_month'] <= 5).astype(int)
-orders_df['is_month_end'] = (orders_df['day_of_month'] >= 25).astype(int)
-orders_df['month'] = orders_df['order_date'].dt.month
-orders_df['quarter'] = orders_df['order_date'].dt.quarter
-
-# Holidays (UK, dataset 2010–2011)
-holidays_uk = pd.to_datetime(['2010-12-25','2010-12-26','2011-01-01','2011-12-25','2011-12-26'])
-orders_df['is_holiday'] = orders_df['order_date'].isin(holidays_uk).astype(int)
-xmas_2010 = pd.Timestamp('2010-12-25')
-orders_df['days_to_holiday'] = (xmas_2010 - orders_df['order_date']).dt.days.clip(lower=-10**9)
-orders_df.loc[orders_df['days_to_holiday'] < 0, 'days_to_holiday'] = 365
-
-# Encoding cíclico
-orders_df['hour_sin']  = np.sin(2*np.pi*orders_df['order_hour_of_day']/24)
-orders_df['hour_cos']  = np.cos(2*np.pi*orders_df['order_hour_of_day']/24)
-orders_df['dow_sin']   = np.sin(2*np.pi*orders_df['order_dow']/7)
-orders_df['dow_cos']   = np.cos(2*np.pi*orders_df['order_dow']/7)
-orders_df['month_sin'] = np.sin(2*np.pi*orders_df['month']/12)
-orders_df['month_cos'] = np.cos(2*np.pi*orders_df['month']/12)
-
-# Externas simuladas (mensuales) + merge por periodo
-orders_df['month_period'] = orders_df['order_date'].dt.to_period('M')
-date_range = pd.date_range(orders_df['order_date'].min().replace(day=1),
-                           orders_df['order_date'].max(), freq='MS')
-np.random.seed(42)
-eco = pd.DataFrame({'month_date':date_range,
-                    'gdp_growth':np.random.normal(2.5,0.5,len(date_range)),
-                    'unemployment_rate':np.random.normal(4.0,0.3,len(date_range)),
-                    'consumer_confidence':np.random.normal(100,5,len(date_range))})
-eco['month_period'] = eco['month_date'].dt.to_period('M')
-
-orders_df = orders_df.merge(eco[['month_period','gdp_growth','unemployment_rate','consumer_confidence']],
-                            on='month_period', how='left')
-for c in ['gdp_growth','unemployment_rate','consumer_confidence']:
-    orders_df[c] = orders_df[c].fillna(method='ffill')  # solo forward fill
-```
-
----
-
-# 🧪 Validación temporal (TS split) y modelado
-
-```python
-# Target: recompra (¿hay otra orden luego?)
-orders_df = orders_df.sort_values(['user_id','order_date'])
-orders_df['will_purchase_again'] = (orders_df.groupby('user_id')['order_id'].shift(-1).notna().astype(int))
-
-feature_cols = [
-    # lags
-    'days_since_prior_lag_1','days_since_prior_lag_2','days_since_prior_lag_3',
-    # rolling
-    'rolling_cart_mean_3','rolling_cart_std_3',
-    # expanding / RFM
-    'expanding_days_mean','total_orders_so_far','expanding_total_spent',
-    'recency_days','monetary_avg','monetary_total',
-    # time windows
-    'orders_7d','orders_30d','orders_90d','spend_7d','spend_30d','spend_90d',
-    # calendar
-    'order_dow','order_hour_of_day','is_weekend','is_month_start','is_month_end',
-    'is_holiday','days_to_holiday','dow_sin','dow_cos','hour_sin','hour_cos',
-    # externas
-    'gdp_growth','unemployment_rate','consumer_confidence',
-    # base
-    'cart_size','order_total','order_number'
-]
-feature_cols = [c for c in feature_cols if c in orders_df.columns]
-
-df_model = orders_df[feature_cols + ['will_purchase_again','order_date','user_id']].dropna().sort_values('order_date')
-X, y = df_model[feature_cols], df_model['will_purchase_again']
-
-tscv = TimeSeriesSplit(n_splits=3)
-scores = []
-for fold,(tr,va) in enumerate(tscv.split(X),1):
-    Xtr,Xva = X.iloc[tr], X.iloc[va]
-    ytr,yva = y.iloc[tr], y.iloc[va]
-    model = RandomForestClassifier(n_estimators=100, max_depth=10, random_state=42, n_jobs=-1)
-    model.fit(Xtr,ytr)
-    auc = roc_auc_score(yva, model.predict_proba(Xva)[:,1])
-    scores.append(auc)
-    print(f"Fold {fold}: AUC={auc:.4f}")
-
-print(f"Mean AUC: {np.mean(scores):.4f} ± {np.std(scores):.4f}")
-```
-
----
-
-# ⚖️ Comparación: Base vs Temporal
-
-```python
-base_cols = [c for c in ['order_dow','order_hour_of_day','is_weekend','is_holiday',
-                         'cart_size','order_total','order_number'] if c in feature_cols]
-def eval_subset(cols):
-    s=[]; tscv=TimeSeriesSplit(n_splits=3)
-    for tr,va in tscv.split(X):
-        m=RandomForestClassifier(n_estimators=100, max_depth=10, random_state=42, n_jobs=-1)
-        m.fit(X.iloc[tr][cols], y.iloc[tr])
-        s.append(roc_auc_score(y.iloc[va], m.predict_proba(X.iloc[va][cols])[:,1]))
-    return np.mean(s), np.std(s)
-
-base_mean, base_std = eval_subset(base_cols)
-full_mean, full_std = eval_subset(feature_cols)
-
-print(f"Base (sin temporales): {base_mean:.4f} ± {base_std:.4f}")
-print(f"Full (con temporales): {full_mean:.4f} ± {full_std:.4f}")
-print(f"Δ AUC: {full_mean - base_mean:.4f}  ({(full_mean-base_mean)/max(base_mean,1e-6)*100:.1f}%)")
-```
-
----
-
-# 🔍 Importancia de variables y chequeo de leakage
-
-```python
-# Entrenar full para importancia
-m=RandomForestClassifier(n_estimators=200, max_depth=12, random_state=42, n_jobs=-1).fit(X,y)
-imp = (pd.DataFrame({'feature':feature_cols,'importance':m.feature_importances_})
-         .sort_values('importance',ascending=False))
-print(imp.head(25))
-
-# Señales de alerta (heurísticas)
-train_acc = m.score(X,y)
-print(f"Train accuracy: {train_acc:.3f}")
-if train_acc > 0.99: print("⚠️ OVERFIT sospechoso")
-if (train_acc - full_mean) > 0.30: print("⚠️ Gap train–CV grande → revisar leakage")
-
-suspicious = [f for f in imp.head(10)['feature'] if any(x in f for x in ['target','label','leak'])]
-print("Suspicious:", suspicious or "OK")
-```
+- Todas las agregaciones históricas se realizaron con **`.shift(1)`**.  
+- Las **ventanas móviles y acumulativas** excluyen el registro actual.  
+- Las **variables externas** usan solo información previa (relleno hacia adelante).  
+- Se utilizó **`TimeSeriesSplit`** para validar respetando el orden cronológico.
 
 ---
 
 # 🧠 Resultados y discusión
 
-| Hallazgo | Interpretación |
+| Hallazgo | Lectura |
 |---|---|
-| **Δ AUC (full vs base)** | El modelo con features temporales mejoró de **0.661 → 0.728**, un incremento de **+0.066 (~10%)**, demostrando que las variables derivadas del comportamiento temporal agregan información real sobre recompra. |
-| **Categorías más importantes** | Dominan las de **Lag/Window (0.29)**, seguidas por **Diversity (0.17)** y **RFM (0.15)**. Las económicas y de calendario aportan menos pero ayudan a capturar estacionalidad. |
-| **Ventana temporal clave** | Las features de **90 días (spend_90d, orders_90d)** resultaron más influyentes que las de 7d/30d, lo que sugiere que la recompra en e-commerce tiene un horizonte de mediano plazo. |
-| **Señales de leakage** | No se detectaron fugas. Todas las operaciones usaron `.shift(1)` y `groupby('user_id')`, evitando acceso a datos futuros. La validación se hizo con `TimeSeriesSplit`, garantizando orden temporal. |
+| **AUC +0.066** | Las features temporales aportan señal real de recompra. |
+| **Horizonte** | Las ventanas **de 90 días** son más informativas que 7/30. |
+| **Categorías** | **Lag/Window > RFM > Diversidad > Calendario/Económicas**. |
+| **Robustez** | Gap train–CV razonable, sin indicios de fuga. |
 
-> En mi implementación me enfoqué en construir un pipeline **realista y productivo**, donde cada paso (limpieza, agregaciones, ventanas, encoding) está **ordenado cronológicamente** y encapsulado dentro del pipeline.  
-> Los *lags* capturaron la cadencia individual de compra; las *rolling windows* suavizaron variaciones cortas; las *expanding features* reflejaron comportamiento histórico.  
-> El **encoding cíclico** (sin/cos) evitó rupturas en variables como hora o día, y el *forward fill* en datos económicos mantuvo consistencia temporal sin mirar al futuro.  
-> En conjunto, estas decisiones hicieron que el modelo ganara estabilidad y robustez, manteniendo la trazabilidad necesaria para producción.
+> En un entorno productivo, implementaría un **pipeline diario** que regenere features solo con datos hasta la fecha de corte.  
+> Para futuras versiones, extendería con **Fourier features** para estacionalidad, **tendencias (slopes)** y validaciones tipo **walk-forward**.
 
 ---
 
@@ -330,21 +116,22 @@ print("Suspicious:", suspicious or "OK")
 
 # 🧩 Reflexión final
 
-En este trabajo confirmé que **las features temporales son las que más valor aportan**: los *lags* y *rolling windows* fueron decisivos para modelar la recurrencia de compra.  
-Las de **RFM y diversidad** complementan el comportamiento histórico, mientras que las económicas y de calendario solo refinan estacionalidad.
+Este ejercicio me ayudó a entender que las **features temporales son las más poderosas** para describir el comportamiento dinámico de los usuarios.  
+Las *lags* permiten detectar patrones de repetición, las *rolling windows* suavizan fluctuaciones y las métricas *RFM* resumen la historia de cada cliente.
 
-Para evitar **leakage en producción**, mantendría un **batch diario** con cálculos basados únicamente en datos previos al corte, usando siempre `.shift(1)` y `forward fill`.  
-El **trade-off** principal está entre señal y costo: las *rolling/expanding* son pesadas, pero justifican su uso cuando el objetivo es capturar la dinámica de usuario.  
-A futuro, extendería el pipeline con **Fourier features** para estacionalidad, **slope features** para tendencias y **walk-forward validation** para robustecer el despliegue en tiempo real.
-
+Más allá del rendimiento, aprendí la importancia de **respetar la secuencia temporal** y diseñar pipelines que sean **seguros frente a leakage**.  
+El equilibrio entre información útil y costo computacional es clave: las ventanas amplias son costosas, pero ofrecen una lectura más profunda del comportamiento.
 
 ---
 
 # 🧰 Stack técnico
 
-**Lenguaje:** Python  
-**Librerías:** Pandas · NumPy · Scikit-learn · Matplotlib/Seaborn  
-**Conceptos:** Lags · Rolling/Expanding · RFM · Calendar (sin/cos) · Ventanas (7/30/90d) · TimeSeriesSplit · Leakage Prevention
+**Python** · Pandas · NumPy · Scikit-learn · Matplotlib/Seaborn  
+**Conceptos:** Lags · Rolling/Expanding · RFM · Ventanas 7/30/90d · Encoding cíclico · `TimeSeriesSplit` · Leakage Prevention
+
+---
+
+# Evidencias
 
 ### 📝 [Notebook](../../../notebooks/UT3-4.ipynb)
 
