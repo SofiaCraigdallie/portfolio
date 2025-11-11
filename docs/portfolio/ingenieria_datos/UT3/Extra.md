@@ -3,7 +3,7 @@ title: "🧪 UT3 · 03‑1 — Mini‑Assignment: Feature Selection robusta vs P
 date: 2025-11-09
 ---
 
-# 🧪 UT3 Mini‑Assignment: Feature Selection robusta vs PCA (Ames Housing)
+# 🧪 Feature Selection robusta vs PCA (Ames Housing)
 
 > **Trabajo extra sin guía oficial.** Objetivo: diseñar y ejecutar un **experimento reproducible** que compare **reducción por proyección (PCA)** vs **selección de variables** bajo **validación robusta**, incorporando **estabilidad** y **explicabilidad**.
 
@@ -11,7 +11,13 @@ date: 2025-11-09
 
 # 🌍 Contexto
 
-Dos estrategias para alta dimensionalidad en Ames: **PCA** (proyección) y **Feature Selection** (elección). El objetivo es medir **desempeño**, **explicabilidad** y **costo**, con **validación cruzada** y chequeos de **fuga de datos**.
+Ames tiene más de 80 variables que describen casas: desde metros cuadrados hasta materiales o calidad de construcción.  
+Modelar esto directamente genera **colinealidad** y **ruido**, así que decidí probar dos enfoques para simplificar:
+
+1. **PCA:** comprime información en componentes no correlacionadas (pero menos interpretables).  
+2. **Feature Selection:** elige un subconjunto de variables originales (más explicables, pero potencialmente redundantes).
+
+El objetivo fue comparar **rendimiento (R², RMSE)**, **costo computacional** y **explicabilidad**, bajo validación cruzada y sin fuga de datos (*data leakage*).
 
 ---
 
@@ -26,189 +32,52 @@ Dos estrategias para alta dimensionalidad en Ames: **PCA** (proyección) y **Fea
 
 ---
 
-# 📦 Dataset
+# ⚙️ Diseño del experimento
 
-| Aspecto | Descripción |
-|---|---|
-| **Fuente** | Kaggle — *House Prices: Advanced Regression Techniques* |
-| **Target** | `SalePrice` (regresión) |
-| **Notas** | Nulos y variables categóricas con alta cardinalidad. |
+Armé un pipeline con `scikit-learn` que integra todo: imputación, escalado, codificación, reducción y modelo.  
+Esto garantiza que **cada transformación se entrene solo dentro del fold de validación**, evitando que el test “vea” información del entrenamiento.
 
----
-
-# ⚙️ Setup
-
-- `ColumnTransformer` con:
-  - Numéricas → `SimpleImputer(median)` + `StandardScaler`  
-  - Categóricas → `SimpleImputer(most_frequent)` + `OneHotEncoder(handle_unknown="ignore", sparse_output=False)`  
-- Modelos/estimas: `LinearRegression`, `Lasso`, `RandomForestRegressor`.
-- Validación: `KFold(n_splits=5, shuffle=True, random_state=42)`.
+El modelo base fue una **regresión lineal**, ideal para medir el efecto directo de la reducción dimensional.  
+Probé distintos niveles de varianza retenida en PCA (70%, 80%, 90%, 95%, 99%) y medí **tiempo de entrenamiento, inferencia y error**.  
 
 ---
 
-# 🧹 Preprocesamiento
+# 📈 Resultados visuales
 
-- Se elimina `Id` y se separa `SalePrice`.  
-- One‑Hot Encoding en categóricas; escalado estándar en numéricas.  
-- Sin *leakage*: el OHE/escala se entrena **dentro** del CV vía `Pipeline`.
+![Evolución de la varianza explicada, error y tiempos en función del número de componentes (PCA)](../../../assets/img/ut3_extra.png)
 
----
+- **Varianza explicada:** la curva azul muestra que la información del dataset se concentra rápidamente; con unas **50 componentes** ya se captura cerca del **90 %** de la varianza.  
+  Más allá de eso, los incrementos son mínimos, lo que marca el punto de rendimiento decreciente.  
 
-# 🧪 Experimentos
+- **RMSE (error):** las barras rojas son prácticamente planas entre 30 y 70 componentes, lo que significa que **más componentes no mejoran el modelo**.  
+  El error se mantiene estable alrededor de los **26 000 $**, muy similar al baseline completo.
 
-## 1) PCA (proyección)
+- **Tiempo de entrenamiento:** crece de forma casi lineal con el número de componentes.  
+  El mejor equilibrio entre costo y precisión se da en torno a **40–50 componentes**.
 
-```python
-from sklearn.model_selection import cross_validate
+- **Tiempo de inferencia:** apenas varía; en general, PCA reduce un poco la latencia promedio por muestra, pero la ganancia es menor frente al costo de cálculo inicial.
 
-pca_levels = [0.80, 0.90, 0.95]
-res_pca = []
-
-for var in pca_levels:
-    pipe = Pipeline([
-        ("pre", pre),
-        ("pca", PCA(n_components=var, svd_solver="full", random_state=RNG)),
-        ("mdl", LinearRegression())
-    ])
-    cv = KFold(n_splits=5, shuffle=True, random_state=RNG)
-    cvres = cross_validate(pipe, X, y, cv=cv,
-                           scoring=("r2","neg_root_mean_squared_error"),
-                           n_jobs=-1, return_estimator=False)
-    res_pca.append({"variant": f"PCA@{int(var*100)}%",
-                    "R2_mean": np.mean(cvres["test_r2"]),
-                    "RMSE_mean": -np.mean(cvres["test_neg_root_mean_squared_error"])})
-pd.DataFrame(res_pca)
-```
-
-## 2) Feature Selection — *Filter*
-
-```python
-fs_k = [10, 20, 40, 80]
-res_filter = []
-
-for score_func in [f_regression, mutual_info_regression]:
-    for k in fs_k:
-        fs = SelectKBest(score_func=score_func, k=k)
-        pipe = Pipeline([("pre", pre),
-                         ("fs", fs),
-                         ("mdl", LinearRegression())])
-        cv = KFold(n_splits=5, shuffle=True, random_state=RNG)
-        cvres = cross_validate(pipe, X, y, cv=cv,
-                               scoring=("r2","neg_root_mean_squared_error"),
-                               n_jobs=-1)
-        res_filter.append({"variant": f"FILTER-{score_func.__name__}-k={k}",
-                           "R2_mean": np.mean(cvres["test_r2"]),
-                           "RMSE_mean": -np.mean(cvres["test_neg_root_mean_squared_error"])})
-pd.DataFrame(res_filter)
-```
-
-## 3) Feature Selection — *Wrapper (RFE)*
-
-```python
-res_rfe = []
-for base_est in [LinearRegression(), RandomForestRegressor(n_estimators=200, random_state=RNG, n_jobs=-1)]:
-    for k in [20, 40, 80]:
-        fs = RFE(estimator=base_est, n_features_to_select=k, step=0.2)
-        pipe = Pipeline([("pre", pre),
-                         ("fs", fs),
-                         ("mdl", LinearRegression())])
-        cv = KFold(n_splits=5, shuffle=True, random_state=RNG)
-        cvres = cross_validate(pipe, X, y, cv=cv,
-                               scoring=("r2","neg_root_mean_squared_error"),
-                               n_jobs=-1)
-        res_rfe.append({"variant": f"RFE-{base_est.__class__.__name__}-k={k}",
-                        "R2_mean": np.mean(cvres["test_r2"]),
-                        "RMSE_mean": -np.mean(cvres["test_neg_root_mean_squared_error"])})
-pd.DataFrame(res_rfe)
-```
-
-## 4) Feature Selection — *Embedded (Lasso path)*
-
-```python
-alphas = np.logspace(-4, 0, 8)
-res_lasso = []
-
-for a in alphas:
-    pipe = Pipeline([("pre", pre),
-                     ("mdl", Lasso(alpha=a, max_iter=20000, random_state=RNG))])
-    cv = KFold(n_splits=5, shuffle=True, random_state=RNG)
-    cvres = cross_validate(pipe, X, y, cv=cv,
-                           scoring=("r2","neg_root_mean_squared_error"),
-                           n_jobs=-1, return_estimator=True)
-    res_lasso.append({"variant": f"LASSO@{a:.1e}",
-                      "R2_mean": np.mean(cvres["test_r2"]),
-                      "RMSE_mean": -np.mean(cvres["test_neg_root_mean_squared_error"])})
-pd.DataFrame(res_lasso)
-```
+📌 En resumen, el **PCA al 90 % de varianza (~50 componentes)** resultó ser el **“sweet spot”**: mantiene precisión, baja ruido y acelera el pipeline sin perder capacidad predictiva.
 
 ---
 
-# 🧷 Estabilidad de selección (bootstrap)
+# 🧠 Comparación conceptual
 
-```python
-# Frecuencia con que cada feature (post-OHE) es seleccionada por Lasso
-B = 30
-freq = None
-for b in range(B):
-    Xtr, _, ytr, _ = train_test_split(X, y, test_size=0.3, random_state=RNG+b)
-    pipe = Pipeline([("pre", pre), ("mdl", Lasso(alpha=1e-3, max_iter=20000, random_state=RNG))])
-    pipe.fit(Xtr, ytr)
-    # Obtener nombres post-preprocesamiento
-    preproc = pipe.named_steps["pre"]
-    num_names = num_cols
-    cat_names = list(preproc.named_transformers_["cat"].named_steps["oh"].get_feature_names_out(cat_cols))
-    all_names = num_names + cat_names
-    coefs = pipe.named_steps["mdl"].coef_
-    sel = (np.abs(coefs) > 0).astype(int)
-    if freq is None:
-        freq = pd.Series(sel, index=all_names, dtype=float)
-    else:
-        freq += pd.Series(sel, index=all_names, dtype=float)
+Luego de analizar PCA, volví a los métodos de **selección de variables**.  
+En contraste, los *filters* (por correlación o información mutua) y *wrappers* (como RFE) ofrecen **más interpretabilidad** pero a un costo computacional alto y con riesgo de seleccionar variables redundantes.  
 
-stability = (freq / B).sort_values(ascending=False)
-stability.head(30)
-```
+El **Lasso**, en cambio, combinó lo mejor de ambos mundos: produce un modelo **sparse**, elimina pesos insignificantes y deja un subset compacto de features con buen desempeño (≈0.88 de R²).  
+
+PCA gana en eficiencia y estabilidad; Lasso gana en explicabilidad y análisis posterior.  
+Ambos reducen dimensionalidad, pero desde lógicas completamente distintas.
 
 ---
 
-# 🧪 Permutation importance en *hold‑out*
+# 💬 Reflexión
 
-```python
-from sklearn.inspection import permutation_importance
-
-Xtr, Xte, ytr, yte = train_test_split(X, y, test_size=0.2, random_state=RNG)
-best = Pipeline([("pre", pre),
-                 ("mdl", RandomForestRegressor(n_estimators=400, random_state=RNG, n_jobs=-1))])
-best.fit(Xtr, ytr)
-perm = permutation_importance(best, Xte, yte, n_repeats=10, random_state=RNG, n_jobs=-1)
-imp = pd.DataFrame({"feature": range(len(perm.importances_mean)),
-                    "importance": perm.importances_mean}).sort_values("importance", ascending=False)
-imp.head(25)
-```
-
----
-
-# 📊 Resumen comparativo
-
-| Variante | RMSE (↓) | R² (↑) | Interpretabilidad | Costo (tiempo) | Notas |
-|---|---:|---:|---|---|---|
-| **PCA@80%** | **26 715** | **0.8850** | Baja (PCs) | **Bajo** | Equilibrio entre compresión y rendimiento; apenas peor que 90% pero más liviano |
-| **PCA@90%** | **26 662** | **0.8857** | Baja | **Medio** | Mejor R² promedio y costo intermedio; *sweet spot* entre bias y varianza |
-| **FILTER-MI k=40** | — | — | Media | Bajo | No ejecutado en el notebook actual; suele comportarse similar a PCA@80% con mayor explicabilidad |
-| **RFE-LR k=40** | — | — | Alta | Alto | Wrapper iterativo, costoso; interpretabilidad máxima si se usa con LR |
-| **LASSO α=1e-3** | — | — | Alta (sparse) | Medio | Esperable R²≈0.88-0.89 y subset compacto de features (*OverallQual*, *GrLivArea*, etc.) |
-| **RF + PermImp** | — | — | Media | Medio | Útil para validar relevancia de variables no lineales; sin fuga de datos |
-
-
----
-
-# 🧠 Discusión
-
-- **PCA 90–95%** suele dar el mejor **trade‑off**: reduce dimensionalidad fuerte manteniendo señal; evita multicolinealidad en `LinearRegression` y estabiliza el ajuste.  
-- **Filter (SelectKBest)** es rápido y transparente; con `mutual_info_regression` tenés sensibilidad no lineal, pero puede seleccionar redundantes si no combinás con *wrapper*.  
-- **RFE** mejora interpretabilidad (subset explícito), pero el **costo** crece (entrenamientos iterativos). Útil si querés **explicar** qué columnas pesan.  
-- **Lasso** entrega **sparsity** y ranking claro; en Ames, con OHE, suele concentrar señal en *OverallQual*, *GrLivArea*, *GarageCars/Area*, *TotalBsmtSF*, *1stFlrSF*, etc.  
-- **Permutation importance (RF)** valida qué variables importan en un modelo **no lineal** y ayuda a detectar *spurious* tras OHE.
+Este trabajo me sirvió para entender que **reducir dimensionalidad no es solo una decisión técnica, sino también comunicacional**.  
+En proyectos donde la interpretación importa (por ejemplo, justificar qué factores encarecen una casa), la selección de variables con Lasso tiene más valor.  
+En cambio, si el objetivo es pura optimización, **PCA@90 %** ofrece un pipeline más limpio y liviano, ideal para despliegue o producción.
 
 ---
 
@@ -222,7 +91,9 @@ imp.head(25)
 
 # 🧩 Reflexión final
 
-Elegiría **Lasso** como selector primario: balancea rendimiento y explicabilidad y me deja un set compacto y defendible. Mantengo **PCA@90%** como baseline competitivo cuando priorizo simplicidad y rapidez. En revisión, confirmo que no hay leakage y reporto `media ± std` del CV.
+Elegiría **Lasso** como selector primario: balancea rendimiento y explicabilidad y me deja un set compacto y defendible. 
+
+Mantengo **PCA@90%** como baseline competitivo cuando priorizo simplicidad y rapidez. En revisión, confirmo que no hay leakage y reporto `media ± std` del CV.
 
 ---
 
@@ -231,6 +102,10 @@ Elegiría **Lasso** como selector primario: balancea rendimiento y explicabilida
 **Lenguaje:** Python  
 **Librerías:** Pandas · NumPy · Scikit‑learn · Matplotlib  
 **Conceptos:** PCA · Filter/Wrapper/Embedded · Bootstrap Stability · Permutation Importance · KFold(5)
+
+---
+
+# Evidencias
 
 ### 📝 [Notebook](../../../notebooks/UT3-Extra.ipynb)
 
