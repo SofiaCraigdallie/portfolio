@@ -39,7 +39,7 @@ Esta práctica de la **Unidad Temática 3 (Feature Engineering)** trabaja **dato
 
 ![Órdenes semanales y días entre órdenes](../../../assets/img/pedidos_semanales.png)
 
-**Figura 1.** A la izquierda se observa la cantidad de órdenes únicas por semana.  
+**Figura 1:** A la izquierda se observa la cantidad de órdenes únicas por semana.  
 A la derecha, la distribución de días entre órdenes, con una **mediana cercana a 28 días**, lo que justifica la creación de *lags* y ventanas de 7, 30 y 90 días.
 
 ---
@@ -64,7 +64,7 @@ El proceso se estructuró en **siete etapas**, construyendo un pipeline reproduc
 
 ![AUC base vs temporal](../../../assets/img/auc_base_vs_temporal.png)
 
-**Figura 2.** Comparación de AUC promedio entre modelos.  
+**Figura 2:** Comparación de AUC promedio entre modelos.  
 El modelo con features temporales alcanzó un **AUC de 0.7277**, frente a **0.6615** del modelo base, lo que representa una **mejora del 10%**.  
 Esta diferencia confirma que las variables derivadas del tiempo aportan señal predictiva real.
 
@@ -74,7 +74,7 @@ Esta diferencia confirma que las variables derivadas del tiempo aportan señal p
 
 ![Importancia de features temporales](../../../assets/img/feature_importance_temporal.png)
 
-**Figura 3.** A la izquierda, las 25 variables más importantes según el modelo.  
+**Figura 3:** A la izquierda, las 25 variables más importantes según el modelo.  
 A la derecha, la importancia acumulada por categoría.  
 Destacan las **lags y ventanas móviles**, seguidas por las de **RFM** y **diversidad de productos**.  
 Las variables de calendario y las externas económicas tuvieron menor impacto, aunque ayudaron a capturar estacionalidad.

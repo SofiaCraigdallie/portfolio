@@ -62,14 +62,14 @@ El Análisis de Componentes Principales permite condensar la información de mú
 
 ![Varianza explicada y acumulada del PCA](../../../assets/img/visualizacion_var.png)
 
-**Figura 1.** A la izquierda se observa el *Scree Plot* (caída de la varianza individual).  
+**Figura 1:** A la izquierda se observa el *Scree Plot* (caída de la varianza individual).  
 A la derecha, la varianza acumulada muestra que con **≈38 componentes** se conserva alrededor del **90%** de la información original.  
 
 > Se seleccionaron **38 componentes principales** como punto de corte, priorizando equilibrio entre información retenida y simplicidad del modelo.
 
 ![Importancia de variables según PCA](../../../assets/img/imp_ft.png)
 
-**Figura 2.** Principales variables que más peso aportan a las componentes del PCA.  
+**Figura 2:** Principales variables que más peso aportan a las componentes del PCA.  
 Las áreas habitables (`Gr Liv Area`, `TotRms AbvGrd`) y características de sótano y baño son las que más influyen, mostrando que las dimensiones espaciales dominan la varianza global del conjunto.
 
 ---
@@ -82,11 +82,11 @@ Los métodos *Filter* seleccionan variables según su relación estadística con
 
 ![Ranking de features por F-test](../../../assets/img/ftest.png)
 
-**Figura 3.** Ranking de variables según el **F-test (ANOVA)**. Las variables con mayor relación lineal con `SalePrice` son `Overall Qual`, `Gr Liv Area`, `Garage Cars` y `Garage Area`.
+**Figura 3:** Ranking de variables según el **F-test (ANOVA)**. Las variables con mayor relación lineal con `SalePrice` son `Overall Qual`, `Gr Liv Area`, `Garage Cars` y `Garage Area`.
 
 ![Ranking de features por Mutual Information](../../../assets/img/mutualinfo.png)
 
-**Figura 4.** Ranking basado en **Mutual Information**, que captura dependencias no lineales. Aparecen variables de calidad (`Neighborhood`, `Bsmt Qual`, `Exter Qual`) que el F-test no detecta, mostrando su poder para relaciones más complejas.
+**Figura 4:** Ranking basado en **Mutual Information**, que captura dependencias no lineales. Aparecen variables de calidad (`Neighborhood`, `Bsmt Qual`, `Exter Qual`) que el F-test no detecta, mostrando su poder para relaciones más complejas.
 
 ---
 
@@ -96,7 +96,7 @@ Los métodos *Wrapper* iteran sobre combinaciones de variables para identificar 
 
 ![Ranking de features seleccionadas por RFE](../../../assets/img/rfe.png)
 
-**Figura 5.** Ranking de features retenidas por **RFE**. Variables como `Bsmt Full Bath`, `Foundation`, `Kitchen Qual` y `Bsmt Qual` fueron las últimas eliminadas, señalando su relevancia estructural.
+**Figura 5:** Ranking de features retenidas por **RFE**. Variables como `Bsmt Full Bath`, `Foundation`, `Kitchen Qual` y `Bsmt Qual` fueron las últimas eliminadas, señalando su relevancia estructural.
 
 > Si bien RFE logra buena precisión, su costo computacional es alto (requiere múltiples entrenamientos).
 
@@ -108,12 +108,12 @@ Los métodos *Embedded* realizan la selección dentro del propio entrenamiento d
 
 ![Importancia de variables según Random Forest](../../../assets/img/rf.png)
 
-**Figura 6.** Importancia de variables según un **Random Forest**.  
+**Figura 6:** Importancia de variables según un **Random Forest**.  
 Se observa una marcada concentración de peso en `Overall Qual` y `Gr Liv Area`, confirmando su alto poder predictivo.
 
 ![Importancia de coeficientes del modelo Lasso](../../../assets/img/lasso.png)
 
-**Figura 7.** Magnitud de los coeficientes del modelo **Lasso (L1)**.  
+**Figura 7:** Magnitud de los coeficientes del modelo **Lasso (L1)**.  
 Lasso actúa como un filtro automático: mantiene solo las variables más relevantes (`Gr Liv Area`, `Overall Qual`, `Exter Qual`) y reduce a cero las redundantes, simplificando la interpretación.
 
 ---
@@ -122,7 +122,7 @@ Lasso actúa como un filtro automático: mantiene solo las variables más releva
 
 ![Comparación de tiempo entre métodos de selección](../../../assets/img/fs_vs_rfe.png)
 
-**Figura 8.** Comparativa de tiempo de ejecución.  
+**Figura 8:** Comparativa de tiempo de ejecución.  
 El método **RFE** ofrece resultados precisos pero con un **costo 15× mayor** que los métodos *Filter* o *Embedded* (como Lasso).  
 En contextos de producción, la elección depende del balance entre **tiempo disponible** y **necesidad de precisión**.
 

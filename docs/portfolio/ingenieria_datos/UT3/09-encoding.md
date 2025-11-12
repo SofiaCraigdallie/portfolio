@@ -49,7 +49,7 @@ Se trabajó con el dataset **Adult Income (US Census, 1994)** para predecir si e
 
 ![Cardinalidad de variables categóricas](../../../assets/img/cardinalidad_variables_categóricas.png)
 
-**Figura 1.** Diagnóstico de cardinalidad por variable. Se observa que la mayoría de las columnas son de baja cardinalidad (≤10), aunque `education`, `occupation` y `native-country` se ubican en rango medio (11–50), lo que justifica usar encodings distintos según el tipo.
+**Figura 1:** Diagnóstico de cardinalidad por variable. Se observa que la mayoría de las columnas son de baja cardinalidad (≤10), aunque `education`, `occupation` y `native-country` se ubican en rango medio (11–50), lo que justifica usar encodings distintos según el tipo.
 
 > **Conclusión:** aplicar *One-Hot* a todas las categóricas no es viable. Se optó por:  
 > - *Label Encoding* para comparativa base,  
@@ -92,12 +92,12 @@ Se trabajó con el dataset **Adult Income (US Census, 1994)** para predecir si e
 
 ![Comparación de encoding por método](../../../assets/img/comparación_imp_método.png)
 
-**Figura 2.** Comparación de los cuatro esquemas de codificación (Label, One-Hot, Target y Pipeline Ramificado). Se observa que Label Encoding logra el mejor equilibrio entre rendimiento y complejidad, mientras que One-Hot y Pipeline aumentan la dimensionalidad sin mejoras notables.
+**Figura 2:** Comparación de los cuatro esquemas de codificación (Label, One-Hot, Target y Pipeline Ramificado). Se observa que Label Encoding logra el mejor equilibrio entre rendimiento y complejidad, mientras que One-Hot y Pipeline aumentan la dimensionalidad sin mejoras notables.
 
 
 ![Comparación de métricas y trade-offs entre métodos de encoding](../../../assets/img/métodos_métricas.png)
 
-**Figura 3.** Comparación visual de métricas y trade-offs. Label Encoding y Pipeline mantienen alta exactitud con tiempos bajos. Target Encoding reduce la dimensionalidad, pero sacrifica rendimiento global.
+**Figura 3:** Comparación visual de métricas y trade-offs. Label Encoding y Pipeline mantienen alta exactitud con tiempos bajos. Target Encoding reduce la dimensionalidad, pero sacrifica rendimiento global.
 
 ---
 
@@ -105,7 +105,7 @@ Se trabajó con el dataset **Adult Income (US Census, 1994)** para predecir si e
 
 ![Importancia de features del modelo Random Forest](../../../assets/img/feature_importance_random_forest.png)
 
-**Figura 4.** Variables más relevantes según el modelo Random Forest. `fnlwgt`, `age`, `education-num`, `capital-gain` y `hours-per-week` lideran la predicción, mientras que algunas categóricas *one-hot* (`marital-status_Married-civ-spouse`, `sex_Male`, `workclass_Private`) aportan contexto adicional.
+**Figura 4:** Variables más relevantes según el modelo Random Forest. `fnlwgt`, `age`, `education-num`, `capital-gain` y `hours-per-week` lideran la predicción, mientras que algunas categóricas *one-hot* (`marital-status_Married-civ-spouse`, `sex_Male`, `workclass_Private`) aportan contexto adicional.
 
 **Importancia por tipo de feature:**
 - **Numéricas:** 76.7 % del total (6 variables).  
@@ -114,7 +114,7 @@ Se trabajó con el dataset **Adult Income (US Census, 1994)** para predecir si e
 
 ![Importancia total y promedio por tipo de feature](../../../assets/img/features_codificadas.png)
 
-**Figura 5.** Comparación de la importancia total y promedio por tipo de variable. Las numéricas dominan tanto en peso total como en relevancia promedio; las categóricas aportan granularidad, pero con menor influencia individual.
+**Figura 5:** Comparación de la importancia total y promedio por tipo de variable. Las numéricas dominan tanto en peso total como en relevancia promedio; las categóricas aportan granularidad, pero con menor influencia individual.
 
 ---
 

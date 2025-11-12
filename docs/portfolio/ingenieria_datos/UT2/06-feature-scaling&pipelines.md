@@ -55,6 +55,21 @@ y = df["SalePrice_log"]
 
 ---
 
+# ⚙️ Exploración inicial y detección de outliers
+
+![Boxplots](../../../assets/img/boxplots_outliers.png) 
+
+**Figura 1:** Boxplots de `LotArea`, `GrLivArea` y `SalePrice` muestran outliers evidentes en todas las variables.
+
+![Distribución de SalePrice](../../../assets/img/dist_saleprice.png) 
+
+**Figura 2:** Distribución sesgada de `SalePrice` — clara necesidad de transformación logarítmica.
+
+📈 **Interpretación:**
+La alta asimetría y presencia de valores extremos justifican el uso de `RobustScaler` y transformaciones logarítmicas (`log1p`) para estabilizar la varianza antes del modelado.
+
+---
+
 # ⚙️ Escalado y construcción del pipeline
 
 Se compararon distintos **scalers** de `scikit-learn` y su impacto en la estabilidad de los modelos:
@@ -109,8 +124,6 @@ print(cv_scores, cv_scores.mean())
 📊 **Interpretación:**  
 El *pipeline* con validación cruzada entrega una evaluación más honesta, evitando fugas de información entre entrenamiento y prueba.
 
-### 📝 [Notebook](../../../notebooks/UT2-2.ipynb)
-
 ---
 
 # 🧠 Resultados y discusión
@@ -149,6 +162,12 @@ Implementar pipelines reproducibles reduce errores humanos, asegura comparabilid
 **Lenguaje:** Python  
 **Librerías:** Pandas · NumPy · Scikit-learn  
 **Conceptos aplicados:** Escalado · Pipeline · Data Leakage · Validación Cruzada  
+
+---
+
+# Evidencias
+
+### 📝 [Notebook](../../../notebooks/UT2-2.ipynb)
 
 ---
 

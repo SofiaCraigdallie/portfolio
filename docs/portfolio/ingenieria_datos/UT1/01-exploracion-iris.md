@@ -50,7 +50,7 @@ El análisis se centró en entender la relación entre medidas y especies, usand
 
 ![Pairplot Iris](../../../assets/img/iris_pairplot.png)
 
-**Figura:** Diagrama de dispersión y distribución de las cuatro variables numéricas coloreadas por especie.
+**Figura 1:** Diagrama de dispersión y distribución de las cuatro variables numéricas coloreadas por especie.
 
 📈 **Interpretación:**  
 - Las variables de **pétalo** (`petal_length`, `petal_width`) separan casi perfectamente las tres especies, sobre todo *setosa*.  
@@ -62,7 +62,7 @@ El análisis se centró en entender la relación entre medidas y especies, usand
 
 ![Heatmap Iris](../../../assets/img/iris_corr.png)
 
-**Figura:** Mapa de correlación de Pearson entre las variables numéricas.
+**Figura 2:** Mapa de correlación de Pearson entre las variables numéricas.
 
 📈 **Interpretación:**  
 - Fuerte correlación (≈ 0.96) entre `petal_length` y `petal_width`.  

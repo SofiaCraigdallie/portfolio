@@ -9,10 +9,10 @@ date: 2025-01-28
 
 # 🌍 Contexto
 
-Esta práctica forma parte de la **Unidad Temática 2: Calidad y Ética de los Datos**, donde se abordan los problemas de **completitud y confiabilidad** de la información.  
+Esta práctica pertenece a la **Unidad Temática 2: Calidad y Ética de los Datos**, donde se abordan los problemas de **completitud y confiabilidad** de la información.  
 El objetivo es aprender a detectar, analizar y tratar **valores faltantes y outliers**, comprendiendo su impacto en el análisis posterior y garantizando la reproducibilidad mediante pipelines de limpieza.
 
-El ejercicio utiliza escenarios con distintos mecanismos de ausencia (MCAR, MAR y MNAR) y muestra cómo aplicar estrategias de imputación controlada, documentando el proceso de forma transparente y ética.
+El ejercicio trabaja con escenarios que representan distintos mecanismos de ausencia (MCAR, MAR y MNAR), aplicando estrategias de imputación controlada y documentando el proceso de forma transparente y ética.
 
 ---
 
@@ -55,39 +55,39 @@ plt.show()
 ```
 
 📈 **Interpretación:**  
-Se detectaron columnas con alta proporción de valores faltantes, principalmente en variables numéricas relacionadas con superficie y precio.
+Se detectaron columnas con una alta proporción de valores faltantes, sobre todo en variables relacionadas con características estructurales y de equipamiento (piscina, cercado, garaje).
 
 ---
 
-# 📊 Análisis exploratorio de ausencias
+# 📊 Análisis de patrones de ausencia
 
-Los valores faltantes pueden clasificarse según su mecanismo:
+## 🔹 Top 10 columnas con mayor porcentaje de missing
 
-- **MCAR (Missing Completely at Random):** ausencia totalmente aleatoria.  
-- **MAR (Missing At Random):** depende de otras variables observadas.  
-- **MNAR (Missing Not At Random):** depende del propio valor faltante.
+![Missing por columna](../../../assets/img/missingcolumna.png)  
 
-📘 **Ejemplo práctico:**  
-Se comprobó que las ausencias en `GarageArea` correlacionaban con el tipo de vivienda → mecanismo **MAR**.
+**Figura 1:** Las variables PoolQC, MiscFeature y Alley presentan más del 90 % de datos faltantes.
+
+---
+
+## 🔹 Distribución de missing por fila
+
+![Missing por fila](../../../assets/img/missing_patterns.png)  
+
+**Figura 2:** La mayoría de las filas contiene entre 4 y 6 valores faltantes, indicando que las ausencias se concentran en pocos campos clave.
+
+📈 **Interpretación:**
+El patrón sugiere un mecanismo MAR (Missing At Random), ya que las ausencias dependen de otras variables observadas, como el tipo de vivienda o su antigüedad.
 
 ---
 
 # ⚙️ Identificación de outliers
 
-```python
-import numpy as np
+![Identificación de outliers](../../../assets/img/outliers_analysis.png)  
 
-Q1 = df["columna"].quantile(0.25)
-Q3 = df["columna"].quantile(0.75)
-IQR = Q3 - Q1
-
-outliers = df[(df["columna"] < Q1 - 1.5*IQR) | (df["columna"] > Q3 + 1.5*IQR)]
-outliers.shape
-```
+**Figura 3:** Detección mediante boxplots logarítmicos e IQR. Los outliers se concentran en `SalePrice`, `LotArea` y `GarageArea`.
 
 📊 **Interpretación:**  
-Los valores atípicos se concentraron en variables como `SalePrice` y `LotArea`.  
-El IQR resultó más estable que el z-score frente a distribuciones sesgadas.
+Los límites del rango intercuartílico (IQR) fueron más robustos frente a distribuciones sesgadas que el z-score, permitiendo conservar observaciones válidas sin recorte excesivo.
 
 ---
 
@@ -100,45 +100,33 @@ imputer = SimpleImputer(strategy="median")
 df["columna"] = imputer.fit_transform(df[["columna"]])
 ```
 
-💡 **Estrategias evaluadas:**  
-- **Media / Mediana:** adecuadas para distribuciones simétricas.  
-- **Forward / Backward Fill:** útiles en series temporales.  
-- **Modelo predictivo (no aplicado aquí):** opción avanzada en futuras unidades.
+💡 **Estrategias aplicadas:**  
+- **Mediana:** para variables numéricas sesgadas.  
+- **Forward / Backward Fill:** para columnas temporales.  
+- **Categorías más frecuentes:** en variables nominales.
 
 La imputación con **mediana** mantuvo la forma original de la distribución y minimizó el sesgo.
 
 ---
 
-# 🧩 Pipeline reproducible
+# 📈 Comparación antes y después de la imputación
 
-Se desarrolló un conjunto de funciones modulares para:  
-1. Detectar nulos y calcular porcentajes.  
-2. Imputar columnas según estrategia configurable.  
-3. Validar la completitud final y guardar el reporte.  
+![Comparación de distribuciones](../../../assets/img/distribution_comparison.png)  
 
-Este pipeline permite replicar la limpieza en nuevos datasets con los mismos pasos.
+**Figura 4:** Comparación de distribuciones antes y después de imputar.
+Se observa mínima alteración en la densidad de las variables principales.
+
+![Matrices de correlación](../../../assets/img/correlation_comparison.png)  
+
+**Figura 5:** Matrices de correlación antes (izquierda) y después (derecha) de imputar.
+Las correlaciones se mantuvieron estables, confirmando que la imputación no distorsionó las relaciones entre variables.
 
 ---
 
-# 📈 Evidencias visuales
+# 🧩 Pipeline reproducible
 
-### 🔹 Patrones de datos faltantes  
-![Patrones de missing](../../../assets/img/missing_patterns.png)  
-> Columnas con mayor proporción de nulos y distribución de registros incompletos.
-
-### 🔹 Outliers detectados  
-![Outliers](../../../assets/img/outliers_analysis.png)  
-> Detección mediante boxplots e IQR en variables como `SalePrice`, `LotArea`, `GarageArea`.
-
-### 🔹 Distribución antes y después de imputación  
-![Distribución imputación](../../../assets/img/distribution_comparison.png)  
-> La imputación con mediana preservó la forma general de la distribución.
-
-### 🔹 Correlaciones originales vs imputadas  
-![Correlaciones](../../../assets/img/correlation_comparison.png)  
-> Poca variación en las correlaciones → imputación estable.
-
-### 📝 [Notebook](../../../notebooks/UT2-1.ipynb)
+El proceso se encapsuló en funciones para detectar nulos, imputar según tipo de variable y validar la completitud final.
+Esto permite aplicar la misma limpieza sobre nuevos datasets manteniendo trazabilidad y reproducibilidad.
 
 ---
 
@@ -178,6 +166,12 @@ El equilibrio entre completitud, precisión y ética es clave en la ingeniería 
 **Lenguaje:** Python  
 **Librerías:** Pandas · Seaborn · Matplotlib · NumPy · Scikit-learn  
 **Conceptos aplicados:** MCAR-MAR-MNAR · Imputación · Outliers · Pipeline reproducible  
+
+---
+
+# Evidencias
+
+### 📝 [Notebook](../../../notebooks/UT2-1.ipynb)
 
 ---
 

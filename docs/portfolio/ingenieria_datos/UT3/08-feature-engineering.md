@@ -57,7 +57,7 @@ ames_df["crowded_property"] = ames_df["BedroomAbvGr"] / ames_df["GrLivArea"]
 
 ![Distribución de variables originales y transformadas](../../../assets/img/distribucion_features_libre.png)
 
-**Figura 1.** Distribución de variables originales y transformadas utilizadas como base para el *feature engineering*.  
+**Figura 1:** Distribución de variables originales y transformadas utilizadas como base para el *feature engineering*.  
 Se observa que las transformaciones logarítmicas y cuadráticas ayudan a estabilizar la escala y reducir sesgos.
 
 ---
@@ -80,7 +80,7 @@ Estas variables permiten incorporar conocimiento del dominio inmobiliario direct
 
 ![Distribución de las features derivadas](../../../assets/img/distribucion_features_derivadas.png)
 
-**Figura 2.** Distribución de las variables derivadas del dominio. Se observa que la mayoría tienen asimetría positiva (sesgo a la derecha), lo cual justifica transformaciones logarítmicas o normalizaciones en pasos posteriores.
+**Figura 2:** Distribución de las variables derivadas del dominio. Se observa que la mayoría tienen asimetría positiva (sesgo a la derecha), lo cual justifica transformaciones logarítmicas o normalizaciones en pasos posteriores.
 
 Las nuevas variables muestran rangos y distribuciones distintas, pero todas capturan aspectos estructurales o contextuales con impacto en el valor del inmueble.
 
@@ -119,7 +119,7 @@ Las features derivadas de superficie y eficiencia presentan la relación positiv
 
 ![Comparación de importancia de features según distintos métodos](../../../assets/img/importancia_de_features.png)
 
-**Figura 3.** Comparación de las 10 variables más relevantes según Mutual Information (izquierda) y Random Forest (derecha).  
+**Figura 3:** Comparación de las 10 variables más relevantes según Mutual Information (izquierda) y Random Forest (derecha).  
 Ambos métodos coinciden en destacar la relevancia de `construction_density`, `sqft_squared` y `property_age`, confirmando la validez de las features generadas.
 Esto sugiere consistencia entre métodos y valida la utilidad de las variables generadas desde el conocimiento de dominio.
 

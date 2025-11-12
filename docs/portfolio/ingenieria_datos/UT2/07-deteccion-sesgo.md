@@ -60,6 +60,10 @@ El pipeline de fairness incluyó pasos de preprocesamiento, modelado base, cálc
 El dataset contiene correlaciones históricas entre raza y precio de vivienda.  
 Se cuantificó la brecha promedio en las predicciones por grupo racial.
 
+![Distribución de precios por grupo racial](../../../assets/img/fairness_boston.png)
+
+**Figura 1:** Distribución y boxplots de precios por grupo racial en Boston Housing.
+
 📊 **Resultado:**  
 > Diferencia de predicción media ≈ **−2.4%** (precio menor para zonas de población no blanca).
 
@@ -128,8 +132,6 @@ Las disparidades reflejan diferencias estructurales de acceso y valor territoria
 - **Brecha geográfica (MAE):** +132% (barrio más caro vs. más barato).  
 - **Brecha temporal (MAE):** +47% (casas nuevas vs. antiguas).
 
-### 📝 [Notebook](../../../notebooks/UT2-3.ipynb)
-
 ---
 
 # 🧠 Resultados y discusión
@@ -167,6 +169,12 @@ La ética de datos es una dimensión técnica, pero también profundamente human
 **Lenguaje:** Python  
 **Librerías:** Pandas · Scikit-learn · Fairlearn  
 **Conceptos aplicados:** Fairness · Mitigación · Métricas por grupo · Performance loss  
+
+---
+
+# Evidencias
+
+### 📝 [Notebook](../../../notebooks/UT2-3.ipynb)
 
 ---
 
