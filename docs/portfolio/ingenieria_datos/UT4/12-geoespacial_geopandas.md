@@ -4,7 +4,6 @@ date: 2025-11-25
 ---
 
 # 🌎 Análisis Geoespacial en CABA  
-Práctica de la Unidad Temática 4 – Geodatos y Sistemas de Coordenadas
 
 ---
 
