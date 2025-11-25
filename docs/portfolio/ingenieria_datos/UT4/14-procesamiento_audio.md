@@ -131,7 +131,7 @@ Los folds están relativamente balanceados (800–1000 audios cada uno).
 
 ## ⏳ Time Stretch (0.9x)
 
-![Time Stretch](../../../assets/img/audio_time_stretch.png.png)
+![Time Stretch](../../../assets/img/audio_time_stretch.png)
 
 **Figura 9:** El audio se comprime ligeramente en el tiempo, manteniendo relaciones tonales.  
 Useful para variación temporal sin alterar pitch.
