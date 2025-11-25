@@ -181,6 +181,6 @@ El manejo de GeoPandas abre la puerta a desarrollar **features geoespaciales** q
 # 📚 Referencias
 
 - Guía UT4 — Geoespacial: <https://juanfkurucz.com/ucu-id/ut4/12-geoespacial/>
-- GeoPandas Documentation — https://geopandas.org/
-- Contextily — https://contextily.readthedocs.io/
-- Shapely — https://shapely.readthedocs.io/
+- [GeoPandas Documentation](https://geopandas.org/)
+- [Contextily](https://contextily.readthedocs.io/)
+- [Shapely](https://shapely.readthedocs.io/)

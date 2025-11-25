@@ -192,5 +192,5 @@ Esta práctica me dio un entendimiento completo del pipeline inicial en proyecto
 # 📚 Referencias
 
 - UT4 — Audio: <https://juanfkurucz.com/ucu-id/ut4/14-audio/>  
-- Librosa documentation — https://librosa.org/  
-- UrbanSound8K dataset — https://urbansounddataset.weebly.com/
+- [Librosa documentation](https://librosa.org/  )
+- [UrbanSound8K dataset](https://urbansounddataset.weebly.com/)

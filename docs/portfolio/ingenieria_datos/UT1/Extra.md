@@ -178,5 +178,5 @@ No se observa correlación lineal significativa, lo que sugiere que las variacio
 # 📚 Referencias
 
 - Open-Meteo API (Forecast): https://open-meteo.com/en/docs
-- Pandas IO JSON: https://pandas.pydata.org/pandas-docs/stable/user_guide/io.html#io-json
-- Time series resampling: https://pandas.pydata.org/pandas-docs/stable/user_guide/timeseries.html#dateoffset-objects
+- [Pandas IO JSON](https://pandas.pydata.org/pandas-docs/stable/user_guide/io.html#io-json)
+- [Time series resampling](https://pandas.pydata.org/pandas-docs/stable/user_guide/timeseries.html#dateoffset-objects)

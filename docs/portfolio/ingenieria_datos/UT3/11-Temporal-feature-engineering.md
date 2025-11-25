@@ -140,7 +140,7 @@ El equilibrio entre información útil y costo computacional es clave: las venta
 # 📚 Referencias
 
 - Práctica: <https://juanfkurucz.com/ucu-id/ut3/11-temporal-features-assignment/> 
-- Kaggle API — https://www.kaggle.com/docs/api  
-- Pandas Time Series — https://pandas.pydata.org/docs/user_guide/timeseries.html  
-- TimeSeriesSplit — https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.TimeSeriesSplit.html  
-- RandomForestClassifier — https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html
+- [Kaggle API](https://www.kaggle.com/docs/api)
+- [Pandas Time Series](https://pandas.pydata.org/docs/user_guide/timeseries.html ) 
+- [TimeSeriesSplit](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.TimeSeriesSplit.html)  
+- [RandomForestClassifier](https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html)
