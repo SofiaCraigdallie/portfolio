@@ -78,3 +78,8 @@ nav:
               - 🧠 Reducción y Selección; comparando PCA y técnicas de Feature Selection en Ames: portfolio/ingenieria_datos/UT3/10-PCAFeature-selection.md
               - ⏱️ Tiempo en Acción; creando y evaluando features temporales con Pandas: portfolio/ingenieria_datos/UT3/11-Temporal-feature-engineering.md
               - 🧬 Proyecto extra; Mini-Assignment, comparando robustez de PCA vs Selection en pipelines reales: portfolio/ingenieria_datos/UT3/Extra.md
+          - "🧭 UT4: Datos Especiales":
+              - Introducción: portfolio/ingenieria_datos/UT4/Portada.md
+              - 🌍 Manejo de Datos Geoespaciales; visualización y análisis con GeoPandas y Folium: portfolio/ingenieria_datos/UT4/12-geoespacial_geopandas.md
+              - 📸 Preprocesamiento de Imágenes; mejorando calidad y extracción de features visuales: portfolio/ingenieria_datos/UT4/13-preprocesamiento_img.md
+              - 🔊 Procesamiento de Audio; limpieza y extracción de características acústicas con Librosa: portfolio/ingenieria_datos/UT4/14-procesamiento_audio.md
