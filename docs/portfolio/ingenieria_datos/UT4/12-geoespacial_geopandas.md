@@ -61,11 +61,7 @@ Primero se visualizaron los radios censales para validar geometrías y proyecci�
 
 # 📊 Densidad de población
 
-Se incorporó el dato de población y área, reproyectando a metros cuadrados y calculando:
-
-\[
-\mathrm{densidad} = \frac{\mathrm{poblacion}}{\mathrm{area\ (km^2)}}
-\]
+Se incorporó el dato de población y área, reproyectando a metros cuadrados.
 
 ![Densidad de población](../../../assets/img/densidad.png)
 
