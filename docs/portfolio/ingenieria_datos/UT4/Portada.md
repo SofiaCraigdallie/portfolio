@@ -28,7 +28,7 @@ Esta unidad amplía el enfoque de Ingeniería de Datos hacia modalidades donde l
 | Proyecto | Descripción | Enlace |
 |-----------|--------------|----------|
 | 🗺️ **Análisis Geoespacial en CABA** | Cálculo de áreas, distancias y cobertura urbana con GeoPandas. | [Ver artículo](./12-geoespacial_geopandas.md) |
-| 🖼️ **Preprocesamiento de Imágenes** | Histogramas, CLAHE, filtros, Canny y keypoints. | [Ver artículo](./13-preprocesamiento-img.md) |
+| 🖼️ **Preprocesamiento de Imágenes** | Histogramas, CLAHE, filtros, Canny y keypoints. | [Ver artículo](./13-preprocesamiento_img.md) |
 | 🎵 **Preprocesamiento de Audio** | Waveform, STFT, Mel, normalización, ruido y augmentations. | [Ver artículo](./14-procesamiento_audio.md) |
 
 ---
