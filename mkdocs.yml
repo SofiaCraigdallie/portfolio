@@ -71,14 +71,14 @@ nav:
               - 🏠 Escalando variables con estilo; creando pipelines justos y reproducibles: portfolio/ingenieria_datos/UT2/06-feature-scaling&pipelines.md
               - ⚖️ Modelos más justos; detectando y mitigando sesgos en Boston, Titanic y Ames: portfolio/ingenieria_datos/UT2/07-deteccion-sesgo.md
               - 🎬 Proyecto extra; Auditoría de calidad y joins con TMDb 5000 (movies & credits): portfolio/ingenieria_datos/UT2/Extra.md
-          - "🧭 UT3: Feature Engineering":
+          - "🧭 UT3 - Feature Engineering":
               - Introducción: portfolio/ingenieria_datos/UT3/Portada.md
               - 🧩 Ingeniería de Features; mejorando el modelo de Ames Housing: portfolio/ingenieria_datos/UT3/08-feature-engineering.md
               - 🧩 Encoding Avanzado; experimentando con cardinalidad, fuga y explicabilidad: portfolio/ingenieria_datos/UT3/09-encoding.md
               - 🧠 Reducción y Selección; comparando PCA y técnicas de Feature Selection en Ames: portfolio/ingenieria_datos/UT3/10-PCAFeature-selection.md
               - ⏱️ Tiempo en Acción; creando y evaluando features temporales con Pandas: portfolio/ingenieria_datos/UT3/11-Temporal-feature-engineering.md
               - 🧬 Proyecto extra; Mini-Assignment, comparando robustez de PCA vs Selection en pipelines reales: portfolio/ingenieria_datos/UT3/Extra.md
-          - "🧭 UT4: Datos Especiales":
+          - "🧭 UT4 - Datos Especiales":
               - Introducción: portfolio/ingenieria_datos/UT4/Portada.md
               - 🌍 Manejo de Datos Geoespaciales; visualización y análisis con GeoPandas y Folium: portfolio/ingenieria_datos/UT4/12-geoespacial_geopandas.md
               - 📸 Preprocesamiento de Imágenes; mejorando calidad y extracción de features visuales: portfolio/ingenieria_datos/UT4/13-preprocesamiento_img.md
