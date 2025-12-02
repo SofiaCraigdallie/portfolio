@@ -83,3 +83,4 @@ nav:
               - 🌍 Manejo de Datos Geoespaciales; visualización y análisis con GeoPandas y Folium: portfolio/ingenieria_datos/UT4/12-geoespacial_geopandas.md
               - 📸 Preprocesamiento de Imágenes; mejorando calidad y extracción de features visuales: portfolio/ingenieria_datos/UT4/13-preprocesamiento_img.md
               - 🔊 Procesamiento de Audio; limpieza y extracción de características acústicas con Librosa: portfolio/ingenieria_datos/UT4/14-procesamiento_audio.md
+              - 📊 Proyecto extra; Dashboard de Control de Calidad para Audio (QA): portfolio/ingenieria_datos/UT4/Extra.md

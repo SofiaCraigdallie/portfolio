@@ -3,7 +3,7 @@ title: "🧪 UT4 · Control de Calidad de Audio"
 date: 2025-12-02
 ---
 
-# UT4 — Extra: Dashboard de Control de Calidad para Audio (QA)
+# 📊 UT4 — Extra: Dashboard de Control de Calidad para Audio (QA)
 
 ---
 
