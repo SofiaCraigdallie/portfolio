@@ -66,6 +66,6 @@ Esta unidad me dio herramientas concretas para enfrentar proyectos modernos dond
 # 📚 Referencias
 
 - Material de cátedra: <https://juanfkurucz.com/ucu-id/ut4/>  
-- GeoPandas Documentation — https://geopandas.org/  
-- Librosa — https://librosa.org/  
-- OpenCV — https://docs.opencv.org/  
+- [GeoPandas Documentation](https://geopandas.org/)
+- [Librosa](https://librosa.org/)  
+- [OpenCV](https://docs.opencv.org/)  
