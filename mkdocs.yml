@@ -84,3 +84,8 @@ nav:
               - 📸 Preprocesamiento de Imágenes; mejorando calidad y extracción de features visuales: portfolio/ingenieria_datos/UT4/13-preprocesamiento_img.md
               - 🔊 Procesamiento de Audio; limpieza y extracción de características acústicas con Librosa: portfolio/ingenieria_datos/UT4/14-procesamiento_audio.md
               - 📊 Proyecto extra; Dashboard de Control de Calidad para Audio (QA): portfolio/ingenieria_datos/UT4/Extra.md
+          - "🧭 UT5 – Pipelines ETL y DataOps":
+              - Introducción: portfolio/ingenieria_datos/UT5/Portada.md
+              - ⚙️ Pipelines ETL, DataOps y Orquestación con Prefect: portfolio/ingenieria_datos/UT5/15-prefect.md
+              - ☁️ Google Cloud Skills; A Tour of Google Cloud Hands-on Labs: portfolio/ingenieria_datos/UT5/16-googlecloud.md
+              - 🔄 Google Cloud Skills; Creating a Data Transformation Pipeline with Cloud Dataprep: portfolio/ingenieria_datos/UT5/17-googlecloud2.md

@@ -206,7 +206,7 @@ La conclusión principal es que un pipeline de audio serio debería incluir alg�
 
 # Evidencias
 
-### 📝 [Notebook](../../../notebooks/UT4-extra-audio-qa.ipynb)
+### 📝 [Notebook](../../../notebooks/UT4-Extra.ipynb)
 
 ---
 
