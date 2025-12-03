@@ -21,8 +21,8 @@ Aquí recopilo **proyectos, prácticas y visualizaciones** que forman parte de m
 
 ## 🌟 Proyectos destacados 
 
-- 🧭 [Exploración y Fuentes de Datos; Netflix bajo la lupa](portfolio/ingenieria_datos/UT1/03-eda-netflix.md) 
-- 🧭 [Calidad y Ética de los Datos; Modelos más justos](portfolio/ingenieria_datos/UT2/07-deteccion-sesgo.md) 
-- 🧭 [Feature Engineering; Reducción y Selección](portfolio/ingenieria_datos/UT3/10-PCAFeature-selection.md) 
-- 🧭 [Datos Especiales; Preprocesamiento de Imágenes](portfolio/ingenieria_datos/UT4/13-preprocesamiento_img.md)
-- 🧭 [Pipelines ETL, DataOps y Cloud](portfolio/ingenieria_datos/UT5/15-prefect.md)
+- [Netflix – Exploración y tendencias globales](portfolio/ingenieria_datos/UT1/03-eda-netflix.md) 
+- [Detección y mitigación de sesgos en ML](portfolio/ingenieria_datos/UT2/07-deteccion-sesgo.md) 
+- [PCA vs Feature Selection – Reducción dimensional](portfolio/ingenieria_datos/UT3/10-PCAFeature-selection.md) 
+- [Preprocesamiento de Imágenes](portfolio/ingenieria_datos/UT4/13-preprocesamiento_img.md)
+- [Pipeline ETL con Prefect + DataOps](portfolio/ingenieria_datos/UT5/15-prefect.md)
